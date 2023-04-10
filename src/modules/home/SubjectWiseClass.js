@@ -35,13 +35,13 @@ function SubjectWiseClass({navigation}) {
 
   return (
     <View style={styles.container}>
-      <View style={{padding: 10,marginLeft:10, marginTop: 10, backgroundColor: '#fff'}}>
+      <View style={{padding: 10,marginLeft:10, marginTop: 5, backgroundColor: '#fff'}}>
         <Text style={[styles.h3, {fontWeight: '700'}]}>
           Subject-wise classes
         </Text>
         {subjects.map(key=>{
             return(
-                <View style={style.header}>
+                <Pressable style={style.header} onPress={()=>navigation.navigate("ParticularSubjectClass",{subject:key.subject})}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <View style={style.circleView}>
                         <Text style={{opacity:1,color:colors.primaryBlue,fontWeight:'bold',fontSize:20}}>
@@ -61,7 +61,7 @@ function SubjectWiseClass({navigation}) {
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Icon name="chevron-right" type="ionicons" size={25} />
                 </View>
-              </View>
+              </Pressable>
             )
         })}
       </View>

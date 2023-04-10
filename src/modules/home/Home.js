@@ -7,6 +7,7 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
+  Pressable,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import Video from '../../components/Video';
@@ -16,11 +17,25 @@ import QuickLinks from './QuickLinks';
 import SubjectWiseClass from './SubjectWiseClass';
 import Swiper from 'react-native-swiper';
 import Button from '../../components/Button';
+import CompleteProfilePopup from '../../components/CompleteProfilePopup';
 // import Video from 'react-native-video';
 
 // create a component
 class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isVisible: true,
+    };
+  }
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({isVisible:false})
+    }, 10000);
+  }
   render() {
+    
+    const { isVisible } = this.state;
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
         <View style={styles.container}>
@@ -35,6 +50,7 @@ class Home extends Component {
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Icon name="search" type="ionicons" size={25} />
+              <Pressable onPress={()=>this.props.navigation.navigate('Account')}>
               <Image
                 source={require('./images/user.png')}
                 style={{
@@ -45,11 +61,12 @@ class Home extends Component {
                   borderRadius: 50,
                 }}
               />
+              </Pressable>
             </View>
           </View>
           <ScrollView style={{marginBottom:110}}>
-            <SubjectWiseClass />
-            <QuickLinks />
+            <SubjectWiseClass navigation={this.props.navigation} />
+            <QuickLinks navigation={this.props.navigation} />
             <View style={{padding: 10,marginLeft:10,paddingTop:15, backgroundColor: '#fff'}}>
               <Text style={[styles.h3, {fontWeight: '700'}]}>
                 Suggested Modules
@@ -65,23 +82,24 @@ class Home extends Component {
           activeDotStyle={{width: 25}}
           activeDotColor={colors.primaryBlue}
           paginationStyle={{bottom: 10}}>
-        <Video />
-        <Video />
-        <Video />
+        <Video navigation={this.props.navigation} />
+        <Video navigation={this.props.navigation}/>
+        <Video navigation={this.props.navigation} />
         </Swiper>
         </View>
-        <View style={{padding: 10,marginLeft:10,marginTop:10, backgroundColor: '#fff'}}>
+        <View style={{padding: 10,marginLeft:10,marginTop:5, backgroundColor: '#fff'}}>
               <Text style={[styles.h3, {fontWeight: '700'}]}>
                 Free Classes
               </Text>
             </View>
             <View style={{backgroundColor:colors.white,paddingBottom:30}}>
-            <Video />
-            <Button text={"See all free classes"} backgroundColor={'#535353'}/>
+            <Video navigation={this.props.navigation} />
+            <Button onpress={()=>this.props.navigation.navigate("FreeVideos")} text={"See all free classes"} backgroundColor={'#535353'}/>
             </View>
             
               {/* <Video source={{uri :"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"}} style={{width:300,height:300}} controls={true} /> */}
           </ScrollView>
+          {/* Subscribe button */}
           <View style={{flexDirection:'row',position:'absolute',width:'100%',justifyContent:'space-between',padding:10,alignItems:'center',backgroundColor:colors.white,bottom:60}}>
             <Text style={styles.h6}>Want to achieve your dreams?</Text>
             <View style={{backgroundColor:colors.primaryBlue,paddingHorizontal:10,paddingVertical:5,borderRadius:5}}>
@@ -90,6 +108,11 @@ class Home extends Component {
                 </Text>
             </View>
           </View>
+          {/* Complete profile button */}
+          {isVisible &&
+            <CompleteProfilePopup />
+          }
+          
         </View>
       </SafeAreaView>
     );

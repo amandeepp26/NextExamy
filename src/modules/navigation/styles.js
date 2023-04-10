@@ -123,7 +123,7 @@ export default StyleSheet.create({
     color: colors.black,
     fontSize: 15,
     fontFamily: fonts.primaryMedium,
-    marginTop: 1
+   
   },
   p: {
     fontSize: 13,

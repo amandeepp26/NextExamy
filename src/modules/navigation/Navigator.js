@@ -37,6 +37,18 @@ import Welcome from '../auth/Welcome';
 import Signup from '../auth/SignUp';
 import SelectCategory from '../onboarding/SelectCategory';
 import SelectSubCategory from '../onboarding/SelectSubCategory';
+import ParticularSubjectClass from '../home/ParticularSubjectClass';
+import SavedVideos from '../video/SavedVideos';
+import FreeVideos from '../video/FreeVideos';
+import ParticularVideo from '../video/ParticularVideo';
+import MockTest from '../Test/MockTest';
+import TestQuestions from '../Test/TestQuestions';
+import Notes from '../notes/Notes';
+import Syllabus from '../syllabus/Syllabus';
+import SubTopics from '../syllabus/SubTopics';
+import TopicLists from '../Topics/TopicLists';
+import Account from '../Account/Account';
+import EditProfile from '../Account/EditProfile';
 
 // const drawerData = [
 //   {
@@ -285,6 +297,18 @@ function Navigator(props) {
         <Stack.Screen name="SelectCategory" component={SelectCategory} />
         <Stack.Screen name="SelectSubCategory" component={SelectSubCategory} />
         <Stack.Screen name="Home" component={TabNavigator} />
+        <Stack.Screen name="ParticularSubjectClass" component={ParticularSubjectClass} />
+        <Stack.Screen name="SavedVideos" component={SavedVideos} />
+        <Stack.Screen name="FreeVideos" component={FreeVideos} />
+        <Stack.Screen name="ParticularVideo" component={ParticularVideo} />
+        <Stack.Screen name="MockTest" component={MockTest} />
+        <Stack.Screen name="TestQuestions" component={TestQuestions} />
+        <Stack.Screen name="Notes" component={Notes} />
+        <Stack.Screen name="Syllabus" component={Syllabus} />
+        <Stack.Screen name="SubTopics" component={SubTopics} />
+        <Stack.Screen name="TopicLists" component={TopicLists} />
+        <Stack.Screen name="Account" component={Account} />
+        <Stack.Screen name="EditProfile" component={EditProfile} />
 
 
 

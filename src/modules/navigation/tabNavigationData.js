@@ -8,6 +8,7 @@
 import Chat from "../chat/Chat";
 import Home from "../home/Home";
 import Splash from "../Splash/Splash";
+import Tests from "../Test/Tests";
 import Videos from "../video/Videos";
 
 
@@ -36,8 +37,8 @@ const tabNavigationData = [
     icon: videoIcon,
   },
   {
-    name:"Test",
-    component:Splash,
+    name:"Tests",
+    component:Tests,
     icon: testIcon,
   }
   

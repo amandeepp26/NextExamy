@@ -11,6 +11,7 @@ import {
 import {colors} from '../../styles';
 import styles from '../navigation/styles';
 import {Icon} from 'react-native-elements';
+import SearchBar from '../../components/SearchBar';
 
 const subjects = [
   {
@@ -55,20 +56,25 @@ const Links = [
     id: 1,
     category: 'SAVED VIDEOS',
     img: require('./images/saved.png'),
+    screen:"SavedVideos"
   },
   {
     id: 2,
     category: 'LIVE VIDEOS',
     img: require('./images/live.png'),
+    screen:"SavedVideos"
+
   },
   {
     id: 3,
     category: 'FREE VIDEOS',
     img: require('./images/free.png'),
+    screen:"FreeVideos"
+
   },
 ];
 // create a component
-function Videos() {
+function Videos({navigation}) {
   return (
     <View style={styles.container}>
       <View style={{backgroundColor: colors.white}}>
@@ -80,11 +86,12 @@ function Videos() {
           marginTop: 5,
           marginBottom: 50,
         }}>
+          <SearchBar />
         {/* Video type section */}
         <View style={{flexDirection: 'row', paddingHorizontal: 10,paddingVertical:15, borderBottomWidth:5,borderColor:colors.lightGray}}>
           {Links.map(key => {
             return (
-              <Pressable style={style.tabContainer}>
+              <Pressable style={style.tabContainer} onPress={()=>navigation.navigate(key.screen)}>
                 <Image source={key.img} style={{width: 42, height: 50}} />
                 <Text
                   style={[

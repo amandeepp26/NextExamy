@@ -12,9 +12,9 @@ import {
 import {colors} from '../styles';
 
 // create a component
-const Button = ({text, onpress,color, load, ...props}) => {
+const Button = ({text, onpress,color, load,opacity, ...props}) => {
   return (
-    <Pressable style={[styles.button,{backgroundColor:color ? "white" : colors.primaryBlue,borderWidth:color ? 0.5 : 0, }]} onPress={onpress}>
+    <Pressable style={[styles.button,{backgroundColor:color ? "white" : colors.primaryBlue,borderWidth:color ? 1 : 0,opacity:opacity?opacity:1 }]} onPress={onpress}>
       {load ? 
       <View style={{alignSelf:"center",width:"100%"}}>
       <ActivityIndicator size="small" color={colors.white} />

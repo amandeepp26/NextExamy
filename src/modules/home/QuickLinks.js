@@ -12,31 +12,37 @@ const Links = [
     id: 1,
     category: 'NOTES',
     img: require('./images/notes.png'),
+    screen:'Notes'
   },
   {
     id: 2,
     category: 'SAVED VIDEOS',
     img: require('./images/saved.png'),
+    screen:'SavedVideos'
   },
   {
     id: 3,
     category: 'LIVE VIDEOS',
     img: require('./images/live.png'),
+    screen:'LiveVideo'
   },
   {
     id: 4,
     category: 'SYLLABUS',
     img: require('./images/syllabus.png'),
+    screen:'Syllabus'
   },
   {
     id: 5,
     category: 'TAKE A MOCK TEST',
     img: require('./images/test.png'),
+    screen:'Test'
   },
   {
     id: 6,
     category: 'ASK A DOUBT',
     img: require('./images/doubt.png'),
+    screen:'Chat'
   },
 ];
 // create a component
@@ -44,6 +50,7 @@ function QuickLinks({navigation}) {
   renderItem = ({item, index}) => {
     return (
       <Pressable
+      onPress={()=>navigation.navigate(item.screen)}
         key={index}
         style={{
           alignItems: 'center',
@@ -52,7 +59,7 @@ function QuickLinks({navigation}) {
           borderRadius: 5,
           backgroundColor: colors.lightGray,
           height: 100,
-          width: '32%',
+          width: '31%',
         }}>
         <Image source={item.img} style={{width: 42, height: 50}} />
           <Text style={[styles.p,{color:'#575757',fontSize:12,marginTop:5,fontWeight:'700'}]}>{item.category}</Text>
@@ -64,7 +71,7 @@ function QuickLinks({navigation}) {
       <View style={{padding: 10,marginLeft:10, backgroundColor: '#fff'}}>
         <Text style={[styles.h3, {fontWeight: '700'}]}>Quick Links</Text>
       </View>
-      <View style={{backgroundColor: colors.white, flex: 1, marginLeft: 10}}>
+      <View style={{backgroundColor: colors.white, flex: 1,paddingHorizontal:7}}>
         <FlatList
           numColumns={3}
           data={Links}
