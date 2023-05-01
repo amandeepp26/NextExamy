@@ -13,7 +13,7 @@ import {Icon} from 'react-native-elements';
 import {SafeAreaView} from 'react-native';
 import Button from '../../components/Button';
 // create a component
-function MockTest({navigation}) {
+function TestInstructions({navigation}) {
   const [agree, setAgree] = useState(false);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
@@ -139,7 +139,7 @@ function MockTest({navigation}) {
           </Text>
         </View>
 
-        <Button text={'Start'} onpress={()=>{agree? navigation.navigate('TestQuestions') : null}} opacity={agree ? 1 : 0.5} />
+        <Button backgroundColor={colors.primaryBlue} text={'Start'} onpress={()=>{agree? navigation.navigate('TestQuestions') : null}} opacity={agree ? 1 : 0.5} />
       </View>
     </SafeAreaView>
   );
@@ -156,4 +156,4 @@ const style = StyleSheet.create({
 });
 
 //make this component available to the app
-export default MockTest;
+export default TestInstructions;

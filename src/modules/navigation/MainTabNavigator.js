@@ -56,8 +56,9 @@ function TabNavigator({navigation}) {
             },
           }}
           options={{
+            tabBarShowLabel:false,
             tabBarIcon: ({focused}) => (
-              <View style={styles.tabBarItemContainer}>
+              <View style={[styles.tabBarItemContainer,{backgroundColor: focused ? 'rgba(2, 146, 183, 0.1)' : 'white'}]}>
                 <Image
                   resizeMode="contain"
                   source={item.icon}
@@ -66,32 +67,38 @@ function TabNavigator({navigation}) {
                     focused && styles.tabBarIconFocused,
                   ]}
                 />
+                {focused && 
+                <Text
+                style={{
+                  marginLeft: 8,
+                  fontFamily: fonts.primarySemiBold,
+                  fontWeight:'700',
+                  fontSize: 12,
+                  color: colors.primaryBlue,
+                }}>
+                {item.name}
+              </Text>}
               </View>
             ),
-            tabBarLabel: ({focused}) =>
-              focused ? (
-                <Text
-                  style={{
-                    marginBottom: 8,
-                    fontFamily: fonts.primarySemiBold,
-                    fontSize: 13,
-                    marginTop: 0,
-                    color: colors.primaryBlue,
-                  }}>
-                  {item.name}
-                </Text>
-              ) : (
-                <Text
-                  style={{
-                    marginBottom: 8,
-                    fontFamily: fonts.primaryRegular,
-                    fontSize: 13,
-                    marginTop: 2,
-                    color: colors.gray,
-                  }}>
-                  {item.name}
-                </Text>
-              ),
+            // tabBarLabel: ({focused}) =>
+            //   focused ? (
+            //     <Text
+            //       // style={{
+            //       //   marginBottom: 8,
+            //       //   fontFamily: fonts.primarySemiBold,
+            //       //   fontSize: 13,
+            //       //   marginTop: 0,
+            //       //   color: colors.primaryBlue,
+            //       // }}
+            //       >
+            //       {/* {item.name} */}
+            //     </Text>
+            //   ) : (
+            //     <Text
+            //       >
+            //       {/* {item.name} */}
+            //     </Text>
+            //   ),
             // <Text style={{ fontSize: 12, color: focused ? colors.blue : colors.grey, fontFamily: fonts.primarySemiBold }}>{item.name}</Text>,
           }}
         />

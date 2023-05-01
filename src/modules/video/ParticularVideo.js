@@ -14,6 +14,7 @@ import Video from 'react-native-video';
 
 import {colors} from '../../styles';
 import styles from '../navigation/styles';
+import Button from '../../components/Button';
 // create a component
 const ParticularVideo = ({navigation}) => {
   return (
@@ -85,6 +86,16 @@ const ParticularVideo = ({navigation}) => {
           </View>
           <Text style={[styles.h6, {marginLeft: 10}]}>00:10:14</Text>
           <Text style={[styles.h6, {marginLeft: 20}]}>Part-3</Text>
+        </View>
+        
+      <View
+        style={{
+          bottom: 30,
+          position: 'absolute',
+          width: '100%',
+          alignItems: 'center',
+        }}>
+        <Button onpress={()=>navigation.navigate('VideoRateReview')} backgroundColor={colors.primaryBlue} text={'Leave a Review'} />
         </View>
       </View>
     </View>

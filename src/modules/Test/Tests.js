@@ -11,7 +11,6 @@ import {
 import {colors} from '../../styles';
 import styles from '../navigation/styles';
 import {Icon} from 'react-native-elements';
-import SearchBar from '../../components/SearchBar';
 
 const subjects = [
   {
@@ -158,7 +157,7 @@ function Tests({navigation}) {
           {testTopics.map(key => {
             return (
               <Pressable
-                onPress={() => navigation.navigate('MockTest')}
+                onPress={() => navigation.navigate('TestInstructions')}
                 style={[style.header]}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <View>

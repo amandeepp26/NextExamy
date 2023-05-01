@@ -16,7 +16,7 @@ class Splash extends Component {
           source={require('../../../assets/images/logoIcon.png')}
         />
         <Image
-          style={{height:'8%', width: '62%',marginTop:-10,}}
+          style={{height:'8.2%', width: '65%',marginTop:-10,}}
           source={require('../../../assets/images/logoText.png')}
         />
       </View>

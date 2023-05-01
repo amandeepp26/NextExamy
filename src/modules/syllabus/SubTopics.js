@@ -93,7 +93,7 @@ const SubTopics = ({navigation, route}) => {
         {Topics.map(key => {
           return (
             <Pressable
-              onPress={() => navigation.navigate('MockTest')}
+              // onPress={() => navigation.navigate('MockTest')}
               style={[style.header]}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <View style={style.circleView}>

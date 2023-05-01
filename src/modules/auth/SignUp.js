@@ -37,7 +37,7 @@ function Signup({navigation}) {
           <Text style={{color: colors.secondaryBlue}} onPress={()=>navigation.navigate("Signup")} >Terms & Conditions</Text> and 
           <Text style={{color: colors.secondaryBlue}} onPress={()=>navigation.navigate("Signup")} > Privacy Policy </Text>
         </Text>
-        <Button text={'Sign Up'} color={false} onpress={()=>{navigation.navigate("SelectCategory")}}/>
+        <Button text={'Sign Up'} backgroundColor={colors.primaryBlue} color={false} onpress={()=>{navigation.navigate("SelectCategory")}}/>
       </View>
     </View>
   );

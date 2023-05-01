@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import Button from '../../components/Button';
 import styles from '../navigation/styles';
+import { colors } from '../../styles';
 
 // create a component
 function Welcome({navigation}) {
@@ -27,8 +28,8 @@ function Welcome({navigation}) {
           NextExamy
         </Text>
         <View style={{marginTop:15}}>
-        <Button text={'I am a Teacher'} color={true} />
-        <Button text={'I am a Student'} color={false} onpress={()=>navigation.navigate("Login")} />
+        <Button text={'I am a Teacher'} backgroundColor={colors.white} color={true} />
+        <Button text={'I am a Student'} backgroundColor={colors.primaryBlue} color={false} onpress={()=>navigation.navigate("Login")} />
         </View>
       </View>
     </View>

@@ -81,6 +81,9 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 10,
+    paddingVertical:5,
+    flexDirection:'row',
+    borderRadius:20
   },
   tabBarIcon: {
     width: 20,
@@ -88,8 +91,8 @@ export default StyleSheet.create({
     tintColor:colors.gray
   },
   tabBarIconFocused: {
-    width: 22,
-    height: 22,
+    width: 21,
+    height: 21,
     tintColor: colors.primaryBlue,
   },
   

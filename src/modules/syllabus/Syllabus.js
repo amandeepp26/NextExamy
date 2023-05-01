@@ -184,6 +184,8 @@ const Syllabus = ({navigation}) => {
             );
           })}
         </ScrollView>
+        <ScrollView >
+          <View >
         {Topics.map(key => {
           return (
             <Pressable
@@ -205,6 +207,8 @@ const Syllabus = ({navigation}) => {
             </Pressable>
           );
         })}
+        </View>
+        </ScrollView>
         {/* <FlatList
           numColumns={2}
           data={NotesArray}

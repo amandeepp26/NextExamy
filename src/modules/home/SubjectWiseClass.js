@@ -12,21 +12,25 @@ const subjects = [
     id: 1,
     subject: 'Physics',
     topics: '10 Topics',
+    color:'#EE7877'
   },
   {
     id: 2,
     subject: 'Mathematics',
     topics: '15 Topics',
+    color:'#EA55D7',
   },
   {
     id: 3,
     subject: 'Chemistry',
     topics: '8 Topics',
+    color:'#00BF93'
   },
   {
     id: 4,
     subject: 'Biology',
     topics: '18 Topics',
+    color:'#326bf3'
   },
 ];
 // create a component
@@ -43,10 +47,12 @@ function SubjectWiseClass({navigation}) {
             return(
                 <Pressable style={style.header} onPress={()=>navigation.navigate("ParticularSubjectClass",{subject:key.subject})}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View style={style.circleView}>
-                        <Text style={{opacity:1,color:colors.primaryBlue,fontWeight:'bold',fontSize:20}}>
+                  <View style={[style.circleView,{backgroundColor:`${key.color}40`}]}>
+                    {/* <Image style={{height:25,width:25}} source={require('../../../assets/images/book.png')} /> */}
+                    <Icon name='book-outline' type='ionicon' color={key.color} size={20} />
+                        {/* <Text style={{opacity:1,color:colors.primaryBlue,fontWeight:'bold',fontSize:20}}>
                             {key.subject[0]}
-                        </Text>
+                        </Text> */}
                   </View>
                   <View>
                   <Text style={[styles.h4,{marginLeft:10}]}>
@@ -88,8 +94,7 @@ const style = StyleSheet.create({
   },
   circleView:{
     width:35,height:35,
-    backgroundColor: 'rgba(2, 146, 183, 0.5)',
-    opacity:0.3,
+    // opacity:0.1,
     borderRadius:50,
     alignItems:'center',
     justifyContent:'center'

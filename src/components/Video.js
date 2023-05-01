@@ -7,7 +7,7 @@ import {Icon} from 'react-native-elements';
 import Swiper from 'react-native-swiper';
 
 // create a component
-function Video({navigation}) {
+function Video({navigation,horizontal}) {
   return (
     <Pressable
       onPress={() => {
@@ -15,19 +15,18 @@ function Video({navigation}) {
       }}
       style={{
         backgroundColor: colors.white,
-        paddingBottom: 10,
-        paddingTop: 10,
+        padding:10,
+        // width:'100%'
       }}>
       <Image
         source={require('./images/thumbnail.jpg')}
         style={{
-          width: '93%',
+          width: horizontal ? 260 :'100%',
           height: 170,
           borderRadius: 10,
-          alignSelf: 'center',
         }}
       />
-      <View style={{paddingLeft: 22, paddingTop: 7}}>
+      <View style={{paddingLeft:5, paddingTop: 7}}>
         <Text style={[styles.h3, {fontWeight: '600'}]}>Mechanics</Text>
         <Text style={[styles.h6, {color: colors.gray}]}>
           Total duration: 3hr 20mins

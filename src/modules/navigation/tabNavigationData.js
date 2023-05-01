@@ -22,22 +22,22 @@ const testIcon = require('@images/test.png');
 
 const tabNavigationData = [
   {
-    name: 'Home',
+    name: 'HOME',
     component: Home,
     icon: homeIcon,
   },
   {
-    name:"Chat",
+    name:"CHAT",
     component: Chat,
     icon: chatIcon,
   },
   {
-    name:"Video",
+    name:"VIDEO",
     component:Videos,
     icon: videoIcon,
   },
   {
-    name:"Tests",
+    name:"TESTS",
     component:Tests,
     icon: testIcon,
   }

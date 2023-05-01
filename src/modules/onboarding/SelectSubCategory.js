@@ -132,7 +132,7 @@ function SelectSubCategory({navigation}) {
           width: '100%',
           alignItems: 'center',
         }}>
-        <Button text={'Next'} onpress={() => navigation.navigate('Home')} />
+        <Button backgroundColor={colors.primaryBlue} text={'Next'} onpress={() => navigation.navigate('Home')} />
       </View>
     </View>
   );

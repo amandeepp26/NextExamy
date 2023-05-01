@@ -18,36 +18,43 @@ const subjects = [
     id: 1,
     subject: 'Physics',
     topics: '10 Topics',
+    color:'#EE7877'
   },
   {
     id: 2,
     subject: 'Mathematics',
+    color:'#00BF93',
     topics: '15 Topics',
   },
   {
     id: 3,
     subject: 'Chemistry',
     topics: '8 Topics',
+    color: '#A2D6E5',
   },
   {
     id: 4,
     subject: 'Biology',
     topics: '18 Topics',
+    color: '#DB84F3',
   },
   {
     id: 5,
     subject: 'Mathematics',
     topics: '15 Topics',
+    color: '#5DA493',
   },
   {
     id: 6,
     subject: 'Chemistry',
     topics: '8 Topics',
+    color:'#326bf3'
   },
   {
     id: 7,
     subject: 'Biology',
     topics: '18 Topics',
+    color: '#0C2C39',
   },
 ];
 
@@ -62,7 +69,7 @@ const Links = [
     id: 2,
     category: 'LIVE VIDEOS',
     img: require('./images/live.png'),
-    screen:"SavedVideos"
+    screen:"LiveClass"
 
   },
   {
@@ -110,23 +117,19 @@ function Videos({navigation}) {
           })}
         </View>
         <View style={{marginTop: 10,paddingLeft:15, backgroundColor: colors.white,paddingBottom:20}}>
-          <Text style={[styles.h3, {fontWeight: '700', marginTop: 10}]}>
+          <Text style={[styles.h4, {fontWeight: '700', marginTop: 10}]}>
             Subjects
           </Text>
           {subjects.map(key => {
             return (
               <View style={[style.header]}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View style={style.circleView}>
-                    <Text
-                      style={{
-                        opacity: 1,
-                        color: colors.primaryBlue,
-                        fontWeight: 'bold',
-                        fontSize: 20,
-                      }}>
-                      {key.subject[0]}
-                    </Text>
+                <View style={[style.circleView,{backgroundColor:`${key.color}40`}]}>
+                    {/* <Image style={{height:25,width:25}} source={require('../../../assets/images/book.png')} /> */}
+                    <Icon name='book-outline' type='ionicon' color={key.color} size={20} />
+                        {/* <Text style={{opacity:1,color:colors.primaryBlue,fontWeight:'bold',fontSize:20}}>
+                            {key.subject[0]}
+                        </Text> */}
                   </View>
                   <View style={{marginLeft: 15}}>
                     <Text style={[styles.h4]}>{key.subject}</Text>
@@ -156,14 +159,13 @@ const style = StyleSheet.create({
     // paddingVertical: 5,
     marginTop: 20,
   },
-  circleView: {
-    width: 35,
-    height: 35,
-    backgroundColor: 'rgba(2, 146, 183, 0.5)',
-    opacity: 0.3,
-    borderRadius: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
+  circleView:{
+    width:35,height:35,
+    // opacity:0.1,
+    borderRadius:50,
+    alignItems:'center',
+    justifyContent:'center'
+
   },
   tabContainer: {
     alignItems: 'center',

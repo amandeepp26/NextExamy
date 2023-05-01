@@ -3,7 +3,7 @@ import React, {Component, useState} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import Button from '../../components/Button';
 import RNSTextInput from '../../components/RNSTextInput';
-import {colors} from '../../styles';
+import {colors, fonts} from '../../styles';
 import styles from '../navigation/styles';
 
 // create a component
@@ -61,7 +61,7 @@ function Login({navigation}) {
           Don't have an account?
           <Text style={{color: colors.secondaryBlue}} onPress={()=>navigation.navigate("Signup")} > Sign Up</Text>
         </Text>
-        <Button text={'Login'} color={false} onpress={()=>navigation.navigate("Home")} />
+        <Button text={'Login'} backgroundColor={colors.primaryBlue} color={false} onpress={()=>navigation.navigate("OtpVerification",{phone_number:8755255052})} />
       </View>
     </View>
   );

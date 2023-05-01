@@ -41,7 +41,6 @@ import ParticularSubjectClass from '../home/ParticularSubjectClass';
 import SavedVideos from '../video/SavedVideos';
 import FreeVideos from '../video/FreeVideos';
 import ParticularVideo from '../video/ParticularVideo';
-import MockTest from '../Test/MockTest';
 import TestQuestions from '../Test/TestQuestions';
 import Notes from '../notes/Notes';
 import Syllabus from '../syllabus/Syllabus';
@@ -49,6 +48,20 @@ import SubTopics from '../syllabus/SubTopics';
 import TopicLists from '../Topics/TopicLists';
 import Account from '../Account/Account';
 import EditProfile from '../Account/EditProfile';
+import Subscription from '../home/Subscription';
+import ChatMessage from '../chat/ChatMessage';
+import OtpVerification from '../auth/OtpVerification';
+import VideoRateReview from '../video/VideoRateReview';
+import Notification from '../Account/Notification';
+import HelpandSupport from '../Account/HelpandSupport';
+import MyLearnings from '../Account/MyLearnings';
+import TestReview from '../Account/TestReview';
+import LiveClass from '../Live/LiveClass';
+import Search from '../home/Search';
+import Live from '../Live/Live';
+import TestInstructions from '../Test/TestInstructions';
+import MockTest from '../MockTest/MockTest';
+import UpcomingLive from '../Live/UpcomingLive';
 
 // const drawerData = [
 //   {
@@ -293,6 +306,7 @@ function Navigator(props) {
         screenOptions={{headerShown: false}}>
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="OtpVerification" component={OtpVerification} />
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="SelectCategory" component={SelectCategory} />
         <Stack.Screen name="SelectSubCategory" component={SelectSubCategory} />
@@ -301,7 +315,7 @@ function Navigator(props) {
         <Stack.Screen name="SavedVideos" component={SavedVideos} />
         <Stack.Screen name="FreeVideos" component={FreeVideos} />
         <Stack.Screen name="ParticularVideo" component={ParticularVideo} />
-        <Stack.Screen name="MockTest" component={MockTest} />
+        <Stack.Screen name="TestInstructions" component={TestInstructions} />
         <Stack.Screen name="TestQuestions" component={TestQuestions} />
         <Stack.Screen name="Notes" component={Notes} />
         <Stack.Screen name="Syllabus" component={Syllabus} />
@@ -309,6 +323,19 @@ function Navigator(props) {
         <Stack.Screen name="TopicLists" component={TopicLists} />
         <Stack.Screen name="Account" component={Account} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
+        <Stack.Screen name="Notification" component={Notification} />
+        <Stack.Screen name="HelpandSupport" component={HelpandSupport} />
+        <Stack.Screen name="MyLearnings" component={MyLearnings} />
+        <Stack.Screen name="TestReview" component={TestReview} />
+        <Stack.Screen name="LiveClass" component={LiveClass} />
+        <Stack.Screen name="Subscription" component={Subscription} />
+        <Stack.Screen name="ChatMessage" component={ChatMessage} />
+        <Stack.Screen name="VideoRateReview" component={VideoRateReview} />
+        <Stack.Screen name="Search" component={Search} />
+        <Stack.Screen name="Live" component={Live} />
+        <Stack.Screen name="MockTest" component={MockTest} />
+        <Stack.Screen name="UpcomingLive" component={UpcomingLive} />
+
 
 
 

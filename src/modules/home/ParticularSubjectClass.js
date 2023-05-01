@@ -15,54 +15,72 @@ import styles from '../navigation/styles';
 import Button from '../../components/Button';
 import {Pressable} from 'react-native';
 // create a component
-const Topics = [
-  {
-    id: 1,
-    name: 'Mechanics',
-    description: 'The study of motion and forces on objects.',
-  },
-  {
-    id: 2,
-    name: 'Electricity and Magnetism',
-    description:
-      'The study of electric and magnetic fields and their effects on objects.',
-  },
-  {
-    id: 3,
-    name: 'Thermodynamics',
-    description:
-      'The study of heat and temperature and their relationship to energy and work.',
-  },
-  {
-    id: 4,
-    name: 'Waves and Optics',
-    description: 'The study of wave phenomena and the behavior of light.',
-  },
-  {
-    id: 5,
-    name: 'Modern Physics',
-    description:
-      'The study of the fundamental nature of matter and energy, including relativity and quantum mechanics.',
-  },
-  {
-    id: 6,
-    name: 'Atomic and Nuclear Physics',
-    description:
-      'The study of the properties and behavior of atoms and nuclei.',
-  },
-  {
-    id: 7,
-    name: 'Quantum Mechanics',
-    description:
-      'The study of the behavior of matter and energy at the atomic and subatomic level.',
-  },
-  {
-    id: 8,
-    name: 'Relativity',
-    description:
-      "The study of the relationships between space, time, and gravity, as described by Einstein's theory of relativity.",
-  },
-];
+// const Topics = [
+//   {
+//     id: 1,
+//     name: 'Mechanics',
+//     description: 'The study of motion and forces on objects.',
+//     color:'#EE7877'
+//   },
+//   {
+//     id: 2,
+//     name: 'Electricity and Magnetism',
+//     color:'#00BF93',
+//     description:
+//       'The study of electric and magnetic fields and their effects on objects.',
+//   },
+//   {
+//     id: 3,
+//     name: 'Thermodynamics',
+//     color:'#EA55D7',
+//     description:
+//       'The study of heat and temperature and their relationship to energy and work.',
+//   },
+//   {
+//     id: 4,
+//     name: 'Waves and Optics',
+//     color:'#BF40BF',
+//     description: 'The study of wave phenomena and the behavior of light.',
+//   },
+//   {
+//     id: 5,
+//     name: 'Modern Physics',
+//     color:'#326bf3',
+//     description:
+//       'The study of the fundamental nature of matter and energy, including relativity and quantum mechanics.',
+//   },
+//   {
+//     id: 6,
+//     name: 'Atomic and Nuclear Physics',
+//     color:'#FF3300',
+//     description:
+//       'The study of the properties and behavior of atoms and nuclei.',
+//   },
+//   {
+//     id: 7,
+//     name: 'Quantum Mechanics',
+//     color:'#FF7F50',
+//     description:
+//       'The study of the behavior of matter and energy at the atomic and subatomic level.',
+//   },
+//   {
+//     id: 8,
+//     name: 'Relativity',
+//     color:'#FF69B4',
+//     description:
+//       "The study of the relationships between space, time, and gravity, as described by Einstein's theory of relativity.",
+//   },
+// ];
+const Topics =[
+  { name: 'Algebra', color: '#9b59b6' },
+  { name: 'Biology', color: '#27ae60' },
+  { name: 'Literature', color: '#34495e' },
+  { name: 'World History', color: '#e67e22' },
+  { name: 'Chemistry', color: '#16a085' },
+  { name: 'Writing', color: '#e74c3c' },
+  { name: 'Geography', color: '#1abc9c' },
+  { name: 'Physics', color: '#f39c12' }
+]
 const ParticularSubjectClass = ({navigation, route}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
@@ -85,21 +103,11 @@ const ParticularSubjectClass = ({navigation, route}) => {
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            flexDirection: 'row',
-          }}>
-          <View style={{width: '40%'}}>
-            <Video navigation={navigation} />
-          </View>
-          <View style={{width: '40%'}}>
-            <Video navigation={navigation} />
-          </View>
-          <View style={{width: '40%'}}>
-            <Video navigation={navigation} />
-          </View>
-          <View style={{width: '40%'}}>
-            <Video navigation={navigation} />
-          </View>
+          >
+            <Video navigation={navigation} horizontal={true} />
+            <Video navigation={navigation} horizontal={true} />
+            <Video navigation={navigation} horizontal={true} />
+            <Video navigation={navigation} horizontal={true} />
         </ScrollView>
         <View
           style={{
@@ -115,21 +123,10 @@ const ParticularSubjectClass = ({navigation, route}) => {
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            flexDirection: 'row',
-          }}>
-          <View style={{width: '40%'}}>
-            <Video navigation={navigation} />
-          </View>
-          <View style={{width: '40%'}}>
-            <Video navigation={navigation} />
-          </View>
-          <View style={{width: '40%'}}>
-            <Video navigation={navigation} />
-          </View>
-          <View style={{width: '40%'}}>
-            <Video navigation={navigation} />
-          </View>
+          >
+            <Video navigation={navigation} horizontal={true} />
+            <Video navigation={navigation} horizontal={true}/>
+            <Video navigation={navigation} horizontal={true} />
         </ScrollView>
         <View
           style={{
@@ -150,16 +147,8 @@ const ParticularSubjectClass = ({navigation, route}) => {
                 }
                 style={[style.header]}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View style={style.circleView}>
-                    <Text
-                      style={{
-                        opacity: 1,
-                        color: colors.primaryBlue,
-                        fontWeight: 'bold',
-                        fontSize: 20,
-                      }}>
-                      {key.name[0]}
-                    </Text>
+                  <View style={[style.circleView,{backgroundColor:`${key.color}40`}]}>
+                  <Icon name='book-outline' type='ionicon' color={key.color} size={20} />
                   </View>
                   <View style={{marginLeft: 15}}>
                     <Text style={[styles.h4]}>{key.name}</Text>
@@ -196,8 +185,6 @@ const style = StyleSheet.create({
   circleView: {
     width: 35,
     height: 35,
-    backgroundColor: 'rgba(2, 146, 183, 0.5)',
-    opacity: 0.3,
     borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',

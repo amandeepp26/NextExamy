@@ -24,7 +24,7 @@ const Links = [
     id: 3,
     category: 'LIVE VIDEOS',
     img: require('./images/live.png'),
-    screen:'LiveVideo'
+    screen:'LiveClass'
   },
   {
     id: 4,

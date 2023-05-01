@@ -30,12 +30,11 @@ class Home extends Component {
   }
   componentDidMount() {
     setTimeout(() => {
-      this.setState({isVisible:false})
+      this.setState({isVisible: false});
     }, 10000);
   }
   render() {
-    
-    const { isVisible } = this.state;
+    const {isVisible} = this.state;
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
         <View style={styles.container}>
@@ -49,70 +48,103 @@ class Home extends Component {
               <Text style={styles.h4}>IIT-JEE Mains</Text>
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Icon name="search" type="ionicons" size={25} />
-              <Pressable onPress={()=>this.props.navigation.navigate('Account')}>
-              <Image
-                source={require('./images/user.png')}
-                style={{
-                  width: 40,
-                  height: 40,
-                  margin: 5,
-                  marginLeft: 15,
-                  borderRadius: 50,
-                }}
-              />
+              <Icon onPress={()=>this.props.navigation.navigate('Search')} name="search" type="ionicons" size={25} />
+              <Pressable
+                onPress={() => this.props.navigation.navigate('Account')}>
+                <Image
+                  source={require('../../components/images/user.jpeg')}
+                  style={{
+                    width: 40,
+                    height: 40,
+                    margin: 5,
+                    marginLeft: 15,
+                    borderRadius: 50,
+                  }}
+                />
               </Pressable>
             </View>
           </View>
-          <ScrollView style={{marginBottom:110}}>
+          <ScrollView style={{marginBottom: 110}}>
             <SubjectWiseClass navigation={this.props.navigation} />
             <QuickLinks navigation={this.props.navigation} />
-            <View style={{padding: 10,marginLeft:10,paddingTop:15, backgroundColor: '#fff'}}>
+            <View
+              style={{
+                padding: 10,
+                marginLeft: 10,
+                paddingTop: 15,
+                backgroundColor: '#fff',
+              }}>
               <Text style={[styles.h3, {fontWeight: '700'}]}>
                 Suggested Modules
               </Text>
             </View>
-            <View style={{height:350,backgroundColor:colors.white}}>
-            <Swiper
-          style={style.wrapper}
-          showsButtons={false}
-          loop={true}
-          dot={false}
-          autoplay
-          activeDotStyle={{width: 25}}
-          activeDotColor={colors.primaryBlue}
-          paginationStyle={{bottom: 10}}>
-        <Video navigation={this.props.navigation} />
-        <Video navigation={this.props.navigation}/>
-        <Video navigation={this.props.navigation} />
-        </Swiper>
-        </View>
-        <View style={{padding: 10,marginLeft:10,marginTop:5, backgroundColor: '#fff'}}>
-              <Text style={[styles.h3, {fontWeight: '700'}]}>
-                Free Classes
-              </Text>
+            <View style={{height: 320, backgroundColor: colors.white}}>
+              <Swiper
+                style={style.wrapper}
+                showsButtons={false}
+                loop={true}
+                dot={false}
+                autoplay
+                activeDotStyle={{width: 25}}
+                activeDotColor={colors.primaryBlue}
+                paginationStyle={{bottom: 10}}>
+                <Video navigation={this.props.navigation} />
+                <Video navigation={this.props.navigation} />
+                <Video navigation={this.props.navigation} />
+              </Swiper>
             </View>
-            <View style={{backgroundColor:colors.white,paddingBottom:30}}>
-            <Video navigation={this.props.navigation} />
-            <Button onpress={()=>this.props.navigation.navigate("FreeVideos")} text={"See all free classes"} backgroundColor={'#535353'}/>
+            <View
+              style={{
+                padding: 10,
+                marginLeft: 10,
+                marginTop: 5,
+                backgroundColor: '#fff',
+              }}>
+              <Text style={[styles.h3, {fontWeight: '700'}]}>Free Classes</Text>
             </View>
-            
-              {/* <Video source={{uri :"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"}} style={{width:300,height:300}} controls={true} /> */}
+            <View style={{backgroundColor: colors.white, paddingBottom: 30}}>
+              <Video navigation={this.props.navigation} />
+              <Button
+                onpress={() => this.props.navigation.navigate('FreeVideos')}
+                text={'See all free classes'}
+                backgroundColor={'#535353'}
+              />
+            </View>
+
+            {/* <Video source={{uri :"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"}} style={{width:300,height:300}} controls={true} /> */}
           </ScrollView>
           {/* Subscribe button */}
-          <View style={{flexDirection:'row',position:'absolute',width:'100%',justifyContent:'space-between',padding:10,alignItems:'center',backgroundColor:colors.white,bottom:60}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              position: 'absolute',
+              width: '100%',
+              justifyContent: 'space-between',
+              padding: 10,
+              alignItems: 'center',
+              backgroundColor: colors.white,
+              bottom: 60,
+            }}>
             <Text style={styles.h6}>Want to achieve your dreams?</Text>
-            <View style={{backgroundColor:colors.primaryBlue,paddingHorizontal:10,paddingVertical:5,borderRadius:5}}>
-                <Text style={[styles.h6,{color:colors.white,textDecorationLine:"underline"}]}>
-                    Subscribe Now!
-                </Text>
-            </View>
+            <Pressable
+              onPress={() => this.props.navigation.navigate('Subscription')}
+              style={{
+                backgroundColor: colors.primaryBlue,
+                paddingHorizontal: 10,
+                paddingVertical: 5,
+                borderRadius: 5,
+              }}>
+              <Text
+                style={[
+                  styles.h6,
+                  {color: colors.white, textDecorationLine: 'underline'},
+                ]}>
+                Subscribe Now!
+              </Text>
+            </Pressable>
           </View>
           {/* Complete profile button */}
-          {isVisible &&
-            <CompleteProfilePopup />
-          }
-          
+          {isVisible && <CompleteProfilePopup />}
         </View>
       </SafeAreaView>
     );
