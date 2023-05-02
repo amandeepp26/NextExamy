@@ -127,7 +127,7 @@ class Home extends Component {
             }}>
             <Text style={styles.h6}>Want to achieve your dreams?</Text>
             <Pressable
-              onPress={() => this.props.navigation.navigate('Subscription')}
+              onPress={() => this.props.navigation.navigate('CompleteProfile')}
               style={{
                 backgroundColor: colors.primaryBlue,
                 paddingHorizontal: 10,

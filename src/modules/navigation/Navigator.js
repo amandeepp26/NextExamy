@@ -62,6 +62,7 @@ import Live from '../Live/Live';
 import TestInstructions from '../Test/TestInstructions';
 import MockTest from '../MockTest/MockTest';
 import UpcomingLive from '../Live/UpcomingLive';
+import CompleteProfile from '../home/CompleteProfile';
 
 // const drawerData = [
 //   {
@@ -335,7 +336,9 @@ function Navigator(props) {
         <Stack.Screen name="Live" component={Live} />
         <Stack.Screen name="MockTest" component={MockTest} />
         <Stack.Screen name="UpcomingLive" component={UpcomingLive} />
+        <Stack.Screen name="CompleteProfile" component={CompleteProfile} />
 
+        
 
 
 
