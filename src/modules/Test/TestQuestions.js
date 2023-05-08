@@ -221,6 +221,9 @@ function TestQuestions({navigation}) {
                         borderBottomWidth: 1,
                         paddingBottom: 10,
                         borderColor: '#d3d3d3',
+                        flex:1,
+                        height:'auto',
+                        // width:'100%'
                       }}>
                       <Icon
                         key={index}
@@ -237,12 +240,14 @@ function TestQuestions({navigation}) {
                         type="ionicon"
                         size={20}
                       />
+                      <View style={{width:250,height:150,alignItems:'center'}}>
                       <Image
                         source={{
                           uri: `https://app.ankitbangwaldigitalmarketing.in/images/assessments/${data?.[index].option_one}`,
                         }}
                         style={style.optionImg}
                       />
+                      </View>
                     </Pressable>
                     <Pressable
                       onPress={() => {
@@ -275,12 +280,15 @@ function TestQuestions({navigation}) {
                         type="ionicon"
                         size={20}
                       />
+                      <View style={{width:250,height:50}}>
+
                       <Image
                         source={{
                           uri: `https://app.ankitbangwaldigitalmarketing.in/images/assessments/${data?.[index].option_two}`,
                         }}
                         style={style.optionImg}
                       />
+                      </View>
                     </Pressable>
                     <Pressable
                       onPress={() => {
@@ -313,12 +321,14 @@ function TestQuestions({navigation}) {
                         type="ionicon"
                         size={20}
                       />
+                      <View style={{width:250,height:50}}>
                       <Image
                         source={{
                           uri: `https://app.ankitbangwaldigitalmarketing.in/images/assessments/${data?.[index].option_three}`,
                         }}
                         style={style.optionImg}
                       />
+                      </View>
                     </Pressable>
                     <Pressable
                       onPress={() => {
@@ -351,12 +361,14 @@ function TestQuestions({navigation}) {
                         type="ionicon"
                         size={20}
                       />
+                      <View style={{width:250,height:50}}>
                       <Image
                         source={{
                           uri: `https://app.ankitbangwaldigitalmarketing.in/images/assessments/${data?.[index].option_four}`,
                         }}
                         style={style.optionImg}
                       />
+                      </View>
                     </Pressable>
                   </>
                 ) : (
@@ -566,8 +578,9 @@ export default TestQuestions;
 // define your styles
 const style = StyleSheet.create({
   optionImg: {
-    width: 200,
-    height: 50,
+    width: '100%',
+    height: "100%",
     marginLeft: 20,
+    resizeMode:'contain'
   },
 });

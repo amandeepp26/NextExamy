@@ -127,7 +127,7 @@ class Home extends Component {
             }}>
             <Text style={styles.h6}>Want to achieve your dreams?</Text>
             <Pressable
-              onPress={() => this.props.navigation.navigate('CompleteProfile')}
+              onPress={() => this.props.navigation.navigate('Subscription')}
               style={{
                 backgroundColor: colors.primaryBlue,
                 paddingHorizontal: 10,
@@ -144,7 +144,7 @@ class Home extends Component {
             </Pressable>
           </View>
           {/* Complete profile button */}
-          {isVisible && <CompleteProfilePopup />}
+          {isVisible && <CompleteProfilePopup navigation={this.props.navigation} />}
         </View>
       </SafeAreaView>
     );

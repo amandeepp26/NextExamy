@@ -30,7 +30,7 @@ export default function CompleteProfile({navigation}) {
               type="ionicons"
               size={25}
             />
-            <Text style={style.h4}>Add Graduation Details</Text>
+            <Text style={[styles.h3,{paddingLeft:5}]}>Add Graduation Details</Text>
           </View>
         </View>
         <View
@@ -42,80 +42,157 @@ export default function CompleteProfile({navigation}) {
           }}>
           <View style={style.dropdownContainer}>
             <Text style={style.label}>Select Education Level</Text>
-            <SelectDropdown
-              data={options1}
-              onSelect={(selectedItem, index) => {
-                setSelectedOption1(selectedItem);
-              }}
-              defaultButtonText="Education Level"
-              buttonTextAfterSelection={(selectedItem, index) => {
-                return selectedItem;
-              }}
-              buttonStyle={style.dropdownText}
-              buttonTextStyle={style.placeholder}
-              dropdownIconPosition="right"    
-            />
-             <Icon name="chevron-down" type="entypo" size={20} color="#444" style={style.dropdownIcon}/>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'baseline',
+                justifyContent: 'space-around',
+              }}>
+              <SelectDropdown
+                data={options1}
+                onSelect={(selectedItem, index) => {
+                  setSelectedOption1(selectedItem);
+                }}
+                defaultButtonText="Education Level"
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem;
+                }}
+                buttonStyle={style.dropdownText}
+                buttonTextStyle={style.placeholder}
+                dropdownIconPosition="right"
+                dropdownStyle={style.dropdown}
+              />
+              <Icon
+                name="chevron-down"
+                type="entypo"
+                size={20}
+                color="#444"
+                style={[style.dropdownIcon, {marginRight: 5}]}
+              />
+            </View>
           </View>
           <View style={style.dropdownContainer}>
             <Text style={style.label}>Select Country</Text>
-            <SelectDropdown
-              data={options2}
-              onSelect={(selectedItem, index) => {
-                setSelectedOption2(selectedItem);
-              }}
-              defaultButtonText="Country"
-              buttonTextAfterSelection={(selectedItem, index) => {
-                return selectedItem;
-              }}
-              buttonStyle={style.dropdownText}
-              buttonTextStyle={style.placeholder}
-            />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'baseline',
+                justifyContent: 'space-around',
+              }}>
+              <SelectDropdown
+                data={options2}
+                onSelect={(selectedItem, index) => {
+                  setSelectedOption2(selectedItem);
+                }}
+                defaultButtonText="Country"
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem;
+                }}
+                buttonStyle={style.dropdownText}
+                buttonTextStyle={style.placeholder}
+              />
+              <Icon
+                name="chevron-down"
+                type="entypo"
+                size={20}
+                color="#444"
+                style={{marginRight: 5}}
+              />
+            </View>
           </View>
           <View style={style.dropdownContainer}>
             <Text style={style.label}>Select University</Text>
-            <SelectDropdown
-              data={options3}
-              onSelect={(selectedItem, index) => {
-                setSelectedOption3(selectedItem);
-              }}
-              defaultButtonText="University"
-              buttonTextAfterSelection={(selectedItem, index) => {
-                return selectedItem;
-              }}
-              buttonStyle={style.dropdownText}
-              buttonTextStyle={style.placeholder}
-            />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'baseline',
+                justifyContent: 'space-around',
+              }}>
+              <SelectDropdown
+                data={options3}
+                onSelect={(selectedItem, index) => {
+                  setSelectedOption3(selectedItem);
+                }}
+                defaultButtonText="University"
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem;
+                }}
+                buttonStyle={style.dropdownText}
+                buttonTextStyle={style.placeholder}
+              />
+              <Icon
+                name="chevron-down"
+                type="entypo"
+                size={20}
+                color="#444"
+                style={[style.dropdownIcon, {marginRight: 5}]}
+              />
+            </View>
           </View>
           <View style={style.dropdownContainer}>
             <Text style={style.label}>Select Your Course</Text>
-            <SelectDropdown
-              data={options4}
-              onSelect={(selectedItem, index) => {
-                setSelectedOption4(selectedItem);
-              }}
-              defaultButtonText="Course"
-              buttonTextAfterSelection={(selectedItem, index) => {
-                return selectedItem;
-              }}
-              buttonStyle={style.dropdownText}
-              buttonTextStyle={style.placeholder}
-            />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'baseline',
+                justifyContent: 'space-around',
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'baseline',
+                  justifyContent: 'space-around',
+                }}>
+                <SelectDropdown
+                  data={options4}
+                  onSelect={(selectedItem, index) => {
+                    setSelectedOption4(selectedItem);
+                  }}
+                  defaultButtonText="Course"
+                  buttonTextAfterSelection={(selectedItem, index) => {
+                    return selectedItem;
+                  }}
+                  buttonStyle={style.dropdownText}
+                  buttonTextStyle={style.placeholder}
+                />
+                <Icon
+                  name="chevron-down"
+                  type="entypo"
+                  size={20}
+                  color="#444"
+                  style={[style.dropdownIcon, {marginRight: 5}]}
+                />
+              </View>
+            </View>
           </View>
           <View style={style.dropdownContainer}>
             <Text style={style.label}>Year of Study</Text>
-            <SelectDropdown
-              data={options5}
-              onSelect={(selectedItem, index) => {
-                setSelectedOption5(selectedItem);
-              }}
-              defaultButtonText="Year"
-              buttonTextAfterSelection={(selectedItem, index) => {
-                return selectedItem;
-              }}
-              buttonStyle={style.dropdownText}
-              buttonTextStyle={style.placeholder}
-            />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'baseline',
+                justifyContent: 'space-around',
+              }}>
+              <SelectDropdown
+                data={options5}
+                onSelect={(selectedItem, index) => {
+                  setSelectedOption5(selectedItem);
+                }}
+                defaultButtonText="Year"
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem;
+                }}
+                buttonStyle={style.dropdownText}
+                buttonTextStyle={style.placeholder}
+              />
+              <Icon
+                name="chevron-down"
+                type="entypo"
+                size={20}
+                color="#444"
+                style={[style.dropdownIcon, {marginRight: 5}]}
+              />
+            </View>
           </View>
           <View style={{position: 'absolute', bottom: 20, width: '100%'}}>
             <Button text={'Save'} backgroundColor={colors.primaryBlue} />
@@ -135,8 +212,8 @@ const style = StyleSheet.create({
     paddingVertical: 20,
   },
   dropdown: {
-    backgroundColor: 'none',
     width: '100%',
+    fontSize: 10,
   },
   dropdownText: {
     fontSize: 12,
@@ -144,7 +221,6 @@ const style = StyleSheet.create({
     textAlign: 'left',
     backgroundColor: 'none',
     width: '100%',
-  
   },
   placeholder: {
     fontSize: 16,
@@ -152,19 +228,16 @@ const style = StyleSheet.create({
     color: 'gray',
   },
   dropdownContainer: {
-    marginBottom: 20,
+    marginBottom: 10,
     marginHorizontal: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    position:'relative'
+  
+    height:80
   },
   label: {
     fontWeight: 500,
     marginBottom: 10,
     color: colors.black,
   },
-  dropdownIcon: {
-   marginBottom:10
-  },
-
 });
