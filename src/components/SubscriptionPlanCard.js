@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import {colors} from '../styles';
-import styles from '../modules/navigation/styles';
+import styles from '../navigation/styles';
 import {Icon} from 'react-native-elements';
 import Button from './Button';
 

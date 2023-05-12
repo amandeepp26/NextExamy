@@ -1,6 +1,6 @@
 import {Pressable, StyleSheet, Text,Image, View} from 'react-native';
 import React from 'react';
-import styles from '../modules/navigation/styles';
+import styles from '../navigation/styles';
 import {colors} from '../styles';
 import {Icon} from 'react-native-elements';
 
@@ -10,7 +10,7 @@ export default function AssessmentTestCard({topic, subject, question,bgColor,nav
   return (
     
     <Pressable
-    onPress={() => navigation.navigate('MockTest')}
+    onPress={() => navigation.navigate('TestInstructions')}
     style={[style.header]}>
     <View style={{flexDirection: 'row', alignItems: 'center'}}>
       <View>

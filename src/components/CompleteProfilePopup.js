@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {Dimensions, Image} from 'react-native';
 import {View, Text, StyleSheet} from 'react-native';
-import styles from '../modules/navigation/styles';
+import styles from '../navigation/styles';
 import {colors} from '../styles';
 import {Pressable} from 'react-native';
 

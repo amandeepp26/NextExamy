@@ -3,8 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
-import AppView from './src/modules/AppView';
-import Splash from './src/modules/Splash/Splash';
+import AppView from './src/StudentModule/AppView';
+import Splash from './src/StudentModule/Splash/Splash';
 import {store} from './src/redux/store'
 
 // create a component

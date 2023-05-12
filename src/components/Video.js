@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image, Pressable} from 'react-native';
 import {colors} from '../styles';
-import styles from '../modules/navigation/styles';
+import styles from '../navigation/styles';
 import {Icon} from 'react-native-elements';
 import Swiper from 'react-native-swiper';
 

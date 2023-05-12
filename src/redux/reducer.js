@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import session from '../modules/auth/session';
-import signin from '../modules/auth/signin';
+import session from '../StudentModule/auth/session';
+import signin from '../StudentModule/auth/signin';
 
 export default combineReducers({
   session,

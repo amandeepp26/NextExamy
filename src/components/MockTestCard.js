@@ -1,6 +1,6 @@
 import {Pressable, StyleSheet,Image, Text, View} from 'react-native';
 import React from 'react';
-import styles from '../modules/navigation/styles';
+import styles from '../navigation/styles';
 import {colors} from '../styles';
 import {Icon} from 'react-native-elements';
 
