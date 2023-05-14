@@ -23,33 +23,19 @@ function TeacherLogin({navigation}) {
           style={{width: 90, height: 90}}
         />
       </View>
-      {loginPhone ? (
-        <View style={{marginTop: 25}}>
-          <Text style={[styles.h4, {marginLeft: 10}]}>Enter Teacher phone number</Text>
-          <RNSTextInput placeHolder={'Phone number'} keyboard={'numeric'} />
-          <Text
-            style={[
-              styles.h6,
-              {marginLeft: 10, marginTop: 10, color: colors.secondaryBlue},
-            ]}
-            onPress={() => setLoginPhone(false)}>
-            Or continue with email
-          </Text>
+     
+        <View style={{marginTop: 25,paddingHorizontal:15}}>
+          <View>
+          <Text style={[styles.h4, {marginLeft: 10}]}>Enter Username</Text>
+          <RNSTextInput placeHolder={'Username'} keyboard={'numeric'} />
+          </View>
+          <View style={{marginTop:25}}>
+          <Text style={[styles.h4, {marginLeft: 10}]}>Enter Password</Text>
+          <RNSTextInput placeHolder={'Password'} keyboard={'numeric'} secureTextEntry />
+          </View>
+          <Text style={{color:colors.primaryBlue,textAlign:'right',paddingTop:20}}>Forgot Password?</Text>
         </View>
-      ) : (
-        <View style={{marginTop: 25}}>
-          <Text style={[styles.h4, {marginLeft: 10}]}>Enter email address</Text>
-          <RNSTextInput placeHolder={'Email'} />
-          <Text
-            style={[
-              styles.h6,
-              {marginLeft: 10, marginTop: 10, color: colors.secondaryBlue},
-            ]}
-            onPress={() => setLoginPhone(true)}>
-            Or continue with phone number
-          </Text>
-        </View>
-      )}
+
       <View
         style={{
           bottom: 30,
@@ -57,11 +43,8 @@ function TeacherLogin({navigation}) {
           width: '100%',
           alignItems: 'center',
         }}>
-        <Text stylele={[styles.h4, {color: '#000'}]}>
-          Don't have an account?
-          <Text style={{color: colors.secondaryBlue}} onPress={()=>navigation.navigate("Signup")} > Sign Up</Text>
-        </Text>
-        <Button text={'Login'} backgroundColor={colors.primaryBlue} color={false} onpress={()=>navigation.navigate("OtpVerification",{phone_number:8755255052})} />
+      
+        <Button text={'Login'} backgroundColor={colors.primaryBlue} color={false} onpress={()=>navigation.navigate("Home",)} />
       </View>
     </View>
   );

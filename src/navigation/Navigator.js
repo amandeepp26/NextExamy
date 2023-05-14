@@ -64,7 +64,10 @@ import MockTest from '../StudentModule/MockTest/MockTest';
 import UpcomingLive from '../StudentModule/Live/UpcomingLive';
 import CompleteProfile from '../StudentModule/home/CompleteProfile';
 import SubjectWiseTest from '../StudentModule/MockTest/SubjectWiseTest';
-import  TeacherLogin from '../TeacherModule/auth/Login';
+import TeacherLogin from '../TeacherModule/auth/Login';
+import Home from '../TeacherModule/home/Home';
+import UpcomingClassesList from '../TeacherModule/home/UpcomingClassesList';
+import LiveClassesList from '../TeacherModule/LiveClass/LiveClassesList';
 
 // const drawerData = [
 //   {
@@ -366,21 +369,28 @@ function Navigator(props) {
         <Stack.Screen name="Home" component={TabNavigator} /> */}
         </Stack.Navigator>
       );
-    } else if(props.userType === 'Teacher') {
+    } else if (props.userType === 'Teacher') {
       return (
         <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Login" component={TeacherLogin} />
+          <Stack.Screen name="Login" component={TeacherLogin} />
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen
+            name="UpcomingClassesList"
+            component={UpcomingClassesList}
+          />
+              <Stack.Screen
+            name="LiveClassesList"
+            component={LiveClassesList}
+          />
         </Stack.Navigator>
       );
-    }
-    else{
+    } else {
       return (
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Welcome" component={Welcome} />
           {/* <Stack.Screen name="Signup" component={Signup} /> */}
         </Stack.Navigator>
       );
-      
     }
   }
   return (
