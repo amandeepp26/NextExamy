@@ -94,7 +94,7 @@ export default function Home({navigation}) {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={[styles.h5, {fontWeight: 600}]}>Upcomg Classes</Text>
+              <Text style={[styles.h5, {fontWeight: 600}]}>Upcoming Classes</Text>
               <TouchableOpacity
                 onPress={() => navigation.navigate('UpcomingClassesList')}>
                 <Text>View all</Text>
@@ -180,5 +180,6 @@ const style = StyleSheet.create({
   asssessmentContainer: {
     backgroundColor: '#ffff',
     marginTop: 5,
+    marginBottom:10
   },
 });

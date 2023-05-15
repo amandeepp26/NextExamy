@@ -27,7 +27,7 @@ function TeacherLogin({navigation}) {
         <View style={{marginTop: 25,paddingHorizontal:15}}>
           <View>
           <Text style={[styles.h4, {marginLeft: 10}]}>Enter Username</Text>
-          <RNSTextInput placeHolder={'Username'} keyboard={'numeric'} />
+          <RNSTextInput placeHolder={'Username'}  />
           </View>
           <View style={{marginTop:25}}>
           <Text style={[styles.h4, {marginLeft: 10}]}>Enter Password</Text>

@@ -57,7 +57,7 @@ export default function UpcomingClasses() {
         </Text>
         <Text style={{fontSize: 12}}>Starts at {data.time}</Text>
         <View style={style.users}>
-          {data.users.map((key,ind) => {
+          {data?.users?.map((key,ind) => {
             const leftPosition= -15*ind
             return (
               <Image

@@ -114,7 +114,7 @@ export default function UpcomingClassesList({navigation}) {
             paddingVertical: 10,
             flex: 1,
           }}>
-          {data.map(data => {
+          {data?.map(data => {
             return (
               <View style={style.container}>
                 <Text
@@ -125,7 +125,7 @@ export default function UpcomingClassesList({navigation}) {
                   Scheduled on {data.date},{data.time}
                 </Text>
                 <View style={style.users}>
-                  {data.users.map((key, ind) => {
+                  {data?.users?.map((key, ind) => {
                     const leftPosition = -15 * ind;
                     return (
                       <Image
