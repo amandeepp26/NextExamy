@@ -7,14 +7,15 @@ import {colors, fonts} from '../styles';
 import styles from './styles';
 
 import tabNavigationData from './tabNavigationData';
+import tabNavigationDataTeacherModule from './tabNavigationDataTeacherModule';
 
 const Tab = createBottomTabNavigator();
 
-function TabNavigator({navigation}) {
+function TabNavigator({navigation,userType}) {
   const headerRightComponent = screenName => {
     return null;
   };
-
+console.warn(userType)
   return (
     <Tab.Navigator
     screenOptions={()=>({
@@ -42,6 +43,72 @@ function TabNavigator({navigation}) {
       //   },
       // }}
       >
+        {userType==='Teacher' ?
+        <>
+      {tabNavigationDataTeacherModule.map((item, idx) => (
+        <Tab.Screen
+          key={`tab_item${idx + 1}`}
+          name={item.name}
+          component={item.component}
+          listeners={{
+            tabPress: e => {
+              // Prevent default action
+              navigation.setOptions({
+                headerRight: () => headerRightComponent(item.name),
+              });
+            },
+          }}
+          options={{
+            tabBarShowLabel:false,
+            tabBarIcon: ({focused}) => (
+              <View style={[styles.tabBarItemContainer,{backgroundColor: focused ? 'rgba(2, 146, 183, 0.1)' : 'white'}]}>
+                <Image
+                  resizeMode="contain"
+                  source={item.icon}
+                  style={[
+                    styles.tabBarIcon,
+                    focused && styles.tabBarIconFocused,
+                  ]}
+                />
+                {focused && 
+                <Text
+                style={{
+                  marginLeft: 8,
+                  fontFamily: fonts.primarySemiBold,
+                  fontWeight:'700',
+                  fontSize: 12,
+                  color: colors.primaryBlue,
+                }}>
+                {item.name}
+              </Text>}
+              </View>
+            ),
+            // tabBarLabel: ({focused}) =>
+            //   focused ? (
+            //     <Text
+            //       // style={{
+            //       //   marginBottom: 8,
+            //       //   fontFamily: fonts.primarySemiBold,
+            //       //   fontSize: 13,
+            //       //   marginTop: 0,
+            //       //   color: colors.primaryBlue,
+            //       // }}
+            //       >
+            //       {/* {item.name} */}
+            //     </Text>
+            //   ) : (
+            //     <Text
+            //       >
+            //       {/* {item.name} */}
+            //     </Text>
+            //   ),
+            // <Text style={{ fontSize: 12, color: focused ? colors.blue : colors.grey, fontFamily: fonts.primarySemiBold }}>{item.name}</Text>,
+          }}
+        />
+      ))}
+      </>
+      :
+      <>
       {tabNavigationData.map((item, idx) => (
         <Tab.Screen
           key={`tab_item${idx + 1}`}
@@ -103,10 +170,23 @@ function TabNavigator({navigation}) {
           }}
         />
       ))}
+      </>
+}
     </Tab.Navigator>
   );
 }
 
-export default connect(state => {
-  return {};
-}, {})(TabNavigator);
+export default connect(
+  state => {
+    return {
+      authToken: state.session.authToken,
+      profile: state.session.profile,
+      skip: state.signin.skip,
+      userType: state.signin.userType,
+    };
+  },
+  // {
+  //   logout,
+  //   skipNow,
+  // },
+)(TabNavigator);

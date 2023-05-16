@@ -18,11 +18,37 @@ import {Icon} from 'react-native-elements';
 import Assessments from './Assessments';
 import Button from '../../components/Button';
 const options2 = ['Option A', 'Option B', 'Option C'];
+const data = [
+  {
+    subject: 'Physics',
+    name: 'simran',
+    topic: 'Solid and Fluid Mechanic',
+    questions: '60',
+    marks: '100',
+    completed_on: '02-09-2023',
+  },
+  {
+    subject: 'Mathematics',
+    name: 'Aman',
+    topic: 'Algebra',
+    questions: '10',
+    marks: '50',
+    completed_on: '10-06-2023',
+  },
+  {
+    subject: 'Chemistry',
+    name: 'Kiran',
+    topic: 'Thermodynamics',
+    questions: '40',
+    marks: '80',
+    completed_on: '05-11-2023',
+  },
+];
 
 export default function Home({navigation}) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
-      <View style={styles.container}>
+      <View style={[styles.container,{backgroundColor:colors.white}]}>
         {/* Header */}
         <View style={style.header}>
           <View style={{flexDirection: 'column'}}>
@@ -40,7 +66,7 @@ export default function Home({navigation}) {
             style={{width: 40, height: 40, borderRadius: 100}}
           />
         </View>
-        <ScrollView>
+        <ScrollView style={{marginBottom:60}}> 
           <View style={style.scheduleContainer}>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -114,7 +140,7 @@ export default function Home({navigation}) {
           </View>
 
           <View style={style.asssessmentContainer}>
-            <Assessments />
+            <Assessments data={data} />
             <View>
               <Button text={'See all'} backgroundColor={colors.gray} />
             </View>

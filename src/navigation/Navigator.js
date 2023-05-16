@@ -68,6 +68,8 @@ import TeacherLogin from '../TeacherModule/auth/Login';
 import Home from '../TeacherModule/home/Home';
 import UpcomingClassesList from '../TeacherModule/home/UpcomingClassesList';
 import LiveClassesList from '../TeacherModule/LiveClass/LiveClassesList';
+import TeacherChatMessage from '../TeacherModule/chat/ChatMessage';
+import VideoTopicLists from '../TeacherModule/Video/VideoTopicList';
 
 // const drawerData = [
 //   {
@@ -373,15 +375,16 @@ function Navigator(props) {
       return (
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Login" component={TeacherLogin} />
-          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Home" component={TabNavigator} />
           <Stack.Screen
             name="UpcomingClassesList"
             component={UpcomingClassesList}
           />
-              <Stack.Screen
-            name="LiveClassesList"
-            component={LiveClassesList}
-          />
+          <Stack.Screen name="LiveClassesList" component={LiveClassesList} />
+          <Stack.Screen name="ChatMessage" component={TeacherChatMessage} />
+          <Stack.Screen name="VideoTopicList" component={VideoTopicLists} />
+
+
         </Stack.Navigator>
       );
     } else {

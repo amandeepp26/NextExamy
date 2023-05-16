@@ -1,30 +1,10 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {colors} from '../../styles';
-import {color} from 'react-native-elements/dist/helpers';
 
-const data = [
-  {
-    subject: 'Physics',
-    Name: 'simran',
-    topic: 'Solid and Fluid Mechanic',
-    questions: '60',
-    marks: '100',
-    Completed_on: '02-09-2023',
-  },
-  {
-    subject: 'Mathematics',
-    Name: 'Aman',
-    topic: 'Algebra',
-    questions: '10',
-    marks: '50',
-    Completed_on: '10-06-2023',
-  },
-];
-
-export default function Assessments() {
+export default function Assessments({data}) {
   return data.map(data => {
-    const formattedDate = new Date(data.Completed_on).toLocaleString('en-us', {
+    const formattedDate = new Date(data.completed_on).toLocaleString('en-us', {
       month: 'long',
       day: 'numeric',
       year: '2-digit',
@@ -32,10 +12,15 @@ export default function Assessments() {
     return (
       <View
         style={{
-          paddingHorizontal: 20,
-          paddingVertical: 20,
-          borderBottomColor: colors.gray,
-          borderBottomWidth: 0.5,
+          paddingHorizontal: 10,
+          paddingVertical: 10,
+          borderColor: colors.lightGray,
+          marginHorizontal:10,
+          marginVertical:5,
+          borderWidth:1,
+          borderRadius:10,
+          elevation:3,
+          backgroundColor:colors.white
         }}>
         <Text style={[styles.p, {color: colors.primaryBlue}]}>
           {data.subject}
@@ -47,7 +32,7 @@ export default function Assessments() {
             textTransform: 'uppercase',
             paddingTop:5
           }}>
-          {data.Name} : 001
+          {data.name} : 001
         </Text>
         <Text
           style={[
