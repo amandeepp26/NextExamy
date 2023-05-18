@@ -48,7 +48,7 @@ const data = [
 export default function Home({navigation}) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
-      <View style={[styles.container,{backgroundColor:colors.white}]}>
+      <View style={[styles.container, {backgroundColor: colors.white}]}>
         {/* Header */}
         <View style={style.header}>
           <View style={{flexDirection: 'column'}}>
@@ -61,12 +61,14 @@ export default function Home({navigation}) {
               Akash Saini
             </Text>
           </View>
-          <Image
-            source={require('./images/user.jpeg')}
-            style={{width: 40, height: 40, borderRadius: 100}}
-          />
+          <Pressable onPress={() => navigation.navigate('Account')}>
+            <Image
+              source={require('./images/user.jpeg')}
+              style={{width: 40, height: 40, borderRadius: 100}}
+            />
+          </Pressable>
         </View>
-        <ScrollView style={{marginBottom:60}}> 
+        <ScrollView style={{marginBottom: 60}}>
           <View style={style.scheduleContainer}>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -106,12 +108,14 @@ export default function Home({navigation}) {
                   Live Classes
                 </Text>
               </Pressable>
-              <View style={style.scheduleInfo}>
+              <Pressable
+                style={style.scheduleInfo}
+                onPress={() => navigation.navigate('MyClassesList')}>
                 <Text style={[styles.h4, {fontWeight: 700}]}>4.8</Text>
                 <Text style={[styles.h6, {color: colors.gray}]}>
                   Class Rating
                 </Text>
-              </View>
+              </Pressable>
             </View>
 
             <View
@@ -120,7 +124,9 @@ export default function Home({navigation}) {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={[styles.h5, {fontWeight: 600}]}>Upcoming Classes</Text>
+              <Text style={[styles.h5, {fontWeight: 600}]}>
+                Upcoming Classes
+              </Text>
               <TouchableOpacity
                 onPress={() => navigation.navigate('UpcomingClassesList')}>
                 <Text>View all</Text>
@@ -129,7 +135,7 @@ export default function Home({navigation}) {
           </View>
 
           <View style={style.upcomingClassesContainer}>
-            <UpcomingClasses />
+            <UpcomingClasses navigation={navigation} />
             <Text
               style={[
                 styles.h5,
@@ -206,6 +212,6 @@ const style = StyleSheet.create({
   asssessmentContainer: {
     backgroundColor: '#ffff',
     marginTop: 5,
-    marginBottom:10
+    marginBottom: 10,
   },
 });

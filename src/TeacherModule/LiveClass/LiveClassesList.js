@@ -1,5 +1,6 @@
 import {
   Image,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -116,7 +117,9 @@ export default function LiveClassesList({navigation}) {
           }}>
           {data.map(data => {
             return (
-              <View style={style.container}>
+              <Pressable
+                style={style.container}
+                onPress={() => alert('Live')}>
                 <Text
                   style={[styles.h6, {paddingVertical: 10, fontWeight: 500}]}>
                   {data.topic}
@@ -148,7 +151,7 @@ export default function LiveClassesList({navigation}) {
                     <Text style={styles.p}>Join Now </Text>
                   </View>
                 </View>
-              </View>
+              </Pressable>
             );
           })}
         </ScrollView>

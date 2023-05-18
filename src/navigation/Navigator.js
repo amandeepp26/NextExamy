@@ -70,6 +70,14 @@ import UpcomingClassesList from '../TeacherModule/home/UpcomingClassesList';
 import LiveClassesList from '../TeacherModule/LiveClass/LiveClassesList';
 import TeacherChatMessage from '../TeacherModule/chat/ChatMessage';
 import VideoTopicLists from '../TeacherModule/Video/VideoTopicList';
+import TeacherNotification from '../StudentModule/Account/Notification';
+import TeacherHelpandSupport from '../StudentModule/Account/HelpandSupport';
+import TeacherTestReview from '../StudentModule/Account/TestReview';
+import TeacherAccount from '../TeacherModule/Account/Account';
+import TeacherEditProfile from '../TeacherModule/Account/EditProfile';
+import TeacherLive from '../TeacherModule/LiveClass/Live';
+import MyClassesList from '../TeacherModule/Video/MyClassesList';
+import TeacherParticularVideo from '../TeacherModule/Video/ParticularVideo';
 
 // const drawerData = [
 //   {
@@ -381,9 +389,19 @@ function Navigator(props) {
             component={UpcomingClassesList}
           />
           <Stack.Screen name="LiveClassesList" component={LiveClassesList} />
+          <Stack.Screen name="Live" component={TeacherLive} />
           <Stack.Screen name="ChatMessage" component={TeacherChatMessage} />
           <Stack.Screen name="VideoTopicList" component={VideoTopicLists} />
-
+          <Stack.Screen name="Account" component={TeacherAccount} />
+          <Stack.Screen name="EditProfile" component={TeacherEditProfile} />
+          <Stack.Screen name="Notification" component={TeacherNotification} />
+          <Stack.Screen
+            name="HelpandSupport"
+            component={TeacherHelpandSupport}
+          />
+          <Stack.Screen name="TestReview" component={TeacherTestReview} />
+          <Stack.Screen name="MyClassesList" component={MyClassesList} />
+          <Stack.Screen name="ParticularVideo" component={TeacherParticularVideo} />
 
         </Stack.Navigator>
       );
