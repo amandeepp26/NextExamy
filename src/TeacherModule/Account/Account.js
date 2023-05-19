@@ -16,14 +16,19 @@ import {colors} from '../../styles';
 import Navigator from '../../navigation/Navigator';
 import styles from '../../navigation/styles';
 // create a component
-function Account({navigation})  {
+export default function TeacherAccount({navigation}) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
         {/* Header */}
         <View style={style.header}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon onPress={()=>navigation.goBack()} name="chevron-left" type="ionicons" size={25} />
+            <Icon
+              onPress={() => navigation.goBack()}
+              name="chevron-left"
+              type="ionicons"
+              size={25}
+            />
 
             <Image
               source={require('../../../assets/images/logoIcon.png')}
@@ -32,7 +37,7 @@ function Account({navigation})  {
             <Text style={styles.h4}>IIT-JEE Mains</Text>
           </View>
           <Pressable
-          onPress={()=>navigation.navigate('EditProfile')}
+            onPress={() => navigation.navigate('EditProfile')}
             style={{
               borderWidth: 1,
               alignItems: 'center',
@@ -49,38 +54,12 @@ function Account({navigation})  {
         <View style={{flex: 1, backgroundColor: colors.white}}>
           <View
             style={{
-              backgroundColor: '#FFF8ED',
-              height: 90,
-              elevation: 3,
-              paddingHorizontal: 12,
-              flexDirection: 'row',
-            }}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <View style={{width: '65%'}}>
-                <Text style={styles.h6}>Easy Subscription</Text>
-                <Text>Get access to sessions,live classes and many more.</Text>
-              </View>
-              <Pressable
-              onPress={()=>navigation.navigate('Subscription')}
-                style={{
-                  alignItems: 'center',
-                  paddingHorizontal: 10,
-                  paddingVertical: 5,
-                  borderRadius: 5,
-                  backgroundColor: colors.primaryBlue,
-                }}>
-                <Text style={[styles.h6, {color: colors.white}]}>
-                  Subscribe Now!
-                </Text>
-              </Pressable>
-            </View>
-          </View>
-          <View
-            style={{
               flexDirection: 'row',
               justifyContent: 'space-evenly',
             }}>
-            <Pressable onPress={()=>navigation.navigate("Notification")} style={style.tab}>
+            <Pressable
+              onPress={() => navigation.navigate('Notification')}
+              style={style.tab}>
               <Image
                 source={require('./images/notification.png')}
                 style={{height: 22, width: 21}}
@@ -91,7 +70,9 @@ function Account({navigation})  {
               </Text>
             </Pressable>
 
-            <Pressable onPress={()=>navigation.navigate("HelpandSupport")}style={style.tab}>
+            <Pressable
+              onPress={() => navigation.navigate('HelpandSupport')}
+              style={style.tab}>
               <Image
                 source={require('./images/support.png')}
                 style={{height: 27, width: 27}}
@@ -115,13 +96,6 @@ function Account({navigation})  {
                 Send Feedback
               </Text>
             </View>
-          </View>
-
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-evenly',
-            }}>
             <View style={style.tab}>
               <Image
                 source={require('./images/aboutus.png')}
@@ -131,7 +105,13 @@ function Account({navigation})  {
                 About Us
               </Text>
             </View>
+          </View>
 
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+            }}>
             <View style={style.tab}>
               <Image
                 source={require('./images/termsandcondition.png')}
@@ -145,12 +125,6 @@ function Account({navigation})  {
                 Terms & Conditions
               </Text>
             </View>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-evenly',
-            }}>
             <View style={style.tab}>
               <Image
                 source={require('./images/privacy.png')}
@@ -160,6 +134,13 @@ function Account({navigation})  {
                 Privacy Policy
               </Text>
             </View>
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+            }}>
             <View style={style.tab}>
               <Image
                 source={require('./images/delete.png')}
@@ -169,8 +150,10 @@ function Account({navigation})  {
                 Delete Account
               </Text>
             </View>
+            <View style={{width:'44%'}}>
+            </View>
           </View>
-          
+
           <View
             style={{
               borderWidth: 1,
@@ -180,23 +163,25 @@ function Account({navigation})  {
               // marginRight: 12,
               borderColor: '#d5d5d5',
               borderRadius: 5,
-              position:'absolute',
-              alignSelf:'center',
-              bottom:70,
-              flexDirection:'row',
-              justifyContent:'space-between'
+              position: 'absolute',
+              alignSelf: 'center',
+              bottom: 70,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
             }}>
-              <Image
-                source={require('./images/logout.png')}
-                style={{height: 25, width: 25}}
-              />
-            <Text style={[styles.h6,{fontWeight:'700',marginLeft:15}]}>Logout</Text>
+            <Image
+              source={require('./images/logout.png')}
+              style={{height: 25, width: 25}}
+            />
+            <Text style={[styles.h6, {fontWeight: '700', marginLeft: 15}]}>
+              Logout
+            </Text>
           </View>
         </View>
       </View>
     </SafeAreaView>
   );
-};
+}
 
 // define your styles
 const style = StyleSheet.create({
@@ -216,9 +201,8 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     elevation: 2,
-    paddingLeft:10
+    paddingLeft: 10,
   },
 });
 
 //make this component available to the app
-export default Account;

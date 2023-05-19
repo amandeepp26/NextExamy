@@ -1,4 +1,4 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import styles from '../../navigation/styles';
 import {colors} from '../../styles';
@@ -23,13 +23,11 @@ const data = [
   {
     topic: 'Chemistry Basics',
     users: [
-   
       {image: user3},
       {image: user5},
       {image: user2},
       {image: user4},
       {image: user},
-   
     ],
     time: '11:00 AM',
   },
@@ -46,19 +44,20 @@ const data = [
   },
   // add more objects as needed
 ];
-
-export default function UpcomingClasses() {
+export default function UpcomingClasses({navigation}) {
   return data.map((data, index) => {
     return (
-      <View style={style.container}>
+      <Pressable
+        style={style.container}
+        onPress={() => navigation.navigate('Live')}>
         <Text style={styles.p}>In 10 minutes</Text>
         <Text style={[styles.h6, {paddingVertical: 10, fontWeight: 500}]}>
           {data.topic}
         </Text>
         <Text style={{fontSize: 12}}>Starts at {data.time}</Text>
         <View style={style.users}>
-          {data?.users?.map((key,ind) => {
-            const leftPosition= -15*ind
+          {data?.users?.map((key, ind) => {
+            const leftPosition = -15 * ind;
             return (
               <Image
                 style={{
@@ -73,16 +72,14 @@ export default function UpcomingClasses() {
             );
           })}
 
-         
-          <View
-            style={style.userCount}>
-            <Text style={{color:'#fff',fontSize:10}}>+25</Text>
+          <View style={style.userCount}>
+            <Text style={{color: '#fff', fontSize: 10}}>+25</Text>
           </View>
           <View style={style.joinBtn}>
             <Text style={styles.p}>Join Now </Text>
           </View>
         </View>
-      </View>
+      </Pressable>
     );
   });
 }
@@ -91,7 +88,7 @@ const style = StyleSheet.create({
   container: {
     backgroundColor: '#f5f5f5',
     marginHorizontal: 15,
-    marginTop:7,
+    marginTop: 7,
     padding: 10,
     borderRadius: 10,
     position: 'relative',
@@ -116,16 +113,15 @@ const style = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 3,
   },
-  userCount:{
+  userCount: {
     backgroundColor: colors.primaryBlue,
     borderRadius: 100,
     width: 30,
     height: 30,
     position: 'relative',
     left: -70,
-    flexDirection:'row',
-    alignItems:'center',
-    justifyContent:'center'
-    
-  }
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
