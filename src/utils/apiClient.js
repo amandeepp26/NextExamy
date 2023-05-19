@@ -1,14 +1,15 @@
-export const baseUrl = 'https://seller.estatedekho.com/';
-export const imgUrl = 'https://seller.estatedekho.com/';
+export const baseUrl = 'https://app.ankitbangwaldigitalmarketing.in/';
+export const imgUrl = 'https://app.ankitbangwaldigitalmarketing.in/images/assessments';
 
 const apiClient = {
   Urls: {
     imgUrl,
     init: 'api/device/add',
-    login: 'api/web/sendOtp',
-    verifyOtp: 'api/web/verifyOtp',
-    signup:'api/web/signup/sendOtp',
-    verifySignupOtp: 'api/web/signup/verifyOtp',
+    login: 'api/login',
+    verifyOtp: 'api/otpverify',
+    signup:'api/register',
+    categories:'api/subcategory',
+    subjects:'api/subjectslist',
     getProfile:"api/web/profile",
     propertyByType:'api/web/home/explore',
     getCities:"api/list/cities",
@@ -29,25 +30,33 @@ const apiClient = {
     searchQuery:"api/web/localities",
     blogDetails:'api/web/blog/post/'
   },
-
   make: function (url, method, params) {
     console.log("apiclient", baseUrl + url, params);
-    let headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
+  
+    let formData = new FormData();
+  
+    if (params) {
+      for (let key in params) {
+        formData.append(key, params[key]);
+      }
     }
-
+  
+    let headers = {};
+  
     if (params?.authToken) {
-      headers['Authorization'] = `Bearer ${params?.authToken}`
+      headers['Authorization'] = `Bearer ${params?.authToken}`;
     }
-
+  
     return fetch(baseUrl + url, {
       method,
       headers,
-      body: JSON.stringify(params),
-    }).then(response => response.json());
-
+      body: formData,
+    })
+      .then(response => response.json())
+      .catch(error => console.error('Error:', error));
   },
+  
+  
 
   post: function (url, params) {
     return this.make(url, 'POST', params);

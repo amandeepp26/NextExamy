@@ -26,6 +26,7 @@ const OtpVerification = ({
   otp,
   resendOtp,
   loading,
+  phone_number
 }) => {
   const [resend, setResend] = useState(false);
   return (
@@ -49,7 +50,7 @@ const OtpVerification = ({
           We have sent an OTP to your {'\n'} Phone number
           <Text style={{fontWeight: 'bold'}}>
             {' '}
-            +91 {route?.params?.phone_number}
+            +91 {phone_number}
           </Text>
         </Text>
         <Pressable
@@ -84,7 +85,7 @@ const OtpVerification = ({
               justifyContent: 'center',
               height: 30,
             }}
-            pinCount={4}
+            pinCount={6}
             autoFocusOnLoad
             keyboardType="number-pad"
             codeInputFieldStyle={style.underlineStyleBase}
@@ -170,7 +171,7 @@ const OtpVerification = ({
               <Button
                 text="Verify"
                 backgroundColor={colors.primaryBlue}
-                onpress={() => navigation.navigate('Home')}
+                onpress={() => validateOtp()}
               />
             </View>
           )}
@@ -218,6 +219,7 @@ export default connect(
     return {
       otp: state.signin.otp,
       loading: state.signin.loading,
+      phone_number:state.signin.phone_number
     };
   },
   {

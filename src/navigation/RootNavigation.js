@@ -8,6 +8,7 @@ import { Image, StyleSheet, TouchableOpacity, View, } from 'react-native';
 
 import StackNavigationData from './stackNavigationData';
 import { colors, fonts } from '../styles';
+import StackNavigationDataTeacherModule from './StackNavigationDataTeacherModule';
 
 const Stack = createStackNavigator();
 
@@ -41,10 +42,33 @@ function NavigatorView(props) {
   //     </View>
   //   )
   // }
+  console.warn('props aere ----> ',props)
+  if(props.userType === 'Student'){
+    return(
+          <Stack.Navigator>
+            {StackNavigationData.map((item, idx) => (
+              <Stack.Screen
+                key={`stack_item-${idx + 1}`}
+                name={item.name}
+                component={item.component}
+                options={{
+                  title: '',
+                  headerShown: false,
+                  headerLeft: null,
+                  headerRight: null,
+                  headerBackground: null,
+                  headerTitleStyle: null,
+                }}
+              />
+            ))}
+          </Stack.Navigator>
 
-  return (
+    )
+  }
+  else{
+    return(
     <Stack.Navigator>
-      {StackNavigationData.map((item, idx) => (
+      {StackNavigationDataTeacherModule.map((item, idx) => (
         <Stack.Screen
           key={`stack_item-${idx + 1}`}
           name={item.name}
@@ -60,13 +84,18 @@ function NavigatorView(props) {
         />
       ))}
     </Stack.Navigator>
-  );
+    )
+  }
 }
 
 
 export default connect(
   state => {
     return {
+      authToken: state.session.authToken,
+      profile: state.session.profile,
+      skip: state.signin.skip,
+      userType: state.signin.userType,
     };
   }, {
 }

@@ -97,7 +97,7 @@ export const setOTP = otp => {
 export const requestOtp = callback => async (dispatch, getState) => {
   const state = getState();
   const {phone_number} = state.signin;
-  console.warn('cll', callback);
+  // console.warn('cll', callback);
   try {
     dispatch({
       type: LOADING_START,
@@ -106,9 +106,9 @@ export const requestOtp = callback => async (dispatch, getState) => {
       mobile: phone_number,
     });
 
-    console.log('Request OTP---------->', response);
+    console.warn('Request OTP---------->', response);
 
-    if (response.success) {
+    if (response.status) {
       if (callback) {
         callback();
       }
@@ -139,6 +139,7 @@ export const requestOtp = callback => async (dispatch, getState) => {
       text1: e.message || e || 'Something went wrong!',
       type: 'error',
     });
+    console.log('error',e)
     dispatch({
       type: ERROR,
       errorMessage: e.message,
@@ -201,6 +202,7 @@ export const validateOtp = () => async (dispatch, getState) => {
   const {otp, phone_number} = state.signin;
   if (otp == '') {
     Toast.show({text1: `Please enter verification code`, type: 'error'});
+    console.log('please type')
     return;
   }
   try {
@@ -214,8 +216,9 @@ export const validateOtp = () => async (dispatch, getState) => {
 
     console.log('Log in---------->', response);
 
-    if (response.success) {
-      dispatch(setAuthData(response.profile.authToken, response.profile));
+    if (response.status) {
+      dispatch(setAuthData(response.token, response.user));
+      dispatch(setUserType('Student'));
       Toast.show({text1: response.message || 'Login Success', type: 'success'});
       dispatch(skipNow(false));
       dispatch({

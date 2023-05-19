@@ -16,7 +16,7 @@ import {colors} from '../../styles';
 import Navigator from '../../navigation/Navigator';
 import styles from '../../navigation/styles';
 // create a component
-const Account = ({navigation}) => {
+function Account({navigation})  {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
