@@ -5,9 +5,19 @@ import Button from '../../components/Button';
 import RNSTextInput from '../../components/RNSTextInput';
 import {colors, fonts} from '../../styles';
 import styles from '../../navigation/styles';
+import {setPhoneNumber, setEmail,requestOtp} from './signin';
+import {connect} from 'react-redux';
 
 // create a component
-function Login({navigation}) {
+function Login({
+  navigation,
+  setPhoneNumber,
+  setEmail,
+  phone_number,
+  loading,
+  email,
+  requestOtp
+}) {
   const [loginPhone, setLoginPhone] = useState(true);
   return (
     <View style={style.container}>
@@ -26,7 +36,13 @@ function Login({navigation}) {
       {loginPhone ? (
         <View style={{marginTop: 25}}>
           <Text style={[styles.h4, {marginLeft: 10}]}>Enter phone number</Text>
-          <RNSTextInput placeHolder={'Phone number'} keyboard={'numeric'} />
+          <RNSTextInput
+            placeHolder={'Phone number'}
+            keyboard={'numeric'}
+            onChangeText={e => setPhoneNumber(e)}
+            value={phone_number}
+            maxLength={10}
+          />
           <Text
             style={[
               styles.h6,
@@ -39,7 +55,11 @@ function Login({navigation}) {
       ) : (
         <View style={{marginTop: 25}}>
           <Text style={[styles.h4, {marginLeft: 10}]}>Enter email address</Text>
-          <RNSTextInput placeHolder={'Email'} />
+          <RNSTextInput
+            placeHolder={'Email'}
+            value={email}
+            onChangeText={e => setEmail(e)}
+          />
           <Text
             style={[
               styles.h6,
@@ -59,9 +79,28 @@ function Login({navigation}) {
         }}>
         <Text stylele={[styles.h4, {color: '#000'}]}>
           Don't have an account?
-          <Text style={{color: colors.secondaryBlue}} onPress={()=>navigation.navigate("Signup")} > Sign Up</Text>
+          <Text
+            style={{color: colors.secondaryBlue}}
+            onPress={() => navigation.navigate('Signup')}>
+            {' '}
+            Sign Up
+          </Text>
         </Text>
-        <Button text={'Login'} backgroundColor={colors.primaryBlue} color={false} onpress={()=>navigation.navigate("OtpVerification",{phone_number:8755255052})} />
+        {loading ? (
+          <Button load={true}
+          backgroundColor={colors.primaryBlue} />
+        ) : (
+          <Button
+            text={'Login'}
+            backgroundColor={colors.primaryBlue}
+            color={false}
+            onpress={() =>
+              requestOtp(function () {
+                navigation.navigate('OtpVerification');
+              })
+            }
+          />
+        )}
       </View>
     </View>
   );
@@ -76,4 +115,17 @@ const style = StyleSheet.create({
 });
 
 //make this component available to the app
-export default Login;
+export default connect(
+  state => {
+    return {
+      phone_number: state.signin.phone_number,
+      loading: state.signin.loading,
+      email: state.signin.email,
+    };
+  },
+  {
+    setPhoneNumber,
+    setEmail,
+    requestOtp
+  },
+)(Login);

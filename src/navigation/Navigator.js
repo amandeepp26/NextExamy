@@ -306,14 +306,12 @@ import VideoTopicLists from '../TeacherModule/Video/VideoTopicList';
 
 function Navigator(props) {
   console.warn('ppppp', props);
+  const Stack = createStackNavigator();
   if (!props.authToken && props.skip) {
-    const Stack = createStackNavigator();
     if (props.userType === 'Student') {
       return (
         <Stack.Navigator
-          initialRouteName="Splash"
           screenOptions={{headerShown: false}}>
-          {/* <Stack.Screen name="Welcome" component={Welcome} /> */}
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="OtpVerification" component={OtpVerification} />
           <Stack.Screen name="Signup" component={Signup} />
@@ -322,67 +320,23 @@ function Navigator(props) {
             name="SelectSubCategory"
             component={SelectSubCategory}
           />
-          <Stack.Screen name="Home" component={TabNavigator} />
-          <Stack.Screen
-            name="ParticularSubjectClass"
-            component={ParticularSubjectClass}
-          />
-          <Stack.Screen name="SavedVideos" component={SavedVideos} />
-          <Stack.Screen name="FreeVideos" component={FreeVideos} />
-          <Stack.Screen name="ParticularVideo" component={ParticularVideo} />
-          <Stack.Screen name="TestInstructions" component={TestInstructions} />
-          <Stack.Screen name="TestQuestions" component={TestQuestions} />
-          <Stack.Screen name="Notes" component={Notes} />
-          <Stack.Screen name="Syllabus" component={Syllabus} />
-          <Stack.Screen name="SubTopics" component={SubTopics} />
-          <Stack.Screen name="TopicLists" component={TopicLists} />
-          <Stack.Screen name="Account" component={Account} />
-          <Stack.Screen name="EditProfile" component={EditProfile} />
-          <Stack.Screen name="Notification" component={Notification} />
-          <Stack.Screen name="HelpandSupport" component={HelpandSupport} />
-          <Stack.Screen name="MyLearnings" component={MyLearnings} />
-          <Stack.Screen name="TestReview" component={TestReview} />
-          <Stack.Screen name="LiveClass" component={LiveClass} />
-          <Stack.Screen name="Subscription" component={Subscription} />
-          <Stack.Screen name="ChatMessage" component={ChatMessage} />
-          <Stack.Screen name="VideoRateReview" component={VideoRateReview} />
-          <Stack.Screen name="Search" component={Search} />
-          <Stack.Screen name="Live" component={Live} />
-          <Stack.Screen name="MockTest" component={MockTest} />
-          <Stack.Screen name="SubjectWiseTest" component={SubjectWiseTest} />
-          <Stack.Screen name="UpcomingLive" component={UpcomingLive} />
-          <Stack.Screen name="CompleteProfile" component={CompleteProfile} />
 
-          {/* <Stack.Screen name="OtpVerification" component={OtpVerification} />
-        <Stack.Screen
-          name="SignupOtpVerification"
-          component={SignupOtpVerification}
-        />
-        <Stack.Screen name="Signup" component={Signup} />
-        <Stack.Screen name="SignupDetails" component={SignupDetails} />
-        <Stack.Screen name="Skip" component={Skip} />
-        <Stack.Screen name="LookingFor" component={LookingFor} />
-        <Stack.Screen name="SelectCity" component={SelectCity} />
-        <Stack.Screen name="SelectLocation" component={SelectLocation} />
-        <Stack.Screen
-          name="SelectPropertyType"
-          component={SelectPropertyType}
-        />
-        <Stack.Screen name="Home" component={TabNavigator} /> */}
+         
         </Stack.Navigator>
       );
     } else if (props.userType === 'Teacher') {
       return (
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Login" component={TeacherLogin} />
-          <Stack.Screen name="Home" component={TabNavigator} />
+
+          {/* <Stack.Screen name="Home" component={TabNavigator} />
           <Stack.Screen
             name="UpcomingClassesList"
             component={UpcomingClassesList}
           />
           <Stack.Screen name="LiveClassesList" component={LiveClassesList} />
           <Stack.Screen name="ChatMessage" component={TeacherChatMessage} />
-          <Stack.Screen name="VideoTopicList" component={VideoTopicLists} />
+          <Stack.Screen name="VideoTopicList" component={VideoTopicLists} /> */}
 
 
         </Stack.Navigator>
@@ -391,13 +345,13 @@ function Navigator(props) {
       return (
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Welcome" component={Welcome} />
-          {/* <Stack.Screen name="Signup" component={Signup} /> */}
         </Stack.Navigator>
       );
     }
   }
   return (
-    <Splash />
+    <NavigatorView />
+   
     // <Drawer.Navigator
     //   drawerStyle={{
     //     backgroundColor: '#fff',
