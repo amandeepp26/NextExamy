@@ -262,7 +262,7 @@ export const requestSignupOtp = callback => async (dispatch, getState) => {
 
     console.log('Request OTP---------->', response);
 
-    if (response.success) {
+    if (response.status) {
       if (callback) {
         callback();
       }
@@ -375,30 +375,33 @@ export const resendSignupOtp = callback => async (dispatch, getState) => {
   }
 };
 
-export const validateSignupOtp = () => async (dispatch, getState) => {
+export const validateSignupOtp = callback => async (dispatch, getState) => {
   const state = getState();
-  const {otp, phone_number, email, name} = state.signin;
+  const {otp, phone_number} = state.signin;
   if (otp == '') {
     Toast.show({text1: `Please enter verification code`, type: 'error'});
+    console.log('please type')
     return;
   }
   try {
     dispatch({
       type: LOGIN_START,
     });
-    const response = await apiClient.post(apiClient.Urls.verifySignupOtp, {
+    const response = await apiClient.post(apiClient.Urls.verifyOtp, {
       mobile: phone_number,
       otp: otp,
-      name: name,
-      email: email,
     });
 
-    console.log('OTP Verification---------->', response);
+    console.log('Log in---------->', response);
 
-    if (response.success) {
-      dispatch(setAuthData(response.profile.authToken, response.profile));
+    if (response.status) {
+      dispatch(setAuthData(response.token, response.user));
+      dispatch(setUserType('Student'));
       Toast.show({text1: response.message || 'Login Success', type: 'success'});
-      dispatch(skipNow(false));
+      // dispatch(skipNow(false));
+      if (callback) {
+        callback();
+      }
       dispatch({
         type: LOGIN_SUCCESS,
       });

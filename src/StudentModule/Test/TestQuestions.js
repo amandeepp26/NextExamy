@@ -13,6 +13,9 @@ import styles from '../../navigation/styles';
 import {Icon} from 'react-native-elements';
 import {SafeAreaView} from 'react-native';
 import Button from '../../components/Button';
+import apiClient from '../../utils/apiClient';
+import { connect } from 'react-redux';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 // create a component
 
 const Questions = [
@@ -118,7 +121,7 @@ const Questions = [
     ],
   },
 ];
-function TestQuestions({navigation}) {
+function TestQuestions({navigation,authToken}) {
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
   const [index, setIndex] = useState(0);
   const [data, setData] = useState(null);
@@ -128,29 +131,28 @@ function TestQuestions({navigation}) {
     getAssessmentQuestion();
   }, []);
 
-  const getAssessmentQuestion = () => {
-    fetch('https://app.ankitbangwaldigitalmarketing.in/api/assessmentdata', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'Cache-Control': 'no-cache',
-      },
-    })
-      .then(response => response.json())
-      .then(json => {
-        console.warn(json);
-        if (json.status) {
-          setData(json.data);
-          setIsLoading(false);
-        }
-        else{
-          setIsLoading(false);
-        }
-      })
-      .catch(error => {
-        console.warn(error);
+  const getAssessmentQuestion = async () => {
+    try {
+      const response = await apiClient.post(
+        `${apiClient.Urls.mockTest}`,
+        {
+          subject_id: 1,
+          authToken: authToken,
+        },
+      );
+      console.warn(response.data);
+      if (response.status) {
+        setData(response.data);
+        setIsLoading(false);
+      } else {
+        setIsLoading(false)
+      }
+    } catch (e) {
+      Toast.show({
+        text1: e.message || e || 'Something went wrong!',
+        type: 'error',
       });
+    }
   };
 
   return (
@@ -200,319 +202,108 @@ function TestQuestions({navigation}) {
               </Text>
               <View style={{marginLeft: 10, marginTop: 10}}>
                 <Text style={[styles.p, {lineHeight: 18, marginBottom: 10}]}>
-                  {data?.[index]?.question}
+                  {data?.[index]?.question.text}
                 </Text>
-                {/* {Questions[index]?.answers.map((key, index) => {
-              return ( */}
-                {data?.[index]?.option_one.includes('png') ? (
+                {data?.[index]?.question.images.img!='' &&
+                <Image 
+                style={{width:220,height:60,marginTop:15,alignSelf:'center'}}
+                      source={{
+                        uri: `https://app.ankitbangwaldigitalmarketing.in/images/assessments/${data?.[index]?.question.images.img}`,}} />
+                      }
+                {data?.[index]?.options[0].option.includes('png') ? (
                   <>
-                    <Pressable
-                      onPress={() => {
-                        if (selectedCardIndex != index) {
-                          setSelectedCardIndex(index);
-                        } else {
-                          setSelectedCardIndex(null);
-                        }
+                  
+                  {data?.[index]?.options.map((key,ind)=>{
+                return(
+                  <Pressable
+                    onPress={() => {
+                      if (selectedCardIndex != ind) {
+                        setSelectedCardIndex(ind);
+                      } else {
+                        setSelectedCardIndex(null);
+                      }
+                    }}
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginTop: 15,
+                      borderBottomWidth: 1,
+                      paddingBottom: 10,
+                      borderColor: '#d3d3d3',
+                      flex:1,
+                      height:'auto',
+                      // width:'100%'
+                    }}>
+                    <Icon
+                      key={ind}
+                      name={
+                        selectedCardIndex === ind
+                          ? 'radio-button-on-outline'
+                          : 'radio-button-off-outline'
+                      }
+                      color={
+                        selectedCardIndex === ind
+                          ? colors.primaryBlue
+                          : '#000'
+                      }
+                      type="ionicon"
+                      size={20}
+                    />
+                    <View style={{width:180,height:30,alignItems:'center'}}>
+                    <Image
+                    resizeMode='contain'
+                      source={{
+                        uri: `https://app.ankitbangwaldigitalmarketing.in/images/assessments/${key.option}`,
                       }}
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginTop: 15,
-                        borderBottomWidth: 1,
-                        paddingBottom: 10,
-                        borderColor: '#d3d3d3',
-                        flex:1,
-                        height:'auto',
-                        // width:'100%'
-                      }}>
-                      <Icon
-                        key={index}
-                        name={
-                          selectedCardIndex === index
-                            ? 'radio-button-on-outline'
-                            : 'radio-button-off-outline'
-                        }
-                        color={
-                          selectedCardIndex === index
-                            ? colors.primaryBlue
-                            : '#000'
-                        }
-                        type="ionicon"
-                        size={20}
-                      />
-                      <View style={{width:250,height:150,alignItems:'center'}}>
-                      <Image
-                        source={{
-                          uri: `https://app.ankitbangwaldigitalmarketing.in/images/assessments/${data?.[index].option_one}`,
-                        }}
-                        style={style.optionImg}
-                      />
-                      </View>
-                    </Pressable>
-                    <Pressable
-                      onPress={() => {
-                        if (selectedCardIndex != index) {
-                          setSelectedCardIndex(index);
-                        } else {
-                          setSelectedCardIndex(null);
-                        }
-                      }}
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginTop: 15,
-                        borderBottomWidth: 1,
-                        paddingBottom: 10,
-                        borderColor: '#d3d3d3',
-                      }}>
-                      <Icon
-                        key={index}
-                        name={
-                          selectedCardIndex === index
-                            ? 'radio-button-on-outline'
-                            : 'radio-button-off-outline'
-                        }
-                        color={
-                          selectedCardIndex === index
-                            ? colors.primaryBlue
-                            : '#000'
-                        }
-                        type="ionicon"
-                        size={20}
-                      />
-                      <View style={{width:250,height:50}}>
+                      style={style.optionImg}
+                    />
+                    </View>
+                  </Pressable>
 
-                      <Image
-                        source={{
-                          uri: `https://app.ankitbangwaldigitalmarketing.in/images/assessments/${data?.[index].option_two}`,
-                        }}
-                        style={style.optionImg}
-                      />
-                      </View>
-                    </Pressable>
-                    <Pressable
-                      onPress={() => {
-                        if (selectedCardIndex != index) {
-                          setSelectedCardIndex(index);
-                        } else {
-                          setSelectedCardIndex(null);
-                        }
-                      }}
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginTop: 15,
-                        borderBottomWidth: 1,
-                        paddingBottom: 10,
-                        borderColor: '#d3d3d3',
-                      }}>
-                      <Icon
-                        key={index}
-                        name={
-                          selectedCardIndex === index
-                            ? 'radio-button-on-outline'
-                            : 'radio-button-off-outline'
-                        }
-                        color={
-                          selectedCardIndex === index
-                            ? colors.primaryBlue
-                            : '#000'
-                        }
-                        type="ionicon"
-                        size={20}
-                      />
-                      <View style={{width:250,height:50}}>
-                      <Image
-                        source={{
-                          uri: `https://app.ankitbangwaldigitalmarketing.in/images/assessments/${data?.[index].option_three}`,
-                        }}
-                        style={style.optionImg}
-                      />
-                      </View>
-                    </Pressable>
-                    <Pressable
-                      onPress={() => {
-                        if (selectedCardIndex != index) {
-                          setSelectedCardIndex(index);
-                        } else {
-                          setSelectedCardIndex(null);
-                        }
-                      }}
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginTop: 15,
-                        borderBottomWidth: 1,
-                        paddingBottom: 10,
-                        borderColor: '#d3d3d3',
-                      }}>
-                      <Icon
-                        key={index}
-                        name={
-                          selectedCardIndex === index
-                            ? 'radio-button-on-outline'
-                            : 'radio-button-off-outline'
-                        }
-                        color={
-                          selectedCardIndex === index
-                            ? colors.primaryBlue
-                            : '#000'
-                        }
-                        type="ionicon"
-                        size={20}
-                      />
-                      <View style={{width:250,height:50}}>
-                      <Image
-                        source={{
-                          uri: `https://app.ankitbangwaldigitalmarketing.in/images/assessments/${data?.[index].option_four}`,
-                        }}
-                        style={style.optionImg}
-                      />
-                      </View>
-                    </Pressable>
+                )})}
                   </>
                 ) : (
                   <>
-                    <Pressable
-                      onPress={() => {
-                        if (selectedCardIndex != index) {
-                          setSelectedCardIndex(index);
-                        } else {
-                          setSelectedCardIndex(null);
-                        }
-                      }}
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginTop: 15,
-                        borderBottomWidth: 1,
-                        paddingBottom: 10,
-                        borderColor: '#d3d3d3',
-                      }}>
-                      <Icon
-                        key={index}
-                        name={
-                          selectedCardIndex === index
-                            ? 'radio-button-on-outline'
-                            : 'radio-button-off-outline'
-                        }
-                        color={
-                          selectedCardIndex === index
-                            ? colors.primaryBlue
-                            : '#000'
-                        }
-                        type="ionicon"
-                        size={20}
-                      />
-                      <Text style={[styles.p, {marginLeft: 10, width: '85%'}]}>
-                        {data?.[index].option_one}
-                      </Text>
-                    </Pressable>
-                    <Pressable
-                      onPress={() => {
-                        if (selectedCardIndex != index) {
-                          setSelectedCardIndex(index);
-                        } else {
-                          setSelectedCardIndex(null);
-                        }
-                      }}
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginTop: 15,
-                        borderBottomWidth: 1,
-                        paddingBottom: 10,
-                        borderColor: '#d3d3d3',
-                      }}>
-                      <Icon
-                        key={index}
-                        name={
-                          selectedCardIndex === index
-                            ? 'radio-button-on-outline'
-                            : 'radio-button-off-outline'
-                        }
-                        color={
-                          selectedCardIndex === index
-                            ? colors.primaryBlue
-                            : '#000'
-                        }
-                        type="ionicon"
-                        size={20}
-                      />
-                      <Text style={[styles.p, {marginLeft: 10, width: '85%'}]}>
-                        {data?.[index].option_two}
-                      </Text>
-                    </Pressable>
-                    <Pressable
-                      onPress={() => {
-                        if (selectedCardIndex != index) {
-                          setSelectedCardIndex(index);
-                        } else {
-                          setSelectedCardIndex(null);
-                        }
-                      }}
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginTop: 15,
-                        borderBottomWidth: 1,
-                        paddingBottom: 10,
-                        borderColor: '#d3d3d3',
-                      }}>
-                      <Icon
-                        key={index}
-                        name={
-                          selectedCardIndex === index
-                            ? 'radio-button-on-outline'
-                            : 'radio-button-off-outline'
-                        }
-                        color={
-                          selectedCardIndex === index
-                            ? colors.primaryBlue
-                            : '#000'
-                        }
-                        type="ionicon"
-                        size={20}
-                      />
-                      <Text style={[styles.p, {marginLeft: 10, width: '85%'}]}>
-                        {data?.[index].option_three}
-                      </Text>
-                    </Pressable>
-                    <Pressable
-                      onPress={() => {
-                        if (selectedCardIndex != index) {
-                          setSelectedCardIndex(index);
-                        } else {
-                          setSelectedCardIndex(null);
-                        }
-                      }}
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginTop: 15,
-                        borderBottomWidth: 1,
-                        paddingBottom: 10,
-                        borderColor: '#d3d3d3',
-                      }}>
-                      <Icon
-                        key={index}
-                        name={
-                          selectedCardIndex === index
-                            ? 'radio-button-on-outline'
-                            : 'radio-button-off-outline'
-                        }
-                        color={
-                          selectedCardIndex === index
-                            ? colors.primaryBlue
-                            : '#000'
-                        }
-                        type="ionicon"
-                        size={20}
-                      />
-                      <Text style={[styles.p, {marginLeft: 10, width: '85%'}]}>
-                        {data?.[index].option_four}
-                      </Text>
-                    </Pressable>
+                  {data?.[index]?.options.map((key,ind)=>{
+                return(
+                  
+                  <Pressable
+                  onPress={() => {
+                    if (selectedCardIndex != ind) {
+                      setSelectedCardIndex(ind);
+                    } else {
+                      setSelectedCardIndex(null);
+                    }
+                  }}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginTop: 15,
+                    borderBottomWidth: 1,
+                    paddingBottom: 10,
+                    borderColor: '#d3d3d3',
+                  }}>
+                  <Icon
+                    key={ind}
+                    name={
+                      selectedCardIndex === ind
+                        ? 'radio-button-on-outline'
+                        : 'radio-button-off-outline'
+                    }
+                    color={
+                      selectedCardIndex === ind
+                        ? colors.primaryBlue
+                        : '#000'
+                    }
+                    type="ionicon"
+                    size={20}
+                  />
+                  <Text style={[styles.p, {marginLeft: 10, width: '85%'}]}>
+                    {key.option}
+                  </Text>
+                </Pressable>
+                )
+              })}
                   </>
                 )}
                 {/* );
@@ -573,7 +364,16 @@ function TestQuestions({navigation}) {
 }
 
 //make this component available to the app
-export default TestQuestions;
+export default connect(
+  state =>{
+    return {
+      authToken:state.session.authToken
+    }
+
+  },{
+
+  }
+)(TestQuestions);
 
 // define your styles
 const style = StyleSheet.create({
@@ -581,6 +381,5 @@ const style = StyleSheet.create({
     width: '100%',
     height: "100%",
     marginLeft: 20,
-    resizeMode:'contain'
   },
 });

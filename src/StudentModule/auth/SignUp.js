@@ -6,7 +6,7 @@ import RNSTextInput from '../../components/RNSTextInput';
 import {colors} from '../../styles';
 import styles from '../../navigation/styles';
 import {connect} from 'react-redux';
-import {setPhoneNumber, setEmail, setName} from './signin';
+import {setPhoneNumber, setEmail, setName,requestSignupOtp} from './signin';
 
 // create a component
 function Signup({
@@ -17,6 +17,8 @@ function Signup({
   name,
   email,
   phone_number,
+  loading,
+  requestSignupOtp
 }) {
   return (
     <View style={style.container}>
@@ -81,14 +83,20 @@ function Signup({
             Privacy Policy{' '}
           </Text>
         </Text>
-        <Button
-          text={'Sign Up'}
-          backgroundColor={colors.primaryBlue}
-          color={false}
-          onpress={() => {
-            navigation.navigate('SelectCategory');
-          }}
-        />
+        {loading ? (
+          <Button load={true} backgroundColor={colors.primaryBlue} />
+        ) : (
+          <Button
+            text={'Sign Up'}
+            backgroundColor={colors.primaryBlue}
+            color={false}
+            onpress={() => {
+              requestSignupOtp(function () {
+                navigation.navigate('signupOtpVerification');
+              })
+            }}
+          />
+        )}
       </View>
     </View>
   );
@@ -116,5 +124,6 @@ export default connect(
     setPhoneNumber,
     setEmail,
     setName,
+    requestSignupOtp
   },
 )(Signup);

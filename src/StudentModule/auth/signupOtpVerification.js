@@ -14,15 +14,15 @@ import {Icon} from 'react-native-elements';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import {connect} from 'react-redux';
 import CountDown from 'react-native-countdown-component';
-import {setOTP, validateOtp, resendOtp} from './signin';
+import {setOTP, validateSignupOtp, resendOtp} from './signin';
 import {colors, fonts} from '../../styles';
 import styles from '../../navigation/styles';
 // create a component
-const OtpVerification = ({
+const signupOtpVerification = ({
   navigation,
   route,
   setOTP,
-  validateOtp,
+  validateSignupOtp,
   otp,
   resendOtp,
   loading,
@@ -159,8 +159,7 @@ const OtpVerification = ({
           
         </View>
         {loading ? (
-            <Button load={true}
-            backgroundColor={colors.primaryBlue} />
+            <Button load={true} />
           ) : (
             <View
               style={{
@@ -172,7 +171,9 @@ const OtpVerification = ({
               <Button
                 text="Verify"
                 backgroundColor={colors.primaryBlue}
-                onpress={() => validateOtp()}
+                onpress={() => validateSignupOtp(function () {
+                    navigation.navigate('SelectCategory');
+                  })}
               />
             </View>
           )}
@@ -225,7 +226,7 @@ export default connect(
   },
   {
     setOTP,
-    validateOtp,
+    validateSignupOtp,
     resendOtp,
   },
-)(OtpVerification);
+)(signupOtpVerification);

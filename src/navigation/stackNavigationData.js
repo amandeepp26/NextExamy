@@ -266,7 +266,7 @@ const StackNavigationData = [
   },
   {
     name: 'ChatMessage',
-    component: Account,
+    component: ChatMessage,
     headerLeft: null,
     headerBackground: {source: logo},
     headerTitleStyle: {

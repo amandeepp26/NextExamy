@@ -6,6 +6,8 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import Button from '../../components/Button';
 import {colors} from '../../styles';
 import styles from '../../navigation/styles';
+import { skipNow } from '../auth/signin';
+import { connect } from 'react-redux';
 
 const category = [
   {
@@ -46,7 +48,7 @@ const category = [
   },
 ];
 // create a component
-function SelectSubCategory({navigation}) {
+function SelectSubCategory({navigation,skipNow}) {
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
 
   renderItem = ({item, index}) => {
@@ -132,7 +134,7 @@ function SelectSubCategory({navigation}) {
           width: '100%',
           alignItems: 'center',
         }}>
-        <Button backgroundColor={colors.primaryBlue} text={'Next'} onpress={() => navigation.navigate('Home')} />
+        <Button backgroundColor={colors.primaryBlue} text={'Next'} onpress={() => skipNow(false)} />
       </View>
     </View>
   );
@@ -149,4 +151,12 @@ const style = StyleSheet.create({
 });
 
 //make this component available to the app
-export default SelectSubCategory;
+export default connect(
+  state => {
+    return {
+    };
+  },
+  {
+    skipNow
+  },
+)(SelectSubCategory);

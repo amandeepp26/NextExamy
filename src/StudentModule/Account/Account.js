@@ -16,7 +16,7 @@ import {colors} from '../../styles';
 import Navigator from '../../navigation/Navigator';
 import styles from '../../navigation/styles';
 // create a component
-function Account({navigation})  {
+const Account = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
@@ -106,6 +106,16 @@ function Account({navigation})  {
               flexDirection: 'row',
               justifyContent: 'space-evenly',
             }}>
+            <Pressable onPress={()=>navigation.navigate("MyLearnings")} style={style.tab}>
+              <Image
+                source={require('./images/books.png')}
+                style={{height: 30, width: 30}}
+              />
+              <Text style={[styles.h5, {color: '#575757', marginLeft: 10}]}>
+                My Learnings
+              </Text>
+            </Pressable>
+
             <View style={style.tab}>
               <Image
                 source={require('./images/chat.png')}
