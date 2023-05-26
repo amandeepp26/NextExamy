@@ -1,15 +1,15 @@
 export default {
-  primaryBlack: 'Poppins-Black',
-  primaryBlackItalic: 'Poppins-BlackItalic',
-  primaryBold: 'Poppins-Bold',
-  primaryBoldItalic: 'Poppins-BoldItalic',
-  primaryItalic: 'Poppins-Italic',
-  primaryLight: 'Poppins-Light',
-  primaryLightItalic: 'Poppins-LightItalic',
-  primaryMedium: 'Poppins-Medium',
-  primaryMediumItalic: 'Poppins-MediumItalic',
-  primaryRegular: 'Poppins-Regular',
-  primaryThin: 'Poppins-Thin',
-  primaryThinItalic: 'Poppins-ThinItalic',
-  primarySemiBold:'Poppins-SemiBold'
+  primaryBlack: 'Roboto-Black',
+  primaryBlackItalic: 'Roboto-BlackItalic',
+  primaryBold: 'Roboto-Bold',
+  primaryBoldItalic: 'Roboto-BoldItalic',
+  primaryItalic: 'Roboto-Italic',
+  primaryLight: 'Roboto-Light',
+  primaryLightItalic: 'Roboto-LightItalic',
+  primaryMedium: 'Roboto-Medium',
+  primaryMediumItalic: 'Roboto-MediumItalic',
+  primaryRegular: 'Roboto-Regular',
+  primaryThin: 'Roboto-Thin',
+  primaryThinItalic: 'Roboto-ThinItalic',
+  primarySemiBold:'Roboto-SemiBold'
 };

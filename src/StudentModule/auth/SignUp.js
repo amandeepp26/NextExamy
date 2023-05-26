@@ -27,11 +27,12 @@ function Signup({
           alignSelf: 'center',
           alignItems: 'center',
           width: '100%',
+          height:'12%',
           marginTop: 20,
         }}>
         <Image
           source={require('../../../assets/images/logo.png')}
-          style={{width: 90, height: 90}}
+          style={{width: '22%', height: '99%'}}
         />
       </View>
       <View style={{marginTop: 10}}>
@@ -67,22 +68,26 @@ function Signup({
           position: 'absolute',
           width: '100%',
           alignItems: 'center',
+          justifyContent:'center',
+          left:0
         }}>
-        <Text stylele={[styles.p, {color: '#000', textAlign: 'justify'}]}>
+          <View style={{width:'70%',alignItems:'center',justifyContent:'center'}}>
+        <Text stylele={[styles.p, {color: '#000', textAlign: 'justify',}]}>
           By signing up, you agree to {'\n'}
           <Text
             style={{color: colors.secondaryBlue}}
-            onPress={() => navigation.navigate('Signup')}>
-            Terms & Conditions
+            onPress={() => navigation.navigate('')}>
+             Terms & Conditions
           </Text>{' '}
           and
           <Text
             style={{color: colors.secondaryBlue}}
-            onPress={() => navigation.navigate('Signup')}>
+            onPress={() => navigation.navigate('')}>
             {' '}
             Privacy Policy{' '}
           </Text>
         </Text>
+        </View>
         {loading ? (
           <Button load={true} backgroundColor={colors.primaryBlue} />
         ) : (

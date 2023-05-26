@@ -11,14 +11,12 @@ class Splash extends Component {
           style={{height: '100%', width: '100%', position: 'absolute'}}
           source={require('../../../assets/images/splash_background.jpg')}
         />
+        <View style={{width:'65%',height:'100%',flex:1,justifyContent:'center',alignItems:'center'}}>
         <Image
-          style={{height:200, width: 200,}}
-          source={require('../../../assets/images/logoIcon.png')}
+          style={{height:'35%', width: '100%'}}
+          source={require('../../../assets/images/logo.png')}
         />
-        <Image
-          style={{height:'8.2%', width: '65%',marginTop:-10,}}
-          source={require('../../../assets/images/logoText.png')}
-        />
+        </View>
       </View>
     );
   }

@@ -26,16 +26,17 @@ function Login({
           alignSelf: 'center',
           alignItems: 'center',
           width: '100%',
+          height:'12%',
           marginTop: 20,
         }}>
         <Image
           source={require('../../../assets/images/logo.png')}
-          style={{width: 90, height: 90}}
+          style={{width: '22%', height: '99%'}}
         />
       </View>
       {loginPhone ? (
         <View style={{marginTop: 25}}>
-          <Text style={[styles.h4, {marginLeft: 10}]}>Enter phone number</Text>
+          <Text style={[styles.h4, {marginLeft: 10,fontFamily:'Roboto-italic'}]}>Enter phone number</Text>
           <RNSTextInput
             placeHolder={'Phone number'}
             keyboard={'numeric'}

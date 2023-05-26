@@ -32,18 +32,19 @@ const signupOtpVerification = ({
   return (
     <View style={{flex: 1, backgroundColor: colors.white}}>
       
-        <View
-          style={{
-            alignSelf: 'center',
-            alignItems: 'center',
-            width: '100%',
-            marginTop: 20,
-          }}>
-          <Image
-            source={require('../../../assets/images/logo.png')}
-            style={{width: 90, height: 90}}
-          />
-        </View>
+      <View
+        style={{
+          alignSelf: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height:'12%',
+          marginTop: 20,
+        }}>
+        <Image
+          source={require('../../../assets/images/logo.png')}
+          style={{width: '22%', height: '99%'}}
+        />
+      </View>
         <View style={{alignItems:'center'}}>
         <Text style={[styles.h3, {marginTop: 20,fontWeight:'bold'}]}>Enter OTP</Text>
         <Text style={[styles.h6, {marginTop: 10, textAlign: 'center',color:colors.gray}]}>
@@ -159,7 +160,15 @@ const signupOtpVerification = ({
           
         </View>
         {loading ? (
-            <Button load={true} />
+          <View
+          style={{
+            bottom: 50,
+            position: 'absolute',
+            width: '100%',
+            alignItems: 'center',
+          }}>
+            <Button load={true} backgroundColor={colors.primaryBlue} />
+            </View>
           ) : (
             <View
               style={{
