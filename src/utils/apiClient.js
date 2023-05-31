@@ -10,7 +10,9 @@ const apiClient = {
     signup:'api/register',
     categories:'api/subcategory',
     subjects:'api/subjectslist',
+    topicList:'api/topiclist',
     mockTest:'api/assessmentdata',
+    checkAnswer:'api/checkanswer',
     
     getProfile:"api/web/profile",
     propertyByType:'api/web/home/explore',

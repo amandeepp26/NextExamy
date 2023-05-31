@@ -31,6 +31,7 @@ const persistConfig = {
   storage:AsyncStorage,
   whitelist: [
     'session',
+    'signin'
   ],
 };
 

@@ -15,8 +15,11 @@ import Video from '../../components/Video';
 import {colors} from '../../styles';
 import Navigator from '../../navigation/Navigator';
 import styles from '../../navigation/styles';
+import { useDispatch } from 'react-redux';
+import { logout } from '../auth/session';
 // create a component
 export default function TeacherAccount({navigation}) {
+  const dispatch = useDispatch();
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
@@ -154,7 +157,8 @@ export default function TeacherAccount({navigation}) {
             </View>
           </View>
 
-          <View
+          <Pressable
+          onPress={()=>dispatch(logout())}
             style={{
               borderWidth: 1,
               alignItems: 'center',
@@ -176,7 +180,7 @@ export default function TeacherAccount({navigation}) {
             <Text style={[styles.h6, {fontWeight: '700', marginLeft: 15}]}>
               Logout
             </Text>
-          </View>
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>

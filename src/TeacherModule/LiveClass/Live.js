@@ -33,6 +33,7 @@ export default function TeacherLive({navigation}) {
         }}
         style={{width: '100%', height: 220}}
         controls={true}
+        paused={true}
       />
 
       <Pressable

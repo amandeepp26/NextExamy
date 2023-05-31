@@ -7,6 +7,8 @@ import {
   ScrollView,
   ActivityIndicator,
   Pressable,
+  Alert,
+  BackHandler,
 } from 'react-native';
 import {colors} from '../../styles';
 import styles from '../../navigation/styles';
@@ -14,138 +16,72 @@ import {Icon} from 'react-native-elements';
 import {SafeAreaView} from 'react-native';
 import Button from '../../components/Button';
 import apiClient from '../../utils/apiClient';
-import { connect } from 'react-redux';
-import { Toast } from 'react-native-toast-message/lib/src/Toast';
-// create a component
+import {connect} from 'react-redux';
+import {Toast} from 'react-native-toast-message';
+import {RenderHTML} from 'react-native-render-html';
 
-const Questions = [
-  {
-    id: 1,
-    question: 'Which of the following is NOT a prime number?',
-    answers: [
-      {id: 1, text: '17'},
-      {id: 2, text: '19'},
-      {id: 3, text: '21', correct: true},
-      {id: 4, text: '23'},
-    ],
-  },
-  {
-    id: 2,
-    question:
-      'Which of the following elements has the highest electronegativity?',
-    answers: [
-      {id: 1, text: 'Carbon'},
-      {id: 2, text: 'Oxygen', correct: true},
-      {id: 3, text: 'Fluorine'},
-      {id: 4, text: 'Nitrogen'},
-    ],
-  },
-  {
-    id: 3,
-    question: 'Which of the following is NOT a type of RAM?',
-    answers: [
-      {id: 1, text: 'SDRAM'},
-      {id: 2, text: 'DDR4'},
-      {id: 3, text: 'SRAM', correct: true},
-      {id: 4, text: 'DRAM'},
-    ],
-  },
-  {
-    id: 4,
-    question: 'Which of the following is NOT a property of a logarithm?',
-    answers: [
-      {id: 1, text: 'Product rule'},
-      {id: 2, text: 'Power rule'},
-      {id: 3, text: 'Addition rule', correct: true},
-      {id: 4, text: 'Change of base rule'},
-    ],
-  },
-  {
-    id: 5,
-    question: 'Which of the following countries is NOT a member of the G20?',
-    answers: [
-      {id: 1, text: 'India'},
-      {id: 2, text: 'Russia'},
-      {id: 3, text: 'Canada', correct: true},
-      {id: 4, text: 'Brazil'},
-    ],
-  },
-  {
-    id: 6,
-    question: 'Which of the following is NOT a type of radiation?',
-    answers: [
-      {id: 1, text: 'Alpha'},
-      {id: 2, text: 'Beta'},
-      {id: 3, text: 'Delta', correct: true},
-      {id: 4, text: 'Gamma'},
-    ],
-  },
-  {
-    id: 7,
-    question: 'Which of the following is NOT a characteristic of a protein?',
-    answers: [
-      {id: 1, text: 'Primary structure'},
-      {id: 2, text: 'Quaternary structure'},
-      {id: 3, text: 'Tertiary structure'},
-      {id: 4, text: 'Binary structure', correct: true},
-    ],
-  },
-  {
-    id: 8,
-    question: 'Which of the following is NOT a programming language?',
-    answers: [
-      {id: 1, text: 'Python'},
-      {id: 2, text: 'Java'},
-      {id: 3, text: 'Ruby'},
-      {id: 4, text: 'Photoshop', correct: true},
-    ],
-  },
-  {
-    id: 9,
-    question: 'What is the capital of France?',
-    answers: [
-      {id: 1, text: 'Madrid'},
-      {id: 2, text: 'Paris', correct: true},
-      {id: 3, text: 'Rome'},
-      {id: 4, text: 'Berlin'},
-    ],
-  },
-  {
-    id: 10,
-    question: 'What is the largest planet in our solar system?',
-    answers: [
-      {id: 1, text: 'Saturn'},
-      {id: 2, text: 'Jupiter', correct: true},
-      {id: 3, text: 'Neptune'},
-      {id: 4, text: 'Uranus'},
-    ],
-  },
-];
-function TestQuestions({navigation,authToken}) {
-  const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+function TestQuestions({navigation, authToken, route}) {
   const [index, setIndex] = useState(0);
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [optionId, setOptionId] = useState(null);
 
   useEffect(() => {
     getAssessmentQuestion();
-  }, []);
+    console.warn('options is--->>', selectedOptions, optionId);
+  }, [selectedOptions, optionId]);
 
   const getAssessmentQuestion = async () => {
     try {
-      const response = await apiClient.post(
-        `${apiClient.Urls.mockTest}`,
-        {
-          subject_id: 1,
-          authToken: authToken,
-        },
-      );
-      console.warn(response.data);
+      const response = await apiClient.post(`${apiClient.Urls.mockTest}`, {
+        topic: route?.params.topic,
+        authToken: authToken,
+      });
+      console.warn(response);
       if (response.status) {
         setData(response.data);
         setIsLoading(false);
       } else {
-        setIsLoading(false)
+        setIsLoading(false);
+      }
+    } catch (e) {
+      Toast.show({
+        text1: e.message || e || 'Something went wrong!',
+        type: 'error',
+      });
+      setIsLoading(false);
+    }
+  };
+
+  const endTest = () => {
+    Alert.alert('Are you sure?', 'Do you really want to submit your answers?', [
+      {text: 'Cancel', style: 'cancel'},
+      {
+        text: 'Submit',
+        onPress: () => {
+          navigation.navigate('TESTS');
+        },
+      },
+    ]);
+  };
+
+  const handleSelectOption = id => {
+    const updatedSelectedOptions = [...selectedOptions];
+    updatedSelectedOptions[index] = id;
+    setSelectedOptions(updatedSelectedOptions);
+    setOptionId(id);
+  };
+
+  const checkAnswer = async () => {
+    try {
+      const response = await apiClient.post(`${apiClient.Urls.checkAnswer}`, {
+        question_id: data[index]?.id,
+        answer_id: optionId,
+        authToken: authToken,
+      });
+      if (response.status) {
+        setIndex(index + 1);
       }
     } catch (e) {
       Toast.show({
@@ -155,231 +91,355 @@ function TestQuestions({navigation,authToken}) {
     }
   };
 
+  useEffect(() => {
+    const handleBackButton = () => {
+      Alert.alert(
+        'Want to exit?',
+        'If you exit your test will automatically submit at current stage.',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+            textStyle: {
+              color: 'red',
+              fontWeight: 'bold',
+            },
+          },
+          {
+            text: 'Exit',
+            onPress: () => {
+              navigation.navigate('TESTS');
+              // Handle the user's choice to continue
+            },
+            textStyle: {
+              color: 'green',
+              fontStyle: 'italic',
+            },
+          },
+        ],
+        {cancelable: false},
+      );
+      return true; // Return true to prevent default back button behavior
+    };
+    if (data === null) {
+      return; // Exit the useEffect if data is null
+    }
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      handleBackButton,
+    );
+    return () => {
+      backHandler.remove(); // Clean up the event listener when the component unmounts
+    };
+  }, [data]);
+
+  const selectedOption = selectedOptions[index];
+
+  if (isLoading) {
+    return (
+      <View style={{justifyContent: 'center', flex: 1}}>
+        <ActivityIndicator size={25} color={colors.primaryBlue} />
+      </View>
+    );
+  }
+
+  if (data == null) {
+    return (
+      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+        <Text style={styles.h3}>No data found!</Text>
+      </View>
+    );
+  }
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
-      {isLoading ? (
-        <View style={{justifyContent: 'center', flex: 1}}>
-          <ActivityIndicator size={25} color={colors.primaryBlue} />
+      <View
+        style={{
+          backgroundColor: colors.white,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          borderBottomWidth: 3,
+          borderColor: '#e5e5e5',
+        }}>
+        <Text style={[styles.h6, {padding: 20}]}>
+          {' '}
+          {index + 1} of {data?.length}
+        </Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Timer
+            duration={30}
+            onTimeUp={() =>
+              Alert.alert(
+                'Time is up!',
+                'Your test time has expired. Do you want to submit your answers?',
+                [
+                  {
+                    text: 'Submit',
+                    onPress: () => {
+                      navigation.navigate('TESTS');
+                    },
+                  },
+                ],
+                {cancelable: false},
+              )
+            }
+          />
+          <Pressable
+            onPress={() => endTest()}
+            style={{
+              borderWidth: 1,
+              paddingVertical: 6,
+              paddingHorizontal: 25,
+              marginHorizontal: 10,
+              borderColor: '#d3d3d3',
+              borderRadius: 7,
+            }}>
+            <Text style={styles.h6}>Finish</Text>
+          </Pressable>
         </View>
-      ) : (
-        <>
-        {data!=null ?
-        <>
-          <View
-            style={{
-              backgroundColor: colors.white,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              borderBottomWidth: 3,
-              borderColor: '#e5e5e5',
-            }}>
-            <Text style={[styles.h6, {padding: 20}]}>
-              {' '}
-              {data?.[index].id} of {data?.length}
-            </Text>
-            <Pressable
-              onPress={() => navigation.navigate('TESTS')}
-              style={{
-                borderWidth: 1,
-                paddingVertical: 6,
-                paddingHorizontal: 25,
-                marginRight: 10,
-                borderColor: '#d3d3d3',
-                borderRadius: 7,
-              }}>
-              <Text style={styles.h6}>Finish</Text>
-            </Pressable>
-          </View>
-          <ScrollView>
-            <View
-              style={{
-                marginTop: 10,
-                paddingHorizontal: 15,
-              }}>
-              <Text style={[styles.h6, {marginLeft: 10, color: colors.black}]}>
-                Question {data?.[index].id}
-              </Text>
-              <View style={{marginLeft: 10, marginTop: 10}}>
-                <Text style={[styles.p, {lineHeight: 18, marginBottom: 10}]}>
+      </View>
+      <ScrollView>
+        <View
+          style={{
+            marginTop: 10,
+            paddingHorizontal: 15,
+            marginBottom: 100,
+          }}>
+          <Text style={[styles.h6, {marginLeft: 10, color: colors.black}]}>
+            Question {index + 1}
+          </Text>
+          <View style={{marginLeft: 10, marginTop: 10}}>
+            <RenderHTML source={{html: data?.[index]?.question.text}} />
+            {/* <Text style={[styles.p, {lineHeight: 18, marginBottom: 10}]}>
                   {data?.[index]?.question.text}
-                </Text>
-                {data?.[index]?.question.images.img!='' &&
-                <Image 
-                style={{width:220,height:60,marginTop:15,alignSelf:'center'}}
-                      source={{
-                        uri: `https://app.ankitbangwaldigitalmarketing.in/images/assessments/${data?.[index]?.question.images.img}`,}} />
-                      }
-                {data?.[index]?.options[0].option.includes('png') ? (
-                  <>
-                  
-                  {data?.[index]?.options.map((key,ind)=>{
-                return(
-                  <Pressable
-                    onPress={() => {
-                      if (selectedCardIndex != ind) {
-                        setSelectedCardIndex(ind);
-                      } else {
-                        setSelectedCardIndex(null);
-                      }
-                    }}
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      marginTop: 15,
-                      borderBottomWidth: 1,
-                      paddingBottom: 10,
-                      borderColor: '#d3d3d3',
-                      flex:1,
-                      height:'auto',
-                      // width:'100%'
-                    }}>
-                    <Icon
-                      key={ind}
-                      name={
-                        selectedCardIndex === ind
-                          ? 'radio-button-on-outline'
-                          : 'radio-button-off-outline'
-                      }
-                      color={
-                        selectedCardIndex === ind
-                          ? colors.primaryBlue
-                          : '#000'
-                      }
-                      type="ionicon"
-                      size={20}
-                    />
-                    <View style={{width:180,height:30,alignItems:'center'}}>
-                    <Image
-                    resizeMode='contain'
-                      source={{
-                        uri: `https://app.ankitbangwaldigitalmarketing.in/images/assessments/${key.option}`,
-                      }}
-                      style={style.optionImg}
-                    />
-                    </View>
-                  </Pressable>
-
-                )})}
-                  </>
-                ) : (
-                  <>
-                  {data?.[index]?.options.map((key,ind)=>{
-                return(
-                  
-                  <Pressable
-                  onPress={() => {
-                    if (selectedCardIndex != ind) {
-                      setSelectedCardIndex(ind);
-                    } else {
-                      setSelectedCardIndex(null);
-                    }
-                  }}
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginTop: 15,
-                    borderBottomWidth: 1,
-                    paddingBottom: 10,
-                    borderColor: '#d3d3d3',
-                  }}>
-                  <Icon
-                    key={ind}
-                    name={
-                      selectedCardIndex === ind
-                        ? 'radio-button-on-outline'
-                        : 'radio-button-off-outline'
-                    }
-                    color={
-                      selectedCardIndex === ind
-                        ? colors.primaryBlue
-                        : '#000'
-                    }
-                    type="ionicon"
-                    size={20}
-                  />
-                  <Text style={[styles.p, {marginLeft: 10, width: '85%'}]}>
-                    {key.option}
-                  </Text>
-                </Pressable>
-                )
-              })}
-                  </>
-                )}
-                {/* );
-            })} */}
-              </View>
-            </View>
-          </ScrollView>
-          <View
-            style={{
-              position: 'absolute',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              bottom: 20,
-              width: '95%',
-              alignSelf: 'center',
-            }}>
-            <View style={{width: '47%'}}>
-              {index > 0 ? (
-                <Button
-                  text={'Previous'}
-                  color={true}
-                  onpress={() => {
-                    if (index > 0) {
-                      setIndex(index - 1);
-                    }
+                </Text> */}
+            {data?.[index]?.question.images.img != '' &&
+            data?.[index]?.question.images.img != null ? (
+              <View style={{height: 210, width: 250, alignSelf: 'center'}}>
+                <Image
+                  style={{width: '100%', height: '100%'}}
+                  resizeMode="contain"
+                  source={{
+                    uri: `https://app.ankitbangwaldigitalmarketing.in/images/assessments/${data?.[index]?.question.images.img}`,
                   }}
                 />
-              ) : null}
-            </View>
-            <View style={{width: '47%'}}>
-              <Button
-                backgroundColor={colors.primaryBlue}
-                text={index + 1 == Questions.length ? 'Finish' : 'Save & Next'}
-                onpress={() => {
-                  if (index + 1 < Questions.length) {
-                    setSelectedCardIndex(null);
-                    setIndex(index + 1);
-                  } else {
-                    navigation.navigate('TESTS');
-                  }
-                }}
-              />
-            </View>
+              </View>
+            ) : null}
+            {data?.[index]?.options[0].option.includes('png') ? (
+              <>
+                {data?.[index]?.options.map(key => {
+                  return (
+                    <Pressable
+                      onPress={() => handleSelectOption(key.option_id)}
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginTop: 15,
+                        borderBottomWidth: 1,
+                        paddingBottom: 10,
+                        borderColor: '#d3d3d3',
+                        flex: 1,
+                        height: 'auto',
+                        // width:'100%'
+                      }}>
+                      <Icon
+                        name={
+                          selectedOption === key.option_id
+                            ? 'radio-button-on-outline'
+                            : 'radio-button-off-outline'
+                        }
+                        color={
+                          selectedOption === key.option_id
+                            ? colors.primaryBlue
+                            : '#000'
+                        }
+                        type="ionicon"
+                        size={20}
+                      />
+                      <View
+                        style={{
+                          width: 180,
+                          height: 30,
+                          alignItems: 'center',
+                        }}>
+                        <Image
+                          resizeMode="contain"
+                          source={{
+                            uri: `https://app.ankitbangwaldigitalmarketing.in/images/assessments/${key.option}`,
+                          }}
+                          style={style.optionImg}
+                        />
+                      </View>
+                    </Pressable>
+                  );
+                })}
+              </>
+            ) : (
+              <>
+                {data?.[index]?.options.map(key => {
+                  return (
+                    <Pressable
+                      onPress={() => handleSelectOption(key.option_id)}
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginTop: 15,
+                        borderBottomWidth: 1,
+                        paddingBottom: 10,
+                        borderColor: '#d3d3d3',
+                      }}>
+                      <Icon
+                        name={
+                          selectedOption === key.option_id
+                            ? 'radio-button-on-outline'
+                            : 'radio-button-off-outline'
+                        }
+                        color={
+                          selectedOption === key.option_id
+                            ? colors.primaryBlue
+                            : '#000'
+                        }
+                        type="ionicon"
+                        size={20}
+                        style={{marginRight: 10}}
+                      />
+                      <View style={{width: '90%'}}>
+                        <RenderHTML source={{html: key.option}} />
+                      </View>
+                    </Pressable>
+                  );
+                })}
+              </>
+            )}
+            {/* );
+            })} */}
           </View>
-        </>
-        :
-        
-        <View style={{justifyContent: 'center',alignItems:'center', flex: 1}}>
-        <Text style={styles.h3}>
-          No data found!
-        </Text>
         </View>
-}
-        </>
-      )}
+      </ScrollView>
+      <View
+        style={{
+          position: 'absolute',
+          flexDirection: 'row',
+          backgroundColor: colors.white,
+          justifyContent: 'space-between',
+          bottom: 20,
+          width: '95%',
+          alignSelf: 'center',
+        }}>
+        <View style={{width: '47%'}}>
+          {index > 0 ? (
+            <Button
+              text={'Previous'}
+              color={true}
+              onpress={() => {
+                if (index > 0) {
+                  setIndex(index - 1);
+                }
+              }}
+            />
+          ) : null}
+        </View>
+        <View style={{width: '47%'}}>
+          <Button
+            backgroundColor={colors.primaryBlue}
+            text={index + 1 == data.length ? 'Finish' : 'Save & Next'}
+            onpress={() => {
+              if (index + 1 < data.length) {
+                checkAnswer();
+              } else {
+                endTest();
+              }
+            }}
+          />
+        </View>
+      </View>
     </SafeAreaView>
   );
 }
 
-//make this component available to the app
-export default connect(
-  state =>{
-    return {
-      authToken:state.session.authToken
-    }
+function Timer({duration, onTimeUp}) {
+  const [seconds, setSeconds] = useState(duration * 60);
+  const [alert, setAlert] = useState(false);
 
-  },{
+  useEffect(() => {
+    let interval = setInterval(() => {
+      setSeconds(prevSeconds => {
+        if (prevSeconds <= 0) {
+          clearInterval(interval);
+          onTimeUp();
+          return 0;
+        }
+        if (prevSeconds < 59) {
+          setAlert(true);
+        }
+        return prevSeconds - 1;
+      });
+    }, 1000);
 
+    return () => clearInterval(interval);
+  }, []);
+
+  const formatTime = time => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes.toString().padStart(2, '0')}:${seconds
+      .toString()
+      .padStart(2, '0')}`;
+  };
+
+  return (
+    <View style={styles.timerContainer}>
+      {alert ? (
+        <Blink text={formatTime(seconds)} />
+      ) : (
+        <Text style={style.timerText}>{formatTime(seconds)}</Text>
+      )}
+    </View>
+  );
+}
+
+const Blink = props => {
+  const [isShowingText, setIsShowingText] = useState(true);
+
+  useEffect(() => {
+    const toggle = setInterval(() => {
+      setIsShowingText(!isShowingText);
+    }, 600);
+
+    return () => clearInterval(toggle);
+  }, [isShowingText]);
+
+  if (!isShowingText) {
+    return null;
   }
-)(TestQuestions);
+
+  return <Text style={[style.timerText, {color: 'red'}]}>{props.text}</Text>;
+};
+//make this component available to the app
+export default connect(state => {
+  return {
+    authToken: state.session.authToken,
+  };
+}, {})(TestQuestions);
 
 // define your styles
 const style = StyleSheet.create({
   optionImg: {
     width: '100%',
-    height: "100%",
+    height: '100%',
     marginLeft: 20,
+  },
+  timerContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#e5e5e5',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  timerText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#000',
   },
 });

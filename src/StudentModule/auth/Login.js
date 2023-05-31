@@ -44,14 +44,14 @@ function Login({
             value={phone_number}
             maxLength={10}
           />
-          <Text
+          {/* <Text
             style={[
               styles.h6,
               {marginLeft: 10, marginTop: 10, color: colors.secondaryBlue},
             ]}
             onPress={() => setLoginPhone(false)}>
             Or continue with email
-          </Text>
+          </Text> */}
         </View>
       ) : (
         <View style={{marginTop: 25}}>

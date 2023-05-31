@@ -56,7 +56,7 @@ export const skipNow = skip => ({
 
 export const setUserType = userType => ({
   type: SET_USERTYPE,
-  userType,
+  userType:userType,
 });
 
 export const setPhoneNumber = phone_number => {

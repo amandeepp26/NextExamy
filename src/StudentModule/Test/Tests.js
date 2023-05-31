@@ -1,5 +1,5 @@
 //import liraries
-import React, {Component, useState} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -11,29 +11,11 @@ import {
 import {colors} from '../../styles';
 import styles from '../../navigation/styles';
 import {Icon} from 'react-native-elements';
+import apiClient from '../../utils/apiClient';
+import {Toast} from 'react-native-toast-message/lib/src/Toast';
+import {useSelector} from 'react-redux';
+import SkeletonComponent from './Loader';
 
-const subjects = [
-  {
-    id: 1,
-    subject: 'Physics',
-    topics: '10 Topics',
-  },
-  {
-    id: 2,
-    subject: 'Mathematics',
-    topics: '15 Topics',
-  },
-  {
-    id: 3,
-    subject: 'Chemistry',
-    topics: '8 Topics',
-  },
-  {
-    id: 4,
-    subject: 'Biology',
-    topics: '18 Topics',
-  },
-];
 const testTopics = [
   {
     id: 1,
@@ -87,6 +69,59 @@ const testTopics = [
 // create a component
 function Tests({navigation}) {
   const [selectedCardIndex, setSelectedCardIndex] = useState(0);
+  const [subjects, setSubjects] = useState(null);
+  const [topics, setTopics] = useState(null);
+  const [isloading,setIsLoading] = useState(true);
+
+
+  const authToken = useSelector(state => state.session.authToken);
+
+  useEffect(() => {
+    getSubjects();
+  }, []);
+
+  const getSubjects = async () => {
+    try {
+      const response = await apiClient.post(`${apiClient.Urls.subjects}`, {
+        authToken: authToken,
+      });
+      console.warn(response);
+      if (response.status) {
+        setSubjects(response.data);
+        getTopics(response.data[0].id);
+      } else {
+        setSubjects(null);
+      }
+    } catch (e) {
+      Toast.show({
+        text1: e.message || e || 'Something went wrong!',
+        type: 'error',
+      });
+    }
+  };
+
+  const getTopics = async (e) => {
+    try {
+      const response = await apiClient.post(`${apiClient.Urls.topicList}`, {
+        authToken: authToken,
+        subject_id:e
+      });
+      console.warn(response);
+      setTopics(response);
+      setIsLoading(false)
+    } catch (e) {
+      Toast.show({
+        text1: e.message || e || 'Something went wrong!',
+        type: 'error',
+      });
+    }
+  };
+
+  if(isloading){
+    return(
+      <SkeletonComponent />
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -125,13 +160,14 @@ function Tests({navigation}) {
                 alignItems: 'center',
                 paddingVertical: 20,
               }}>
-              {subjects.map((subject, index) => {
+              {subjects?.map((subject, index) => {
                 return (
                   <Pressable
                     key={index}
                     onPress={() => {
                       if (selectedCardIndex != index) {
                         setSelectedCardIndex(index);
+                        getTopics(subject.id)
                       } else {
                         setSelectedCardIndex(null);
                       }
@@ -148,23 +184,23 @@ function Tests({navigation}) {
                       alignItems: 'center',
                       marginRight: 8,
                     }}>
-                    <Text style={styles.h6}>{subject.subject}</Text>
+                    <Text style={styles.h6}>{subject.name}</Text>
                   </Pressable>
                 );
               })}
             </ScrollView>
           </View>
-          {testTopics.map(key => {
+          {topics?.map(key => {
             return (
               <Pressable
-                onPress={() => navigation.navigate('TestInstructions')}
+                onPress={() => navigation.navigate('TestInstructions',{topic:key.topic})}
                 style={[style.header]}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View>
+                  <View style={{width:'90%'}}>
                     <Text style={[styles.p, {color: colors.primaryBlue}]}>
-                      {key.questions} Questions
+                      50 Questions
                     </Text>
-                    <Text style={[styles.h5, {marginTop: 2}]}>{key.name}</Text>
+                    <Text style={[styles.h5, {marginTop: 2,}]}>{key.topic}</Text>
                     <View
                       style={{
                         flexDirection: 'row',
@@ -173,12 +209,13 @@ function Tests({navigation}) {
                       }}>
                       <Icon name="time-outline" type="ionicon" size={15} />
                       <Text style={[styles.p, {marginLeft: 5}]}>
-                        {key.time}
+                        30 minutes
+                        {/* {key.time} */}
                       </Text>
                     </View>
                   </View>
                 </View>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ alignItems: 'center'}}>
                   <Image
                     style={{height: 40, width: 40}}
                     source={require('./images/notebook.png')}

@@ -95,7 +95,7 @@ function TeacherTests({navigation}) {
           marginTop: 5,
           marginBottom: 50,
         }}>
-          <Assessments data={data} />
+          <Assessments data={data} navigation={navigation} />
       </ScrollView>
     </View>
   );

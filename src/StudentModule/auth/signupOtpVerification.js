@@ -86,7 +86,7 @@ const signupOtpVerification = ({
               justifyContent: 'center',
               height: 30,
             }}
-            pinCount={6}
+            pinCount={4}
             autoFocusOnLoad
             keyboardType="number-pad"
             codeInputFieldStyle={style.underlineStyleBase}

@@ -47,9 +47,7 @@ const data = [
 export default function UpcomingClasses({navigation}) {
   return data.map((data, index) => {
     return (
-      <Pressable
-        style={style.container}
-        onPress={() => navigation.navigate('Live')}>
+      <Pressable style={style.container}>
         <Text style={styles.p}>In 10 minutes</Text>
         <Text style={[styles.h6, {paddingVertical: 10, fontWeight: 500}]}>
           {data.topic}
@@ -75,9 +73,11 @@ export default function UpcomingClasses({navigation}) {
           <View style={style.userCount}>
             <Text style={{color: '#fff', fontSize: 10}}>+25</Text>
           </View>
-          <View style={style.joinBtn}>
+          <Pressable
+            onPress={() => navigation.navigate('Live')}
+            style={style.joinBtn}>
             <Text style={styles.p}>Join Now </Text>
-          </View>
+          </Pressable>
         </View>
       </Pressable>
     );

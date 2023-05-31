@@ -1,7 +1,7 @@
 import { Platform } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import apiClient from '../../utils/apiClient';
-import { skipNow } from './signin';
+import { setUserType, skipNow } from './signin';
 
 const SET_AUTH_DATA = 'auth/session/SET_AUTH_DATA';
 const LOGOUT_SUCCESS = 'auth/session/LOGOUT_SUCCESS';
@@ -20,22 +20,23 @@ export const setAuthData = (authToken, profile) => ({
 });
 
 export const logout = () => (dispatch, getState) => {
-  const { authToken } = getState().session;
-  const deviceId = DeviceInfo.getUniqueId();
+  // const { authToken } = getState().session;
+  // const deviceId = DeviceInfo.getUniqueId();
   dispatch(skipNow(true));
-  apiClient.post(apiClient.Urls.logout, {
-    authToken,
-    device_id: deviceId,
-  }).then((res) => {
-    console.warn(res)
+  dispatch(setUserType(''));
+  // apiClient.post(apiClient.Urls.logout, {
+  //   authToken,
+  //   device_id: deviceId,
+  // }).then((res) => {
+  //   console.warn(res)
     dispatch({
       type: LOGOUT_SUCCESS,
     });
-  }).catch(e => {
-    dispatch({
-      type: LOGOUT_SUCCESS,
-    });
-  });
+  // }).catch(e => {
+  //   dispatch({
+  //     type: LOGOUT_SUCCESS,
+  //   });
+  // });
 };
 
 export const setFCMToken = async (token, deviceId, userId) => {

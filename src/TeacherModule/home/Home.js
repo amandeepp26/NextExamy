@@ -17,6 +17,7 @@ import SelectDropdown from 'react-native-select-dropdown';
 import {Icon} from 'react-native-elements';
 import Assessments from './Assessments';
 import Button from '../../components/Button';
+import { useSelector } from 'react-redux';
 const options2 = ['Option A', 'Option B', 'Option C'];
 const data = [
   {
@@ -46,6 +47,8 @@ const data = [
 ];
 
 export default function Home({navigation}) {
+  const name = useSelector(state => state.signin.name);
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={[styles.container, {backgroundColor: colors.white}]}>
@@ -58,7 +61,7 @@ export default function Home({navigation}) {
                 styles.h5,
                 {color: colors.primaryBlue, fontWeight: '600'},
               ]}>
-              Akash Saini
+              {name}
             </Text>
           </View>
           <Pressable onPress={() => navigation.navigate('Account')}>
@@ -73,7 +76,7 @@ export default function Home({navigation}) {
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={[styles.h5, {fontWeight: 600}]}>My Schedule</Text>
-              <View
+              {/* <View
                 style={{
                   flexDirection: 'row',
                 }}>
@@ -89,14 +92,7 @@ export default function Home({navigation}) {
                   buttonStyle={style.dropdownText}
                   buttonTextStyle={style.placeholder}
                 />
-                {/* <Icon
-                name="chevron-down"
-                type="entypo"
-                size={15}
-                color="#444"
-                style={{marginRight: 5}}
-              /> */}
-              </View>
+              </View> */}
             </View>
 
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
@@ -146,9 +142,9 @@ export default function Home({navigation}) {
           </View>
 
           <View style={style.asssessmentContainer}>
-            <Assessments data={data} />
+            <Assessments data={data} navigation={navigation} />
             <View>
-              <Button text={'See all'} backgroundColor={colors.gray} />
+              <Button text={'See all'} backgroundColor={colors.gray} onpress={()=>navigation.navigate('TESTS')} />
             </View>
           </View>
         </ScrollView>

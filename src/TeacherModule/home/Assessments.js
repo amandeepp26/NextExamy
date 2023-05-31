@@ -1,8 +1,8 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {colors} from '../../styles';
 
-export default function Assessments({data}) {
+export default function Assessments({data,navigation}) {
   return data.map(data => {
     const formattedDate = new Date(data.completed_on).toLocaleString('en-us', {
       month: 'long',
@@ -10,7 +10,8 @@ export default function Assessments({data}) {
       year: '2-digit',
     });
     return (
-      <View
+      <Pressable
+      onPress={()=>navigation.navigate('TestReview')}
         style={{
           paddingHorizontal: 10,
           paddingVertical: 10,
@@ -61,7 +62,7 @@ export default function Assessments({data}) {
           • Completed on {formattedDate}
           </Text>
         </View>
-      </View>
+      </Pressable>
     );
   });
 }

@@ -25,12 +25,8 @@ const initialState = {
   skip: true,
   error: {},
   errorMessage: '',
-  phone_number: '',
   name: '',
-  email: '',
   password: '',
-  otp: '',
-  profile_pic: '',
   loading: false,
   userType:''
 };
@@ -59,24 +55,10 @@ export const setUserType = userType => ({
   userType,
 });
 
-export const setPhoneNumber = phone_number => {
-  return {
-    type: SET_PHONE_NUMBER,
-    phone_number,
-  };
-};
-
 export const setName = name => {
   return {
     type: SET_NAME,
     name,
-  };
-};
-
-export const setEmail = email => {
-  return {
-    type: SET_EMAIL,
-    email,
   };
 };
 
@@ -87,11 +69,64 @@ export const setPassword = password => {
   };
 };
 
-export const setOTP = otp => {
-  return {
-    type: ENTER_OTP,
-    otp,
-  };
+
+export const login = callback => async (dispatch, getState) => {
+  const state = getState();
+  const {name,password} = state.signin;
+  // console.warn('cll', callback);
+  if(name=='' || password == ''){
+    alert('Please enter the details');
+  }
+  else{
+  try {
+    dispatch({
+      type: LOADING_START,
+    });
+    dispatch(setAuthData('teacherToker1234',{name:name}));
+    dispatch(skipNow(false));
+    // const response = await apiClient.post(apiClient.Urls.login, {
+    //   mobile: phone_number,
+    // });
+
+    // console.log('Request OTP---------->', response);
+
+    // if (response.success) {
+    //   if (callback) {
+    //     callback();
+    //   }
+    //   Toast.show({
+    //     text1: response.message || 'OTP Sent',
+    //     type: 'success',
+    //   });
+    //   dispatch({
+    //     type: LOADING_STOP,
+    //   });
+    // }  else {
+    //   if (response.error_object.mobile) {
+    //     Toast.show({
+    //       text1: response.error_object.mobile || response || 'Something went wrong!',
+    //       type: 'error',
+    //     });
+    //   }
+    //   dispatch({
+    //     type: LOADING_STOP,
+    //   });
+    //   dispatch({
+    //     type: ERROR,
+    //     errorMessage: response.message,
+    //   });
+    // }
+  } catch (e) {
+    Toast.show({
+      text1: e.message || e || 'Something went wrong!',
+      type: 'error',
+    });
+    dispatch({
+      type: ERROR,
+      errorMessage: e.message,
+    });
+  }
+}
 };
 
 export const requestOtp = callback => async (dispatch, getState) => {
@@ -145,7 +180,6 @@ export const requestOtp = callback => async (dispatch, getState) => {
     });
   }
 };
-
 
 export const resendOtp = callback => async (dispatch, getState) => {
   const state = getState();
@@ -306,118 +340,6 @@ export const requestSignupOtp = callback => async (dispatch, getState) => {
       type: ERROR,
       errorMessage: e.message,
     });
-  }
-};
-
-export const resendSignupOtp = callback => async (dispatch, getState) => {
-  const state = getState();
-  const {phone_number, name, email} = state.signin;
-  console.warn('cll', callback);
-  try {
-    const response = await apiClient.post(apiClient.Urls.signup, {
-      mobile: phone_number,
-      name: name,
-      email: email,
-    });
-
-    console.log('Request OTP---------->', response);
-
-    if (response.success) {
-      if (callback) {
-        callback();
-      }
-      Toast.show({
-        text1: response.message || 'OTP Sent',
-        type: 'success',
-      });
-      dispatch({
-        type: LOADING_STOP,
-      });
-    } else {
-      if (response.error_object.mobile) {
-        Toast.show({
-          text1: response.errors || response || 'Something went wrong!',
-          type: 'error',
-        });
-      }
-      if (response.error_object.email) {
-        Toast.show({
-          text1: response.errors || response || 'Something went wrong!',
-          type: 'error',
-        });
-      }
-      if (response.error_object.name) {
-        Toast.show({
-          text1: response.errors || response || 'Something went wrong!',
-          type: 'error',
-        });
-      }
-      dispatch({
-        type: LOADING_STOP,
-      });
-      dispatch({
-        type: ERROR,
-        errorMessage: response.message,
-      });
-    }
-  } catch (e) {
-    Toast.show({
-      text1: e.message || e || 'Something went wrong!',
-      type: 'error',
-    });
-    dispatch({
-      type: ERROR,
-      errorMessage: e.message,
-    });
-  }
-};
-
-export const validateSignupOtp = () => async (dispatch, getState) => {
-  const state = getState();
-  const {otp, phone_number, email, name} = state.signin;
-  if (otp == '') {
-    Toast.show({text1: `Please enter verification code`, type: 'error'});
-    return;
-  }
-  try {
-    dispatch({
-      type: LOGIN_START,
-    });
-    const response = await apiClient.post(apiClient.Urls.verifySignupOtp, {
-      mobile: phone_number,
-      otp: otp,
-      name: name,
-      email: email,
-    });
-
-    console.log('OTP Verification---------->', response);
-
-    if (response.success) {
-      dispatch(setAuthData(response.profile.authToken, response.profile));
-      Toast.show({text1: response.message || 'Login Success', type: 'success'});
-      dispatch(skipNow(false));
-      dispatch({
-        type: LOGIN_SUCCESS,
-      });
-    } else {
-      Toast.show({
-        text1: response.message || 'Something went wrong!',
-        type: 'error',
-      });
-      dispatch({
-        type: LOGIN_FAIL,
-      });
-      dispatch(displayError('', response.message || 'Something went wrong!'));
-    }
-  } catch (e) {
-    Toast.show({
-      text1: e.message || e || 'Something went wrong!',
-      type: 'error',
-    });
-    dispatch({
-      type: LOGIN_FAIL,
-    });
-    dispatch(displayError('', e.message || e || 'Something went wrong!'));
   }
 };
 

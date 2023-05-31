@@ -9,6 +9,7 @@ import RNSTextInput from '../../components/RNSTextInput';
 import Button from '../../components/Button';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
+import { ImagePicker } from 'react-native-image-picker';
 
 // create a component
 const TeacherEditProfile = ({navigation}) => {

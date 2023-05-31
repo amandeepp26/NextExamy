@@ -13,7 +13,7 @@ import {Icon} from 'react-native-elements';
 import {SafeAreaView} from 'react-native';
 import Button from '../../components/Button';
 // create a component
-function TestInstructions({navigation}) {
+function TestInstructions({navigation, route}) {
   const [agree, setAgree] = useState(false);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
@@ -31,7 +31,9 @@ function TestInstructions({navigation}) {
           size={30}
           onPress={() => navigation.goBack()}
         />
-        <Text style={[styles.h3, {padding: 20}]}>Mock Test- Kinematics</Text>
+        <Text style={[styles.h4, {padding: 15,width:'80%'}]}>
+          Mock Test- {route?.params.topic}
+        </Text>
       </View>
       <ScrollView>
         <View style={{flex: 1, backgroundColor: colors.white}}>
@@ -95,31 +97,52 @@ function TestInstructions({navigation}) {
                 Instructions
               </Text>
             </View>
-            <View style={{marginLeft: 10, marginTop: 10}}>
+            <View style={{marginLeft: 10, marginTop: 10,marginBottom:120}}>
               <Text style={[styles.p, {lineHeight: 18}]}>
-                • Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-                takimata sanctus est Lorem
+                Welcome to the Mock Test!{'\n'}
                 {'\n'}
-                {'\n'}• Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-                takimata sanctus est Lorem
+                Please read the following instructions carefully before starting
+                the test:{'\n'}
+                1. This mock test is designed to assess your knowledge on the
+                subject matter. It consists of multiple-choice questions (MCQs).
                 {'\n'}
-                {'\n'}• Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-                takimata sanctus est Lorem
+                2. The test duration is 30 minutes. Please ensure that
+                you have enough time to complete the test without interruptions.
+                {'\n'}
+                3. You are not allowed to use any reference materials, such as
+                books, notes, or online resources, during the test. The purpose
+                is to evaluate your understanding based on your existing
+                knowledge.{'\n'}
+                4. Each question has four options (A, B, C, and D). Choose the
+                most appropriate answer by selecting the corresponding option.
+                {'\n'}
+                5. Make sure to select only one answer per question. Multiple
+                answers will be considered incorrect.{'\n'}
+                6. Pay attention to the time remaining for the test. Submit your
+                answers before the time limit expires. Any unanswered questions
+                will be automatically marked as incorrect.{'\n'}
+                7. Once you submit your answers, you will not be able to make
+                any changes. Review your answers carefully before clicking the
+                submit button.
+                {'\n'}
+                8. Stay focused, manage your time wisely, and do your best!
+                {'\n'}
+                {'\n'}
+                Are you ready? If so, begin the test and good luck!{'\n'}
+                {'\n'}
               </Text>
             </View>
           </View>
         </View>
       </ScrollView>
-      <View style={{position: 'absolute', bottom: 20, width: '100%'}}>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          backgroundColor: colors.white,
+          paddingBottom: 20,
+          width: '100%',
+        }}>
         <View
           style={{
             flexDirection: 'row',
@@ -139,7 +162,18 @@ function TestInstructions({navigation}) {
           </Text>
         </View>
 
-        <Button backgroundColor={colors.primaryBlue} text={'Start'} onpress={()=>{agree? navigation.navigate('TestQuestions') : null}} opacity={agree ? 1 : 0.5} />
+        <Button
+          backgroundColor={colors.primaryBlue}
+          text={'Start'}
+          onpress={() => {
+            agree
+              ? navigation.navigate('TestQuestions', {
+                  topic: route?.params.topic,
+                })
+              : null;
+          }}
+          opacity={agree ? 1 : 0.5}
+        />
       </View>
     </SafeAreaView>
   );

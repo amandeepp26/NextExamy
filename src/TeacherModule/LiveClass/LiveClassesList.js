@@ -119,7 +119,7 @@ export default function LiveClassesList({navigation}) {
             return (
               <Pressable
                 style={style.container}
-                onPress={() => alert('Live')}>
+                onPress={() => navigation.navigate('Live')}>
                 <Text
                   style={[styles.h6, {paddingVertical: 10, fontWeight: 500}]}>
                   {data.topic}
