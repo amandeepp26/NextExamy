@@ -8,6 +8,16 @@ import {colors} from '../../styles';
 import styles from '../../navigation/styles';
 import { skipNow } from '../auth/signin';
 import { connect } from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
+
+const colorCodes = [
+  { primary: '#A0E7E5', secondary: '#FFFFFF' }, // Blue and White
+  { primary: '#28A745', secondary: '#6C757D' }, // Green and Gray
+  { primary: '#6F42C1', secondary: '#FF69B4' }, // Purple and Pink
+  { primary: '#20C997', secondary: '#FD7E14' }, // Teal and Orange
+  { primary: '#FFAEBC', secondary: '#FFC107' }, // Red and Yellow
+  { primary: '#B4F8C8', secondary: '#FFD700' }, // Navy Blue and Gold
+];
 
 const category = [
   {
@@ -52,7 +62,9 @@ function SelectSubCategory({navigation,skipNow}) {
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
 
   renderItem = ({item, index}) => {
+    const bgColor = colorCodes[index].primary;
     return (
+
       <Pressable
         key={index}
         onPress={() => {
@@ -62,14 +74,15 @@ function SelectSubCategory({navigation,skipNow}) {
             setSelectedCardIndex(null);
           }
         }}
-        style={{
+        
+        style={[style.gradientContainer,{
           flexDirection: 'row',
           alignItems: 'center',
           margin: 8,
           // marginHorizontal: 10,
           borderWidth: selectedCardIndex === index ? 2.5 : 0,
           borderColor:
-            selectedCardIndex === index ? colors.primaryBlue : colors.gray,
+            selectedCardIndex === index ? colors.primaryBlue : colors.bgColor,
           borderRadius: 10,
           backgroundColor: colors.white,
           elevation: 5,
@@ -79,21 +92,25 @@ function SelectSubCategory({navigation,skipNow}) {
           shadowColor: '#000',
           shadowOffset: {width: 1, height: 1},
           shadowOpacity: 0.7,
-          shadowRadius: 1,
-        }}>
+          shadowRadius: 1, 
+          borderLeftWidth:10,
+          borderLeftColor:bgColor
+          
+        }]}>
+          
         {selectedCardIndex === index ? (
           <View style={{position: 'absolute', right: 10, top: 5}}>
             <Icon name="check-circle" color={colors.primaryBlue} size={22} />
           </View>
         ) : null}
-        <Image source={item.img} style={{width: '37%', height: '67%'}} />
         <View style={{marginLeft: 8, width: '75%', padding: 5}}>
-          <Text style={styles.h4}>{item.category}</Text>
-          <Text style={[styles.p, {fontSize: 13}]} numberOfLines={2}>
+          <Text style={[styles.h6,{fontWeight:'700'}]}>{item.category}</Text>
+          <Text style={[styles.p, {fontSize: 11}]} numberOfLines={2}>
             {item.description}
           </Text>
         </View>
       </Pressable>
+     
     );
   };
   return (
@@ -148,6 +165,14 @@ const style = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#2c3e50',
   },
+  gradientContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgb(2,146,183)',
+    backgroundImage: 'linear-gradient(125deg, rgba(2,146,183,1) 0%, rgba(255,255,255,1) 100%)',
+  },
+  
 });
 
 //make this component available to the app
