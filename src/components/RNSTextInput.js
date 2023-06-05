@@ -1,7 +1,7 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text,Pressable,Image, TextInput, StyleSheet, Dimensions } from 'react-native';
-import { colors } from '../styles';
+import { colors, fonts } from '../styles';
 
 // create a component
 const RNSTextInput = ({
@@ -53,7 +53,7 @@ const style = StyleSheet.create({
         fontSize:14,
         paddingVertical:10,
         color:colors.gray,
-        fontFamily:"Poppins-Regular",
+        fontFamily: fonts.primaryRegular,
         alignSelf:"center",
         alignItems:"center",
         justifyContent:"center"

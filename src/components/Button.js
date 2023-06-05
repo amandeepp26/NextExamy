@@ -9,7 +9,7 @@ import {
   Image,
   ActivityIndicator,
 } from 'react-native';
-import {colors} from '../styles';
+import {colors, fonts} from '../styles';
 
 // create a component
 const Button = ({text, onpress,color,backgroundColor, load,opacity, ...props}) => {
@@ -24,7 +24,7 @@ const Button = ({text, onpress,color,backgroundColor, load,opacity, ...props}) =
       <Text
         style={[
           styles.p,
-          {fontSize: 18, color: color ? colors.gray : colors.white, fontFamily: 'Poppins-Medium'},
+          {fontSize: 18, color: color ? colors.gray : colors.white, fontFamily: fonts.primaryMedium},
         ]}>
         {text}
       </Text>

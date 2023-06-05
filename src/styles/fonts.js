@@ -11,5 +11,5 @@ export default {
   primaryRegular: 'Roboto-Regular',
   primaryThin: 'Roboto-Thin',
   primaryThinItalic: 'Roboto-ThinItalic',
-  primarySemiBold:'Roboto-SemiBold'
+  primarySemiBold:'Roboto-Bold'
 };
