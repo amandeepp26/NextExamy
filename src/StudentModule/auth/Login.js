@@ -26,12 +26,13 @@ function Login({
           alignSelf: 'center',
           alignItems: 'center',
           width: '100%',
-          height:'12%',
+          height:'15%',
           marginTop: 20,
         }}>
         <Image
           source={require('../../../assets/images/logo.png')}
-          style={{width: '22%', height: '99%'}}
+          resizeMode='contain'
+          style={{width: '35%', height: '100%'}}
         />
       </View>
       {loginPhone ? (
@@ -78,7 +79,7 @@ function Login({
           width: '100%',
           alignItems: 'center',
         }}>
-        <Text stylele={[styles.h4, {color: '#000'}]}>
+        <Text style={[styles.p, {color: '#000'}]}>
           Don't have an account?
           <Text
             style={{color: colors.secondaryBlue}}

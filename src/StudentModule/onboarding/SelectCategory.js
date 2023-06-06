@@ -1,65 +1,92 @@
 //import liraries
-import React, {Component, useState} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Image, Pressable} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Button from '../../components/Button';
 import {colors} from '../../styles';
 import styles from '../../navigation/styles';
+import apiClient from '../../utils/apiClient';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
-const category = [
-  {
-    id: 1,
-    category: 'CAT',
-    description:
-      'CAT exams: Verbal Ability & Reading Comprehension (VARC), Data Interpretation & Logical Reasoning (DILR), Quantitative Aptitude (QA)',
-    img: require('./images/cat.png'),
-  },
-  {
-    id: 2,
-    category: 'IIT-JEE',
-    description: 'IIT JEE exams: IIT JEE Prelims, IIT JEE Mains',
-    img: require('./images/iit.png'),
-  },
-  {
-    id: 3,
-    category: 'Medical',
-    description: 'Medical exams: NNET, NEET-PG, NEET MDS, INI CET, AIIMS, FGME',
-    img: require('./images/medical.png'),
-  },
-  {
-    id: 4,
-    category: 'State Exams',
-    description: 'State exams such UKSSC, UPSSC',
-    img: require('./images/state.png'),
-  },
-  {
-    id: 5,
-    category: 'Government Job Exams',
-    description: 'Exams through which you can qualify for government jobs',
-    img: require('./images/govt.png'),
-  },
-];
+// const category = [
+//   {
+//     id: 1,
+//     category: 'CAT',
+//     description:
+//       'CAT exams: Verbal Ability & Reading Comprehension (VARC), Data Interpretation & Logical Reasoning (DILR), Quantitative Aptitude (QA)',
+//     img: require('./images/cat.png'),
+//   },
+//   {
+//     id: 2,
+//     category: 'IIT-JEE',
+//     description: 'IIT JEE exams: IIT JEE Prelims, IIT JEE Mains',
+//     img: require('./images/iit.png'),
+//   },
+//   {
+//     id: 3,
+//     category: 'Medical',
+//     description: 'Medical exams: NNET, NEET-PG, NEET MDS, INI CET, AIIMS, FGME',
+//     img: require('./images/medical.png'),
+//   },
+//   {
+//     id: 4,
+//     category: 'State Exams',
+//     description: 'State exams such UKSSC, UPSSC',
+//     img: require('./images/state.png'),
+//   },
+//   {
+//     id: 5,
+//     category: 'Government Job Exams',
+//     description: 'Exams through which you can qualify for government jobs',
+//     img: require('./images/govt.png'),
+//   },
+// ];
 // create a component
 function SelectCategory({navigation}) {
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+  const [category, setCategory] = useState(null);
+
+  useEffect(() => {
+    getCategory();
+  }, []);
+
+  const getCategory = async () => {
+    try {
+      const response = await apiClient.post(`${apiClient.Urls.categories}`, {});
+      console.warn(response);
+      if (response.status) {
+        setCategory(response.data);
+      } else {
+        setCategory(null);
+      }
+    } catch (e) {
+      Toast.show({
+        text1: e.message || e || 'Something went wrong!',
+        type: 'error',
+      });
+    console.warn(e)
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={{padding: 20, marginTop: 10, backgroundColor: '#fff'}}>
         <Text style={styles.h6}>Let's setup your profile</Text>
-        <Text style={[styles.h3,{fontWeight:'700'}]}>Select your Category</Text>
+        <Text style={[styles.h3, {fontWeight: '700'}]}>
+          Select your Category
+        </Text>
       </View>
       <View style={{marginTop: 5}}>
-        {category.map((key, index) => {
+        {category?.map((key, index) => {
           return (
             <Pressable
               key={index}
               onPress={() => {
                 if (selectedCardIndex != index) {
-                    setSelectedCardIndex(index);
-                }
-                else{
-                    setSelectedCardIndex(null)
+                  setSelectedCardIndex(index);
+                } else {
+                  setSelectedCardIndex(null);
                 }
               }}
               style={{
@@ -91,9 +118,9 @@ function SelectCategory({navigation}) {
                   />
                 </View>
               ) : null}
-              <Image source={key.img} style={{width: '18%', height: '90%'}} />
+              <Image source={{uri:apiClient.Urls.imgUrl+key.image}} style={{width: '18%', height: '90%'}} />
               <View style={{marginLeft: 20, width: '80%', padding: 5}}>
-                <Text style={styles.h3}>{key.category}</Text>
+                <Text style={styles.h3}>{key.name}</Text>
                 <Text style={styles.p} numberOfLines={2}>
                   {key.description}
                 </Text>
@@ -110,7 +137,11 @@ function SelectCategory({navigation}) {
           width: '100%',
           alignItems: 'center',
         }}>
-        <Button backgroundColor={colors.primaryBlue} text={'Next'} onpress={()=>navigation.navigate('SelectSubCategory')} />
+        <Button
+          backgroundColor={colors.primaryBlue}
+          text={'Next'}
+          onpress={() => navigation.navigate('SelectSubCategory')}
+        />
       </View>
     </View>
   );

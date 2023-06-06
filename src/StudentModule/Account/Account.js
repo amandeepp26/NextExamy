@@ -6,19 +6,13 @@ import {
   StyleSheet,
   Image,
   SafeAreaView,
-  ScrollView,
   Pressable,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
-import Button from '../../components/Button';
-import Video from '../../components/Video';
 import {colors} from '../../styles';
-import Navigator from '../../navigation/Navigator';
 import styles from '../../navigation/styles';
 import {useDispatch} from 'react-redux';
 import {logout} from '../auth/session';
-import {skipNow} from '../auth/signin';
-import {setUserType} from '../auth/signin';
 // create a component
 const Account = ({navigation}) => {
   const dispatch = useDispatch();

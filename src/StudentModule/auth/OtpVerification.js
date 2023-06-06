@@ -31,18 +31,18 @@ const OtpVerification = ({
   const [resend, setResend] = useState(false);
   return (
     <View style={{flex: 1, backgroundColor: colors.white}}>
-      
       <View
         style={{
           alignSelf: 'center',
           alignItems: 'center',
           width: '100%',
-          height:'12%',
+          height:'15%',
           marginTop: 20,
         }}>
         <Image
           source={require('../../../assets/images/logo.png')}
-          style={{width: '22%', height: '99%'}}
+          resizeMode='contain'
+          style={{width: '35%', height: '100%'}}
         />
       </View>
         <View style={{alignItems:'center'}}>
@@ -208,7 +208,7 @@ const style = StyleSheet.create({
     backgroundColor: '#FAFCFF',
     borderColor: '#D3DAE6',
     color: colors.black,
-    fontFamily: 'Poppins-Medium',
+    fontFamily: fonts.primaryMedium,
     fontSize: 20,
     alignItems: 'center',
     justifyContent: 'center',

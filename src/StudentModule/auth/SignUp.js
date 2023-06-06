@@ -1,6 +1,6 @@
 //import liraries
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, KeyboardAvoidingView} from 'react-native';
 import Button from '../../components/Button';
 import RNSTextInput from '../../components/RNSTextInput';
 import {colors} from '../../styles';
@@ -21,18 +21,20 @@ function Signup({
   requestSignupOtp
 }) {
   return (
+    <KeyboardAvoidingView style={{flex:1}} behavior='height' enabled >
     <View style={style.container}>
       <View
         style={{
           alignSelf: 'center',
           alignItems: 'center',
           width: '100%',
-          height:'12%',
+          height:'15%',
           marginTop: 20,
         }}>
         <Image
           source={require('../../../assets/images/logo.png')}
-          style={{width: '22%', height: '99%'}}
+          resizeMode='contain'
+          style={{width: '35%', height: '100%'}}
         />
       </View>
       <View style={{marginTop: 10}}>
@@ -60,6 +62,7 @@ function Signup({
           keyboard={'numeric'}
           onChangeText={e => setPhoneNumber(e)}
           value={phone_number}
+          maxLength={10}
         />
       </View>
       <View
@@ -68,11 +71,11 @@ function Signup({
           position: 'absolute',
           width: '100%',
           alignItems: 'center',
-          justifyContent:'center',
+          justifyContent:'flex-end',
           left:0
         }}>
           <View style={{width:'70%',alignItems:'center',justifyContent:'center'}}>
-        <Text stylele={[styles.p, {color: '#000', textAlign: 'justify',}]}>
+        <Text style={[styles.p, {color: '#000', textAlign: 'justify',}]}>
           By signing up, you agree to {'\n'}
           <Text
             style={{color: colors.secondaryBlue}}
@@ -104,6 +107,7 @@ function Signup({
         )}
       </View>
     </View>
+    </KeyboardAvoidingView> 
   );
 }
 

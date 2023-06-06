@@ -4,6 +4,7 @@ import apiClient from '../../utils/apiClient';
 import { setUserType, skipNow } from './signin';
 
 const SET_AUTH_DATA = 'auth/session/SET_AUTH_DATA';
+const SET_TEMP_TOKEN = 'auth/session/SET_TEMP_TOKEN';
 const LOGOUT_SUCCESS = 'auth/session/LOGOUT_SUCCESS';
 const ERROR = 'auth/session/ERROR';
 
@@ -11,6 +12,7 @@ const ERROR = 'auth/session/ERROR';
 const initialState = {
   authToken: null,
   profile: null,
+  tempToken : null
 };
 
 export const setAuthData = (authToken, profile) => ({
@@ -18,6 +20,13 @@ export const setAuthData = (authToken, profile) => ({
   authToken:authToken,
   profile:profile,
 });
+
+export const setTempToken = (tempToken) => ({
+  type: SET_TEMP_TOKEN,
+  tempToken:tempToken
+});
+
+
 
 export const logout = () => (dispatch, getState) => {
   // const { authToken } = getState().session;
@@ -57,6 +66,11 @@ export default sessionReducer = (state = initialState, action) => {
         ...state,
         authToken: action.authToken,
         profile: action.profile,
+      };
+      case SET_TEMP_TOKEN:
+      return {
+        ...state,
+        tempToken: action.tempToken,
       };
     case LOGOUT_SUCCESS:
       return {

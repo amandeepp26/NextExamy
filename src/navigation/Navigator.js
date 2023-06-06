@@ -14,21 +14,34 @@ import signupOtpVerification from '../StudentModule/auth/signupOtpVerification';
 function Navigator(props) {
   console.warn('ppppp', props);
   const Stack = createStackNavigator();
-  if (!props.authToken && props.skip) {
+  if (!props.authToken) {
     if (props.userType === 'Student') {
       return (
-        <Stack.Navigator
-          screenOptions={{headerShown: false}}>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="OtpVerification" component={OtpVerification} />
-          <Stack.Screen name="Signup" component={Signup} />
-          <Stack.Screen name="signupOtpVerification" component={signupOtpVerification} />
-          <Stack.Screen name="SelectCategory" component={SelectCategory} />
-          <Stack.Screen
-            name="SelectSubCategory"
-            component={SelectSubCategory}
-          />
-        </Stack.Navigator>
+        <>
+          {props.skip ? (
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen
+                name="OtpVerification"
+                component={OtpVerification}
+              />
+              <Stack.Screen name="Signup" component={Signup} />
+              <Stack.Screen
+                name="signupOtpVerification"
+                component={signupOtpVerification}
+              />
+            
+            </Stack.Navigator>
+          ) : (
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+              <Stack.Screen name="SelectCategory" component={SelectCategory} />
+              <Stack.Screen
+                name="SelectSubCategory"
+                component={SelectSubCategory}
+              />
+            </Stack.Navigator>
+          )}
+        </>
       );
     } else if (props.userType === 'Teacher') {
       return (
@@ -44,9 +57,7 @@ function Navigator(props) {
       );
     }
   }
-  return (
-    <NavigatorView />
-    );
+  return <NavigatorView />;
 }
 
 export default connect(

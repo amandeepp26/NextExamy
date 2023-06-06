@@ -1,5 +1,5 @@
 import apiClient from '../../utils/apiClient';
-import {setAuthData} from './session';
+import {setAuthData, setTempToken} from './session';
 import Toast from 'react-native-toast-message';
 import {validateEmail, validatePhoneNumber} from '../../utils/validate';
 
@@ -220,7 +220,7 @@ export const validateOtp = () => async (dispatch, getState) => {
       dispatch(setAuthData(response.token, response.user));
       dispatch(setUserType('Student'));
       Toast.show({text1: response.message || 'Login Success', type: 'success'});
-      dispatch(skipNow(false));
+      // dispatch(skipNow(false));
       dispatch({
         type: LOGIN_SUCCESS,
       });
@@ -395,10 +395,10 @@ export const validateSignupOtp = callback => async (dispatch, getState) => {
     console.log('Log in---------->', response);
 
     if (response.status) {
-      dispatch(setAuthData(response.token, response.user));
+      dispatch(setTempToken(response.token));
       dispatch(setUserType('Student'));
       Toast.show({text1: response.message || 'Login Success', type: 'success'});
-      // dispatch(skipNow(false));
+      dispatch(skipNow(false));
       if (callback) {
         callback();
       }

@@ -83,7 +83,7 @@ export const login = callback => async (dispatch, getState) => {
       type: LOADING_START,
     });
     dispatch(setAuthData('teacherToker1234',{name:name}));
-    dispatch(skipNow(false));
+    // dispatch(skipNow(false));
     // const response = await apiClient.post(apiClient.Urls.login, {
     //   mobile: phone_number,
     // });
@@ -251,7 +251,7 @@ export const validateOtp = () => async (dispatch, getState) => {
     if (response.success) {
       dispatch(setAuthData(response.profile.authToken, response.profile));
       Toast.show({text1: response.message || 'Login Success', type: 'success'});
-      dispatch(skipNow(false));
+      // dispatch(skipNow(false));
       dispatch({
         type: LOGIN_SUCCESS,
       });

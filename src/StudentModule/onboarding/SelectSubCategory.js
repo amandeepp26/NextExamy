@@ -2,13 +2,12 @@
 import React, {Component, useState} from 'react';
 import {View, Text, StyleSheet, Image, FlatList, Pressable} from 'react-native';
 import {Icon} from 'react-native-elements';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import Button from '../../components/Button';
 import {colors} from '../../styles';
 import styles from '../../navigation/styles';
 import { skipNow } from '../auth/signin';
-import { connect } from 'react-redux';
-import LinearGradient from 'react-native-linear-gradient';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAuthData } from '../auth/session';
 
 const colorCodes = [
   { primary: '#A0E7E5', secondary: '#FFFFFF' }, // Blue and White
@@ -58,9 +57,11 @@ const category = [
   },
 ];
 // create a component
-function SelectSubCategory({navigation,skipNow}) {
+function SelectSubCategory({navigation}) {
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+  const dispatch = useDispatch();
 
+  const tempToken = useSelector(state=>state.session.tempToken)
   renderItem = ({item, index}) => {
     const bgColor = colorCodes[index].primary;
     return (
@@ -151,7 +152,7 @@ function SelectSubCategory({navigation,skipNow}) {
           width: '100%',
           alignItems: 'center',
         }}>
-        <Button backgroundColor={colors.primaryBlue} text={'Next'} onpress={() => skipNow(false)} />
+        <Button backgroundColor={colors.primaryBlue} text={'Next'} onpress={() => {dispatch(skipNow(false));dispatch(setAuthData(tempToken))}} />
       </View>
     </View>
   );
@@ -176,12 +177,4 @@ const style = StyleSheet.create({
 });
 
 //make this component available to the app
-export default connect(
-  state => {
-    return {
-    };
-  },
-  {
-    skipNow
-  },
-)(SelectSubCategory);
+export default SelectSubCategory;
