@@ -76,7 +76,9 @@ function Signup({
         }}>
           <View style={{width:'70%',alignItems:'center',justifyContent:'center'}}>
         <Text style={[styles.p, {color: '#000', textAlign: 'justify',}]}>
-          By signing up, you agree to {'\n'}
+          By signing up, you agree to
+        </Text>
+        <Text style={[styles.p, {color: '#000', textAlign: 'justify',}]}>
           <Text
             style={{color: colors.secondaryBlue}}
             onPress={() => navigation.navigate('')}>

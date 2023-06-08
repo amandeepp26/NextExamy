@@ -1,7 +1,7 @@
 import { Platform } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import apiClient from '../../utils/apiClient';
-import { setUserType, skipNow } from './signin';
+import { clearState, setUserType, skipNow } from './signin';
 
 const SET_AUTH_DATA = 'auth/session/SET_AUTH_DATA';
 const SET_TEMP_TOKEN = 'auth/session/SET_TEMP_TOKEN';
@@ -33,6 +33,7 @@ export const logout = () => (dispatch, getState) => {
   // const deviceId = DeviceInfo.getUniqueId();
   dispatch(skipNow(true));
   dispatch(setUserType(''));
+  dispatch(clearState());
   // apiClient.post(apiClient.Urls.logout, {
   //   authToken,
   //   device_id: deviceId,

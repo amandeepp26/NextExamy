@@ -166,7 +166,6 @@ const signupOtpVerification = ({
             position: 'absolute',
             width: '100%',
             alignItems: 'center',
-            backgroundColor:colors.white
           }}>
             <Button load={true} backgroundColor={colors.primaryBlue} />
             </View>

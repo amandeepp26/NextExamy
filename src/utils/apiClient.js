@@ -1,5 +1,5 @@
 export const baseUrl = 'https://app.ankitbangwaldigitalmarketing.in/';
-export const imgUrl = 'https://app.ankitbangwaldigitalmarketing.in/images/assessments';
+export const imgUrl = 'https://app.ankitbangwaldigitalmarketing.in/images/assessments/';
 
 const apiClient = {
   Urls: {
@@ -8,11 +8,13 @@ const apiClient = {
     login: 'api/login',
     verifyOtp: 'api/otpverify',
     signup:'api/register',
-    categories:'api/subcategory',
+    categories:'api/category',
     subjects:'api/subjectslist',
     topicList:'api/topiclist',
     mockTest:'api/assessmentdata',
+    startTest:'api/starttest',
     checkAnswer:'api/checkanswer',
+    submitTest:'api/submittest',
     
     getProfile:"api/web/profile",
     propertyByType:'api/web/home/explore',

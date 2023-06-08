@@ -110,17 +110,17 @@ const StackNavigationData = [
       fontSize: 18,
     },
   },
-  {
-    name: 'TestInstructions',
-    component: TestInstructions,
-    headerLeft: null,
-    headerBackground: {source: logo},
-    headerTitleStyle: {
-      fontFamily: fonts.primaryRegular,
-      color: colors.white,
-      fontSize: 18,
-    },
-  },
+  // {
+  //   name: 'TestInstructions',
+  //   component: TestInstructions,
+  //   headerLeft: null,
+  //   headerBackground: {source: logo},
+  //   headerTitleStyle: {
+  //     fontFamily: fonts.primaryRegular,
+  //     color: colors.white,
+  //     fontSize: 18,
+  //   },
+  // },
   {
     name: 'TestQuestions',
     component: TestQuestions,

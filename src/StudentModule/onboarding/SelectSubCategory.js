@@ -8,6 +8,7 @@ import styles from '../../navigation/styles';
 import { skipNow } from '../auth/signin';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthData } from '../auth/session';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 const colorCodes = [
   { primary: '#A0E7E5', secondary: '#FFFFFF' }, // Blue and White
@@ -57,13 +58,20 @@ const category = [
   },
 ];
 // create a component
-function SelectSubCategory({navigation}) {
+function SelectSubCategory({navigation,route}) {
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
   const dispatch = useDispatch();
 
+  if (route?.params.data.length % 2 !== 0) {
+    route?.params.data.push({ id: 'dummy', isDummy: true });
+  }
   const tempToken = useSelector(state=>state.session.tempToken)
   renderItem = ({item, index}) => {
-    const bgColor = colorCodes[index].primary;
+    console.log('indexxis--------------<',index)
+    const bgColor = colorCodes[index % colorCodes.length]?.primary;
+    if (item.isDummy) {
+      return <View style={style.dummyItem} />;
+    }
     return (
 
       <Pressable
@@ -83,7 +91,7 @@ function SelectSubCategory({navigation}) {
           // marginHorizontal: 10,
           borderWidth: selectedCardIndex === index ? 2.5 : 0,
           borderColor:
-            selectedCardIndex === index ? colors.primaryBlue : colors.bgColor,
+            selectedCardIndex === index ? colors.primaryBlue : bgColor,
           borderRadius: 10,
           backgroundColor: colors.white,
           elevation: 5,
@@ -104,10 +112,10 @@ function SelectSubCategory({navigation}) {
             <Icon name="check-circle" color={colors.primaryBlue} size={22} />
           </View>
         ) : null}
-        <View style={{marginLeft: 8, width: '75%', padding: 5}}>
-          <Text style={[styles.h6,{fontWeight:'700'}]}>{item.category}</Text>
+        <View style={{marginLeft: 5, width: '90%', padding: 5}}>
+          <Text style={[styles.h6,{fontWeight:'700'}]}>{item.name}</Text>
           <Text style={[styles.p, {fontSize: 11}]} numberOfLines={2}>
-            {item.description}
+            {item.description || 'Description will come here....'}
           </Text>
         </View>
       </Pressable>
@@ -136,10 +144,10 @@ function SelectSubCategory({navigation}) {
           Select your sub-Category
         </Text>
       </View>
-      <View style={{marginTop: 5, backgroundColor: colors.white, flex: 1}}>
+      <View style={{marginTop: 5,paddingBottom:100,backgroundColor:colors.white, flex:1 }}>
         <FlatList
           numColumns={2}
-          data={category}
+          data={route?.params.data}
           renderItem={renderItem}
           keyExtractor={item => item.id}
         />
@@ -152,8 +160,16 @@ function SelectSubCategory({navigation}) {
           width: '100%',
           alignItems: 'center',
         }}>
+          {selectedCardIndex !=null ?
         <Button backgroundColor={colors.primaryBlue} text={'Next'} onpress={() => {dispatch(skipNow(false));dispatch(setAuthData(tempToken))}} />
-      </View>
+            :
+            <Button
+            backgroundColor={'#a8d5e5'}
+            text={'Next'}
+            onpress={() => Toast.show('Please choose category!')}
+          />
+}
+        </View>
     </View>
   );
 }
@@ -173,7 +189,11 @@ const style = StyleSheet.create({
     backgroundColor: 'rgb(2,146,183)',
     backgroundImage: 'linear-gradient(125deg, rgba(2,146,183,1) 0%, rgba(255,255,255,1) 100%)',
   },
-  
+  dummyItem: {
+    width: 0,
+    flex: 1,
+    margin:20
+  },
 });
 
 //make this component available to the app

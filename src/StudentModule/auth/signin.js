@@ -32,7 +32,8 @@ const initialState = {
   otp: '',
   profile_pic: '',
   loading: false,
-  userType:''
+  userType:'',
+  category:''
 };
 
 export const clearState = () => ({

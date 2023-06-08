@@ -72,6 +72,7 @@ function Tests({navigation}) {
   const [subjects, setSubjects] = useState(null);
   const [topics, setTopics] = useState(null);
   const [isloading,setIsLoading] = useState(true);
+  const [subject_id,setSubject_id] = useState(null)
 
 
   const authToken = useSelector(state => state.session.authToken);
@@ -82,7 +83,7 @@ function Tests({navigation}) {
 
   const getSubjects = async () => {
     try {
-      const response = await apiClient.post(`${apiClient.Urls.subjects}`, {
+      const response = await apiClient.get(`${apiClient.Urls.subjects}`, {
         authToken: authToken,
       });
       console.warn(response);
@@ -101,14 +102,20 @@ function Tests({navigation}) {
   };
 
   const getTopics = async (e) => {
+    setSubject_id(e)
     try {
       const response = await apiClient.post(`${apiClient.Urls.topicList}`, {
         authToken: authToken,
         subject_id:e
       });
       console.warn(response);
-      setTopics(response);
-      setIsLoading(false)
+      if(response.status){
+        setTopics(response.topics);
+        setIsLoading(false);
+      }
+      else{
+        setTopics(null);
+      }
     } catch (e) {
       Toast.show({
         text1: e.message || e || 'Something went wrong!',
@@ -193,12 +200,12 @@ function Tests({navigation}) {
           {topics?.map(key => {
             return (
               <Pressable
-                onPress={() => navigation.navigate('TestInstructions',{topic:key.topic})}
+                onPress={() => navigation.navigate('TestQuestions',{key:key,subject_id:subject_id})}
                 style={[style.header]}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <View style={{width:'90%'}}>
                     <Text style={[styles.p, {color: colors.primaryBlue}]}>
-                      50 Questions
+                      {key.question_count} Questions
                     </Text>
                     <Text style={[styles.h5, {marginTop: 2,}]}>{key.topic}</Text>
                     <View
@@ -209,7 +216,7 @@ function Tests({navigation}) {
                       }}>
                       <Icon name="time-outline" type="ionicon" size={15} />
                       <Text style={[styles.p, {marginLeft: 5}]}>
-                        30 minutes
+                        {key.duration} minutes
                         {/* {key.time} */}
                       </Text>
                     </View>

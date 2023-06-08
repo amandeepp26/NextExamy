@@ -13,8 +13,8 @@ import {Icon} from 'react-native-elements';
 import {SafeAreaView} from 'react-native';
 import Button from '../../components/Button';
 // create a component
-function TestInstructions({navigation, route}) {
-  const [agree, setAgree] = useState(false);
+function TestInstructions({keys,agree,setAgree,startTest, ...props}) {
+  console.log("Instruction component is---------------",keys, agree)
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View
@@ -32,7 +32,7 @@ function TestInstructions({navigation, route}) {
           onPress={() => navigation.goBack()}
         />
         <Text style={[styles.h4, {padding: 15,width:'80%'}]}>
-          Mock Test- {route?.params.topic}
+          Mock Test- {keys?.topic}
         </Text>
       </View>
       <ScrollView>
@@ -54,7 +54,7 @@ function TestInstructions({navigation, route}) {
                 size={20}
               />
               <Text style={[styles.p, {marginLeft: 10, color: colors.black}]}>
-                15 Questions - 60 marks
+                {keys?.question_count} Questions - {keys?.total_marks} marks
               </Text>
             </View>
             <View
@@ -70,7 +70,7 @@ function TestInstructions({navigation, route}) {
                 size={20}
               />
               <Text style={[styles.p, {marginLeft: 10, color: colors.black}]}>
-                30 minutes
+                {keys?.duration} minutes
               </Text>
             </View>
           </View>
@@ -106,7 +106,7 @@ function TestInstructions({navigation, route}) {
                 1. This mock test is designed to assess your knowledge on the
                 subject matter. It consists of multiple-choice questions (MCQs).
                 {'\n'}
-                2. The test duration is 30 minutes. Please ensure that
+                2. The test duration is {keys?.duration} minutes. Please ensure that
                 you have enough time to complete the test without interruptions.
                 {'\n'}
                 3. You are not allowed to use any reference materials, such as
@@ -167,9 +167,8 @@ function TestInstructions({navigation, route}) {
           text={'Start'}
           onpress={() => {
             agree
-              ? navigation.navigate('TestQuestions', {
-                  topic: route?.params.topic,
-                })
+              ? 
+              startTest()
               : null;
           }}
           opacity={agree ? 1 : 0.5}

@@ -19,6 +19,7 @@ import apiClient from '../../utils/apiClient';
 import {connect} from 'react-redux';
 import {Toast} from 'react-native-toast-message';
 import {RenderHTML} from 'react-native-render-html';
+import TestInstructions from './TestInstructions';
 
 function TestQuestions({navigation, authToken, route}) {
   const [index, setIndex] = useState(0);
@@ -26,16 +27,20 @@ function TestQuestions({navigation, authToken, route}) {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [optionId, setOptionId] = useState(null);
+  const [agree, setAgree] = useState(false);
+  const [start, setStart] = useState(false);
+  const [assessment_id,setAssessment_id] = useState(null);
+  const [submit,setSubmit] = useState(false);
+  const [result,setResult] = useState(null)
 
   useEffect(() => {
     getAssessmentQuestion();
     console.warn('options is--->>', selectedOptions, optionId);
   }, [selectedOptions, optionId]);
-
   const getAssessmentQuestion = async () => {
     try {
       const response = await apiClient.post(`${apiClient.Urls.mockTest}`, {
-        topic: route?.params.topic,
+        topic: route?.params.key.topic,
         authToken: authToken,
       });
       console.warn(response);
@@ -54,13 +59,35 @@ function TestQuestions({navigation, authToken, route}) {
     }
   };
 
+  const startTest = async () => {
+    try {
+      const response = await apiClient.post(`${apiClient.Urls.startTest}`, {
+        topic: route?.params.key.topic,
+        subject_id:route?.params.subject_id,
+        authToken: authToken,
+      });
+      console.warn(response);
+      if (response.status) {
+        setAssessment_id(response.assessment_id);
+        setStart(true)
+      } else {
+      }
+    } catch (e) {
+      Toast.show({
+        text1: e.message || e || 'Something went wrong!',
+        type: 'error',
+      });
+      setIsLoading(false);
+    }
+  };
+
   const endTest = () => {
     Alert.alert('Are you sure?', 'Do you really want to submit your answers?', [
       {text: 'Cancel', style: 'cancel'},
       {
         text: 'Submit',
         onPress: () => {
-          navigation.navigate('TESTS');
+          submitTest();
         },
       },
     ]);
@@ -78,10 +105,29 @@ function TestQuestions({navigation, authToken, route}) {
       const response = await apiClient.post(`${apiClient.Urls.checkAnswer}`, {
         question_id: data[index]?.id,
         answer_id: optionId,
+        assessment_id:assessment_id,
         authToken: authToken,
       });
       if (response.status) {
         setIndex(index + 1);
+      }
+    } catch (e) {
+      Toast.show({
+        text1: e.message || e || 'Something went wrong!',
+        type: 'error',
+      });
+    }
+  };
+
+  const submitTest = async () => {
+    try {
+      const response = await apiClient.post(`${apiClient.Urls.submitTest}`, {
+        assessment_id:assessment_id,
+        authToken: authToken,
+      });
+      if (response.status) {
+        setSubmit(true);
+        setResult(response);
       }
     } catch (e) {
       Toast.show({
@@ -108,7 +154,8 @@ function TestQuestions({navigation, authToken, route}) {
           {
             text: 'Exit',
             onPress: () => {
-              navigation.navigate('TESTS');
+              // navigation.navigate('TESTS');
+              submitTest();
               // Handle the user's choice to continue
             },
             textStyle: {
@@ -121,8 +168,11 @@ function TestQuestions({navigation, authToken, route}) {
       );
       return true; // Return true to prevent default back button behavior
     };
-    if (data === null) {
-      return; // Exit the useEffect if data is null
+    if (!start) {
+      return; // Exit the useEffect if test is not started
+    }
+    if (submit) {
+      return; // Exit the useEffect if test is submitted
     }
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
@@ -131,23 +181,46 @@ function TestQuestions({navigation, authToken, route}) {
     return () => {
       backHandler.remove(); // Clean up the event listener when the component unmounts
     };
-  }, [data]);
+  }, [start]);
 
   const selectedOption = selectedOptions[index];
 
-  if (isLoading) {
+  // if (isLoading) {
+  //   return (
+  //     <View style={{justifyContent: 'center', flex: 1}}>
+  //       <ActivityIndicator size={25} color={colors.primaryBlue} />
+  //     </View>
+  //   );
+  // }
+
+  // if (data == null) {
+  //   return (
+  //     <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+  //       <Text style={styles.h3}>No data found!</Text>
+  //     </View>
+  //   );
+  // }
+
+  if (!start) {
     return (
-      <View style={{justifyContent: 'center', flex: 1}}>
-        <ActivityIndicator size={25} color={colors.primaryBlue} />
-      </View>
+      <>
+      <TestInstructions
+        agree={agree}
+        keys={route?.params.key}
+        setAgree={setAgree}
+        startTest={startTest}
+        navigation={navigation}
+        setAssessment_id={setAssessment_id}
+      />
+      </>
+      
     );
   }
 
-  if (data == null) {
+  if (submit) {
+    console.log(result)
     return (
-      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-        <Text style={styles.h3}>No data found!</Text>
-      </View>
+      <TestResultComponent {...result}  />
     );
   }
   return (
@@ -167,7 +240,7 @@ function TestQuestions({navigation, authToken, route}) {
         </Text>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Timer
-            duration={30}
+            duration={route?.params.key.duration}
             onTimeUp={() =>
               Alert.alert(
                 'Time is up!',
@@ -176,7 +249,8 @@ function TestQuestions({navigation, authToken, route}) {
                   {
                     text: 'Submit',
                     onPress: () => {
-                      navigation.navigate('TESTS');
+                      // navigation.navigate('TESTS');
+                      submitTest();
                     },
                   },
                 ],
@@ -398,6 +472,20 @@ function Timer({duration, onTimeUp}) {
   );
 }
 
+const TestResultComponent = ({ message, total_attempt, correct_answer, marks, incorrect_answer, status }) => {
+  return (
+    <View style={style.container}>
+      <Image source={require('../../../assets/images/tick.gif')} style={{width:100,height:100}} />
+      <Text style={style.message}>{message}</Text>
+      <Text>Total Attempts: {total_attempt}</Text>
+      <Text>Correct Answers: {correct_answer}</Text>
+      <Text>Marks: {marks}</Text>
+      <Text>Incorrect Answers: {incorrect_answer}</Text>
+      <Text>Status: {status ? 'Pass' : 'Fail'}</Text>
+    </View>
+  );
+};
+
 const Blink = props => {
   const [isShowingText, setIsShowingText] = useState(true);
 
@@ -441,5 +529,16 @@ const style = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#000',
+  },
+  container: {
+    padding: 10,
+    flex:1,
+    backgroundColor: '#fff',
+    elevation: 2,
+  },
+  message: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
 });
