@@ -1,4 +1,5 @@
 import React, {Component, useEffect, useState} from 'react';
+
 import {
   View,
   Text,
@@ -29,9 +30,9 @@ function TestQuestions({navigation, authToken, route}) {
   const [optionId, setOptionId] = useState(null);
   const [agree, setAgree] = useState(false);
   const [start, setStart] = useState(false);
-  const [assessment_id,setAssessment_id] = useState(null);
-  const [submit,setSubmit] = useState(false);
-  const [result,setResult] = useState(null)
+  const [assessment_id, setAssessment_id] = useState(null);
+  const [submit, setSubmit] = useState(false);
+  const [result, setResult] = useState(null);
 
   useEffect(() => {
     getAssessmentQuestion();
@@ -63,13 +64,13 @@ function TestQuestions({navigation, authToken, route}) {
     try {
       const response = await apiClient.post(`${apiClient.Urls.startTest}`, {
         topic: route?.params.key.topic,
-        subject_id:route?.params.subject_id,
+        subject_id: route?.params.subject_id,
         authToken: authToken,
       });
       console.warn(response);
       if (response.status) {
         setAssessment_id(response.assessment_id);
-        setStart(true)
+        setStart(true);
       } else {
       }
     } catch (e) {
@@ -105,7 +106,7 @@ function TestQuestions({navigation, authToken, route}) {
       const response = await apiClient.post(`${apiClient.Urls.checkAnswer}`, {
         question_id: data[index]?.id,
         answer_id: optionId,
-        assessment_id:assessment_id,
+        assessment_id: assessment_id,
         authToken: authToken,
       });
       if (response.status) {
@@ -122,7 +123,7 @@ function TestQuestions({navigation, authToken, route}) {
   const submitTest = async () => {
     try {
       const response = await apiClient.post(`${apiClient.Urls.submitTest}`, {
-        assessment_id:assessment_id,
+        assessment_id: assessment_id,
         authToken: authToken,
       });
       if (response.status) {
@@ -181,7 +182,7 @@ function TestQuestions({navigation, authToken, route}) {
     return () => {
       backHandler.remove(); // Clean up the event listener when the component unmounts
     };
-  }, [start]);
+  }, [start,submit]);
 
   const selectedOption = selectedOptions[index];
 
@@ -204,24 +205,21 @@ function TestQuestions({navigation, authToken, route}) {
   if (!start) {
     return (
       <>
-      <TestInstructions
-        agree={agree}
-        keys={route?.params.key}
-        setAgree={setAgree}
-        startTest={startTest}
-        navigation={navigation}
-        setAssessment_id={setAssessment_id}
-      />
+        <TestInstructions
+          agree={agree}
+          keys={route?.params.key}
+          setAgree={setAgree}
+          startTest={startTest}
+          navigation={navigation}
+          setAssessment_id={setAssessment_id}
+        />
       </>
-      
     );
   }
 
-  if (submit) {
-    console.log(result)
-    return (
-      <TestResultComponent {...result}  />
-    );
+  if (!submit) {
+    console.log(result);
+    return <TestResultComponent {...result} />;
   }
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
@@ -472,16 +470,57 @@ function Timer({duration, onTimeUp}) {
   );
 }
 
-const TestResultComponent = ({ message, total_attempt, correct_answer, marks, incorrect_answer, status }) => {
+const TestResultComponent = ({
+  message,
+  total_attempt,
+  correct_answer,
+  marks,
+  incorrect_answer,
+  status,
+}) => {
   return (
     <View style={style.container}>
-      <Image source={require('../../../assets/images/tick.gif')} style={{width:100,height:100}} />
-      <Text style={style.message}>{message}</Text>
-      <Text>Total Attempts: {total_attempt}</Text>
-      <Text>Correct Answers: {correct_answer}</Text>
-      <Text>Marks: {marks}</Text>
-      <Text>Incorrect Answers: {incorrect_answer}</Text>
-      <Text>Status: {status ? 'Pass' : 'Fail'}</Text>
+      <Image
+        source={require('../../../assets/images/smile.gif')}
+        style={{width: 200, height: 200}}
+      />
+      <Text style={[styles.h2, {color: colors.primaryBlue, fontWeight: 700}]}>
+        Successfully Submitted !
+      </Text>
+      <View style={{flexDirection: 'row', alignSelf: 'center', width: '100%'}}>
+        <View style={{paddingTop: 30, width: '50%', alignItems: 'flex-end'}}>
+          <View>
+            <Text style={style.text1}>Total Attempts</Text>
+            <Text style={style.text1}>Correct Answers</Text>
+            <Text style={style.text1}>Marks</Text>
+            <Text style={style.text1}>Incorrect Answers</Text>
+          </View>
+        </View>
+        <View style={{paddingTop: 30, width: '40%', marginLeft: 15}}>
+          <Text style={[style.text, {fontWeight: 700}]}>
+            :{'                   '}{total_attempt}
+          </Text>
+          <Text style={[style.text, {fontWeight: 700}]}>
+            :{'                   '}{correct_answer}
+          </Text>
+          <Text style={[style.text, {fontWeight: 700}]}>
+            :{'                   '}{marks}
+          </Text>
+          <Text style={[style.text, {fontWeight: 700}]}>
+            :{'                   '}{incorrect_answer}
+          </Text>
+     
+        </View>
+      </View>
+      <View
+        style={{
+          bottom: 30,
+          position: 'absolute',
+          width: '100%',
+          alignItems: 'center',
+        }}>
+        <Button backgroundColor={colors.primaryBlue} text={'View Insights'} />
+      </View>
     </View>
   );
 };
@@ -531,14 +570,30 @@ const style = StyleSheet.create({
     color: '#000',
   },
   container: {
-    padding: 10,
-    flex:1,
+    flex: 1,
     backgroundColor: '#fff',
     elevation: 2,
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: 100,
   },
   message: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
+  },
+  text: {
+    fontSize: 14,
+    paddingBottom: 2,
+
+    textAlign: 'left',
+    color: colors.gray,
+  },
+  text1: {
+    fontSize: 14,
+    paddingBottom: 2,
+
+    textAlign: 'auto',
+    color: colors.gray,
   },
 });
