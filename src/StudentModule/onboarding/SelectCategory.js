@@ -7,7 +7,7 @@ import {
   Image,
   ScrollView,
   Pressable,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -16,9 +16,9 @@ import {colors} from '../../styles';
 import styles from '../../navigation/styles';
 import apiClient from '../../utils/apiClient';
 import {Toast} from 'react-native-toast-message/lib/src/Toast';
-import { useDispatch, useSelector } from 'react-redux';
-import { skipNow } from '../auth/signin';
-import { setAuthData } from '../auth/session';
+import {useDispatch, useSelector} from 'react-redux';
+import {skipNow} from '../auth/signin';
+import {setAuthData} from '../auth/session';
 import SkeletonComponent from './Loader';
 
 // const category = [
@@ -58,12 +58,11 @@ import SkeletonComponent from './Loader';
 function SelectCategory({navigation}) {
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
   const [category, setCategory] = useState(null);
-  const [subCategory, setsubcategory] = useState(null);
-  const [loading,setLoading] = useState(true);
+  const [subCategory, setsubcategory] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
-  const tempToken = useSelector(state=>state.session.tempToken)
-
+  const tempToken = useSelector(state => state.session.tempToken);
 
   useEffect(() => {
     getCategory();
@@ -73,7 +72,7 @@ function SelectCategory({navigation}) {
     try {
       const response = await apiClient.get(`${apiClient.Urls.categories}`, {});
       console.warn(response);
-      if (response) {
+      if (response.status) {
         setCategory(response.data);
         setLoading(false);
       } else {
@@ -88,12 +87,36 @@ function SelectCategory({navigation}) {
     }
   };
 
-  if(loading){
+  const select = (key, index) => {
+    if (selectedCardIndex != index) {
+      setsubcategory(key.subcategories);
+      console.warn(subCategory);
+      setSelectedCardIndex(index);
+    } else {
+      setSelectedCardIndex(null);
+      setsubcategory([]);
+    }
+  };
+  useEffect(() => {
+    if (selectedCardIndex !== null) {
+      setsubcategory(category[selectedCardIndex].subcategories);
+      console.warn(subCategory);
+    } else {
+      setsubcategory([]);
+    }
+  }, [selectedCardIndex]);
+
+  if (loading) {
     return (
-      <View style={{flex:1,backgroundColor:colors.white,justifyContent:'center'}}>
-        <ActivityIndicator size='large' />
-        </View>
-    )
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: colors.white,
+          justifyContent: 'center',
+        }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
   return (
     <View style={styles.container}>
@@ -110,13 +133,7 @@ function SelectCategory({navigation}) {
               <Pressable
                 key={index}
                 onPress={() => {
-                  if (selectedCardIndex != index) {
-                    setSelectedCardIndex(index);
-                    setsubcategory(key.subcategories);
-                  } else {
-                    setSelectedCardIndex(null);
-                    setsubcategory(null);
-                  }
+                  select(key, index);
                 }}
                 style={{
                   flexDirection: 'row',
@@ -178,17 +195,26 @@ function SelectCategory({navigation}) {
           alignItems: 'center',
         }}>
         {selectedCardIndex != null ? (
-          <Button
-            backgroundColor={colors.primaryBlue}
-            text={'Next'}
-            onpress={() =>{
-              subCategory!=null ?
-              navigation.navigate('SelectSubCategory', {data: subCategory})
-              :
-              dispatch(skipNow(false));dispatch(setAuthData(tempToken))
-            }
-            }
-          />
+          <>
+            {subCategory?.length > 0 ? (
+              <Button
+                backgroundColor={colors.primaryBlue}
+                text={'Next'}
+                onpress={() => {
+                  navigation.navigate('SelectSubCategory', {data: subCategory});
+                }}
+              />
+            ) : (
+              <Button
+                backgroundColor={colors.primaryBlue}
+                text={'Next'}
+                onpress={() => {
+                  dispatch(skipNow(false));
+                  dispatch(setAuthData(tempToken));
+                }}
+              />
+            )}
+          </>
         ) : (
           <Button
             backgroundColor={'#a8d5e5'}

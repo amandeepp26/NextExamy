@@ -33,34 +33,42 @@ const subjects = [
     color:'#326bf3'
   },
 ];
+const colorCodes = [
+  {primary: '#EE7877', secondary: '#FFFFFF'}, // Blue and White
+  {primary: '#00BF93', secondary: '#6C757D'}, // Green and Gray
+  {primary: '#6F42C1', secondary: '#FF69B4'}, // Purple and Pink
+  {primary: '#20C997', secondary: '#FD7E14'}, // Teal and Orange
+  {primary: '#FFAEBC', secondary: '#FFC107'}, // Red and Yellow
+  {primary: '#B4F8C8', secondary: '#FFD700'}, // Navy Blue and Gold
+];
 // create a component
-function SubjectWiseClass({navigation}) {
-  const [selectedCardIndex, setSelectedCardIndex] = useState(null);
-
+function SubjectWiseClass({navigation,subjects}) {
+console.warn(subjects);
   return (
     <View style={styles.container}>
       <View style={{padding: 10,marginLeft:10, marginTop: 5, backgroundColor: '#fff'}}>
         <Text style={[styles.h3, {fontWeight: '700'}]}>
           Subject-wise classes
         </Text>
-        {subjects.map(key=>{
+        {subjects?.map((key,index)=>{
+          const bgColor = colorCodes[index % colorCodes.length]?.primary;
             return(
-                <Pressable style={style.header} onPress={()=>navigation.navigate("ParticularSubjectClass",{subject:key.subject})}>
+                <Pressable style={style.header} onPress={()=>navigation.navigate("ParticularSubjectClass",{subject:key.name})}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View style={[style.circleView,{backgroundColor:`${key.color}40`}]}>
+                  <View style={[style.circleView,{backgroundColor:`${bgColor}40`}]}>
                     {/* <Image style={{height:25,width:25}} source={require('../../../assets/images/book.png')} /> */}
-                    <Icon name='book-outline' type='ionicon' color={key.color} size={20} />
+                    <Icon name='book-outline' type='ionicon' color={bgColor} size={20} />
                         {/* <Text style={{opacity:1,color:colors.primaryBlue,fontWeight:'bold',fontSize:20}}>
                             {key.subject[0]}
                         </Text> */}
                   </View>
                   <View>
                   <Text style={[styles.h4,{marginLeft:10}]}>
-                    {key.subject}
+                    {key.name}
                   </Text>
                   
                   <Text style={[styles.p,{marginLeft:10}]}>
-                    {key.topics}
+                    {key.topics_count} Topics
                   </Text>
                   </View>
                 </View>

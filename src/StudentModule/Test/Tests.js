@@ -86,7 +86,7 @@ function Tests({navigation}) {
       const response = await apiClient.get(`${apiClient.Urls.subjects}`, {
         authToken: authToken,
       });
-      console.warn(response);
+      console.warn("subjects----->>>",response);
       if (response.status) {
         setSubjects(response.data);
         getTopics(response.data[0].id);
@@ -108,13 +108,14 @@ function Tests({navigation}) {
         authToken: authToken,
         subject_id:e
       });
-      console.warn(response);
+      console.warn("Topics ------->>>>",response);
       if(response.status){
         setTopics(response.topics);
         setIsLoading(false);
       }
       else{
         setTopics(null);
+        setIsLoading(false);
       }
     } catch (e) {
       Toast.show({

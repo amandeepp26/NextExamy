@@ -13,8 +13,14 @@ import {Icon} from 'react-native-elements';
 import {SafeAreaView} from 'react-native';
 import Button from '../../components/Button';
 // create a component
-function TestInstructions({keys,agree,setAgree,startTest, ...props}) {
-  console.log("Instruction component is---------------",keys, agree)
+function TestInstructions({
+  keys,
+  agree,
+  setAgree,
+  navigation,
+  startTest,
+  ...props
+}) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View
@@ -31,7 +37,7 @@ function TestInstructions({keys,agree,setAgree,startTest, ...props}) {
           size={30}
           onPress={() => navigation.goBack()}
         />
-        <Text style={[styles.h4, {padding: 15,width:'80%'}]}>
+        <Text style={[styles.h4, {padding: 15, width: '80%'}]}>
           Mock Test- {keys?.topic}
         </Text>
       </View>
@@ -97,7 +103,7 @@ function TestInstructions({keys,agree,setAgree,startTest, ...props}) {
                 Instructions
               </Text>
             </View>
-            <View style={{marginLeft: 10, marginTop: 10,marginBottom:120}}>
+            <View style={{marginLeft: 10, marginTop: 10, marginBottom: 120}}>
               <Text style={[styles.p, {lineHeight: 18}]}>
                 Welcome to the Mock Test!{'\n'}
                 {'\n'}
@@ -106,8 +112,9 @@ function TestInstructions({keys,agree,setAgree,startTest, ...props}) {
                 1. This mock test is designed to assess your knowledge on the
                 subject matter. It consists of multiple-choice questions (MCQs).
                 {'\n'}
-                2. The test duration is {keys?.duration} minutes. Please ensure that
-                you have enough time to complete the test without interruptions.
+                2. The test duration is {keys?.duration} minutes. Please ensure
+                that you have enough time to complete the test without
+                interruptions.
                 {'\n'}
                 3. You are not allowed to use any reference materials, such as
                 books, notes, or online resources, during the test. The purpose
@@ -166,10 +173,7 @@ function TestInstructions({keys,agree,setAgree,startTest, ...props}) {
           backgroundColor={colors.primaryBlue}
           text={'Start'}
           onpress={() => {
-            agree
-              ? 
-              startTest()
-              : null;
+            agree ? startTest() : null;
           }}
           opacity={agree ? 1 : 0.5}
         />

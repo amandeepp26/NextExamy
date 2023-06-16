@@ -35,7 +35,7 @@ function TestQuestions({navigation, authToken, route}) {
   const [result, setResult] = useState(null);
 
   useEffect(() => {
-    getAssessmentQuestion();
+    // getAssessmentQuestion();
     console.warn('options is--->>', selectedOptions, optionId);
   }, [selectedOptions, optionId]);
   const getAssessmentQuestion = async () => {
@@ -71,7 +71,10 @@ function TestQuestions({navigation, authToken, route}) {
       if (response.status) {
         setAssessment_id(response.assessment_id);
         setStart(true);
+        setData(response.data);
+        setIsLoading(false);
       } else {
+        setIsLoading(false);
       }
     } catch (e) {
       Toast.show({
@@ -217,9 +220,9 @@ function TestQuestions({navigation, authToken, route}) {
     );
   }
 
-  if (!submit) {
+  if (submit) {
     console.log(result);
-    return <TestResultComponent {...result} />;
+    return <TestResultComponent {...result} navigation={navigation} setSubmit={setSubmit} setStart={setStart} />;
   }
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
@@ -414,9 +417,9 @@ function TestQuestions({navigation, authToken, route}) {
         <View style={{width: '47%'}}>
           <Button
             backgroundColor={colors.primaryBlue}
-            text={index + 1 == data.length ? 'Finish' : 'Save & Next'}
+            text={index + 1 == data?.length ? 'Finish' : 'Save & Next'}
             onpress={() => {
-              if (index + 1 < data.length) {
+              if (index + 1 < data?.length) {
                 checkAnswer();
               } else {
                 endTest();
@@ -477,6 +480,9 @@ const TestResultComponent = ({
   marks,
   incorrect_answer,
   status,
+  navigation,
+  setSubmit,
+  setStart
 }) => {
   return (
     <View style={style.container}>
@@ -512,15 +518,15 @@ const TestResultComponent = ({
      
         </View>
       </View>
-      <View
+      {/* <View
         style={{
           bottom: 30,
           position: 'absolute',
           width: '100%',
           alignItems: 'center',
         }}>
-        <Button backgroundColor={colors.primaryBlue} text={'View Insights'} />
-      </View>
+        <Button backgroundColor={colors.primaryBlue} text={'View Insights'} onpress={()=>{navigation.navigate('MyLearnings'),setSubmit(false),setStart(false)}} />
+      </View> */}
     </View>
   );
 };

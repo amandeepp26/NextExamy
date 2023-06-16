@@ -15,6 +15,9 @@ const apiClient = {
     startTest:'api/starttest',
     checkAnswer:'api/checkanswer',
     submitTest:'api/submittest',
+    subjectWiseClass:'api/subjecttopics',
+    subjectWiseTopics:'api/topiclist',
+    topicWiseClass:'api/topiclass',
     
     getProfile:"api/web/profile",
     propertyByType:'api/web/home/explore',

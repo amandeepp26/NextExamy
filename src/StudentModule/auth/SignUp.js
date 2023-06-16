@@ -1,6 +1,6 @@
 //import liraries
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Image, KeyboardAvoidingView} from 'react-native';
+import {View, Text, StyleSheet, Image, KeyboardAvoidingView, SafeAreaView} from 'react-native';
 import Button from '../../components/Button';
 import RNSTextInput from '../../components/RNSTextInput';
 import {colors} from '../../styles';
@@ -21,7 +21,7 @@ function Signup({
   requestSignupOtp
 }) {
   return (
-    <KeyboardAvoidingView style={{flex:1}} behavior='height' enabled >
+    <SafeAreaView style={{flex:1,backgroundColor:colors.white}}>
     <View style={style.container}>
       <View
         style={{
@@ -37,7 +37,7 @@ function Signup({
           style={{width: '35%', height: '100%'}}
         />
       </View>
-      <View style={{marginTop: 10}}>
+      <View style={{marginTop: 10,}}>
         <Text style={[styles.h4, {marginLeft: 10, marginTop: 20}]}>
           Enter student's name
         </Text>
@@ -65,10 +65,13 @@ function Signup({
           maxLength={10}
         />
       </View>
-      <View
+     
+    </View>
+     <View
         style={{
           bottom: 30,
           position: 'absolute',
+          backgroundColor:'white',
           width: '100%',
           alignItems: 'center',
           justifyContent:'flex-end',
@@ -108,8 +111,7 @@ function Signup({
           />
         )}
       </View>
-    </View>
-    </KeyboardAvoidingView> 
+    </SafeAreaView> 
   );
 }
 

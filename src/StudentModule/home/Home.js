@@ -18,6 +18,9 @@ import SubjectWiseClass from './SubjectWiseClass';
 import Swiper from 'react-native-swiper';
 import Button from '../../components/Button';
 import CompleteProfilePopup from '../../components/CompleteProfilePopup';
+import apiClient from '../../utils/apiClient';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { connect } from 'react-redux';
 // import Video from 'react-native-video';
 
 // create a component
@@ -26,13 +29,34 @@ class Home extends Component {
     super(props);
     this.state = {
       isVisible: true,
+      subjects:[]
     };
   }
   componentDidMount() {
     setTimeout(() => {
       this.setState({isVisible: false});
     }, 10000);
+    this.getSubjects();
   }
+   getSubjects = async () => {
+    try {
+      const response = await apiClient.post(`${apiClient.Urls.subjectWiseClass}`, {
+        authToken: this.props.authToken
+      });
+      console.warn("response is",response);
+      if (response) {
+        this.setState({subjects:response})
+      } else {
+        this.setState({subjects:[]})
+      }
+    } catch (e) {
+      Toast.show({
+        text1: e.message || e || 'Something went wrong!',
+        type: 'error',
+      });
+      console.warn('error is-->', e);
+    }
+  };
   render() {
     const {isVisible} = this.state;
     return (
@@ -65,7 +89,7 @@ class Home extends Component {
             </View>
           </View>
           <ScrollView style={{marginBottom: 110}}>
-            <SubjectWiseClass navigation={this.props.navigation} />
+            <SubjectWiseClass navigation={this.props.navigation} subjects={this.state.subjects} />
             <QuickLinks navigation={this.props.navigation} />
             <View
               style={{
@@ -167,4 +191,8 @@ const style = StyleSheet.create({
 });
 
 //make this component available to the app
-export default Home;
+export default connect(state => {
+  return {
+    authToken: state.session.authToken,
+  };
+}, {})(Home);
