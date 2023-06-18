@@ -121,9 +121,9 @@ export const requestOtp = callback => async (dispatch, getState) => {
         type: LOADING_STOP,
       });
     }  else {
-      if (response.error_object.mobile) {
+      if (response.errors.mobile) {
         Toast.show({
-          text1: response.error_object.mobile || response || 'Something went wrong!',
+          text1: response.errors.mobile || response || 'Something went wrong!',
           type: 'error',
         });
       }
@@ -172,9 +172,9 @@ export const resendOtp = callback => async (dispatch, getState) => {
         type: LOADING_STOP,
       });
     } else {
-      if (response.error_object.mobile) {
+      if (response.errors.mobile) {
         Toast.show({
-          text1: response.error_object.mobile || response || 'Something went wrong!',
+          text1: response.errors.mobile || response || 'Something went wrong!',
           type: 'error',
         });
       }
@@ -275,21 +275,21 @@ export const requestSignupOtp = callback => async (dispatch, getState) => {
         type: LOADING_STOP,
       });
     } else {
-      if (response.error_object.mobile) {
+      if (response.errors.mobile) {
         Toast.show({
-          text1: response.errors || response || 'Something went wrong!',
+          text1: response.errors.mobile || response || 'Something went wrong!',
           type: 'error',
         });
       }
-      if (response.error_object.email) {
+      if (response.errors.email) {
         Toast.show({
-          text1: response.errors || response || 'Something went wrong!',
+          text1: response.errors.email || response || 'Something went wrong!',
           type: 'error',
         });
       }
-      if (response.error_object.name) {
+      if (response.errors.name) {
         Toast.show({
-          text1: response.errors || response || 'Something went wrong!',
+          text1: response.errors.name || response || 'Something went wrong!',
           type: 'error',
         });
       }
@@ -338,19 +338,19 @@ export const resendSignupOtp = callback => async (dispatch, getState) => {
         type: LOADING_STOP,
       });
     } else {
-      if (response.error_object.mobile) {
+      if (response.errors.mobile) {
         Toast.show({
           text1: response.errors || response || 'Something went wrong!',
           type: 'error',
         });
       }
-      if (response.error_object.email) {
+      if (response.errors.email) {
         Toast.show({
           text1: response.errors || response || 'Something went wrong!',
           type: 'error',
         });
       }
-      if (response.error_object.name) {
+      if (response.errors.name) {
         Toast.show({
           text1: response.errors || response || 'Something went wrong!',
           type: 'error',

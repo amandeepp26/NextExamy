@@ -6,13 +6,16 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import styles from '../../navigation/styles';
 import {colors} from '../../styles';
 import {Icon} from 'react-native-elements';
 import {Image} from 'react-native-ui-lib';
 import LiveClassesVideo from '../../components/LiveClassesVideo';
 import MockTestCard from '../../components/MockTestCard';
+import apiClient from '../../utils/apiClient';
+import { useSelector } from 'react-redux';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 const options = [
   {
     id: 1,
@@ -97,6 +100,10 @@ const testTopics = [
 export default function MyLearnings({navigation}) {
   const [selectedCardIndex, setSelectedCardIndex] = useState(0);
   const [selectedOptions, setselectedOptions] = useState('Courses');
+  const [mockTestData,setMockTestData] = useState(null);
+
+  const authToken = useSelector(state => state.session.authToken);
+
   const getRandomColor = () => {
     const colors = [
       '234, 87, 85',
@@ -110,6 +117,34 @@ export default function MyLearnings({navigation}) {
     ];
     return colors[Math.floor(Math.random() * colors.length)];
   };
+
+  useEffect(() => {
+    getMockTestsList();
+  }, []);
+
+  // Function for the submitted mock test lists
+  const getMockTestsList = async () => {
+    try {
+      const response = await apiClient.post(
+        `${apiClient.Urls.submittedMockTests}`,
+        {
+          authToken: authToken,
+        },
+      );
+      console.warn(response);
+      if (response) {
+        setMockTestData(response.data)
+      } else {
+        
+      }
+    } catch (e) {
+      Toast.show({
+        text1: e.message || e || 'Something went wrong!',
+        type: 'error',
+      });
+    }
+  };
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
@@ -180,7 +215,11 @@ export default function MyLearnings({navigation}) {
             {subjects.map((subject, index) => {
               return (
                 <Pressable
-                onPress={()=>navigation.navigate('ParticularSubjectClass',{subject:subject.subject})}
+                  onPress={() =>
+                    navigation.navigate('ParticularSubjectClass', {
+                      subject: subject.subject,
+                    })
+                  }
                   style={{
                     width: '33.3%',
                     justifyContent: 'center',
@@ -232,16 +271,14 @@ export default function MyLearnings({navigation}) {
         )}
         {selectedOptions === 'Mock Test' && (
           <View style={{backgroundColor: colors.white, marginTop: 5, flex: 1}}>
-            <Text style={[styles.h5, {padding: 15, fontWeight: 700}]}>
+            {/* <Text style={[styles.h5, {padding: 15, fontWeight: 700}]}>
               Submissions
-            </Text>
+            </Text> */}
             <ScrollView>
-              {testTopics.map(key => {
+              {mockTestData?.map(key => {
                 return (
                   <MockTestCard
-                    topic={key.name}
-                    subject={'Physics'}
-                    question={key.questions}
+                    data={key}
                     bgColor={getRandomColor()}
                     navigation={navigation}
                   />

@@ -102,6 +102,7 @@ function TestQuestions({navigation, authToken, route}) {
     updatedSelectedOptions[index] = id;
     setSelectedOptions(updatedSelectedOptions);
     setOptionId(id);
+    checkAnswer();
   };
 
   const checkAnswer = async () => {
@@ -113,7 +114,7 @@ function TestQuestions({navigation, authToken, route}) {
         authToken: authToken,
       });
       if (response.status) {
-        setIndex(index + 1);
+        // setIndex(index + 1);
       }
     } catch (e) {
       Toast.show({
@@ -304,6 +305,7 @@ function TestQuestions({navigation, authToken, route}) {
               <>
                 {data?.[index]?.options.map(key => {
                   return (
+                    key.option &&
                     <Pressable
                       onPress={() => handleSelectOption(key.option_id)}
                       style={{
@@ -420,7 +422,8 @@ function TestQuestions({navigation, authToken, route}) {
             text={index + 1 == data?.length ? 'Finish' : 'Save & Next'}
             onpress={() => {
               if (index + 1 < data?.length) {
-                checkAnswer();
+                // checkAnswer();
+                setIndex(index + 1);
               } else {
                 endTest();
               }

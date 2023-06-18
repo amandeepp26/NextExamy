@@ -3,16 +3,17 @@ import React from 'react';
 import styles from '../navigation/styles';
 import {colors} from '../styles';
 import {Icon} from 'react-native-elements';
+import moment from 'moment';
 
 
 
-export default function MockTestCard({topic, subject, question,bgColor,navigation}) {
+export default function MockTestCard({data,bgColor,navigation}) {
 
   return (
-    <Pressable style={[style.header]} onPress={()=>navigation.navigate('TestReview')}>
+    <Pressable style={[style.header]} onPress={()=>navigation.navigate('TestReview',{id:data?.assess_id,topic:data?.topic})}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <View>
-          <Text style={[styles.h5, {marginTop: 2,justifyContent:'center',alignItems:'center'}]}>{topic}</Text>
+          <Text style={[styles.h5, {marginTop: 2,justifyContent:'center',alignItems:'center'}]}>{data?.topic}</Text>
           <View
             style={{
               flexDirection: 'row',
@@ -29,14 +30,19 @@ export default function MockTestCard({topic, subject, question,bgColor,navigatio
                 
               }}>
               <Text style={[styles.p, {marginLeft: 5, color: `rgb(${bgColor})`}]}>
-                {subject}
+                {data?.subject_name} {data?.assess_id}
               </Text>
             </View>
             <Text
               style={[styles.p, {marginLeft: 10, color: colors.primaryBlue}]}>
-              {question} Questions
+              {data?.total_questions} Questions
             </Text>
           </View>
+          
+          <Text
+              style={[styles.p, {marginTop: 10,marginLeft:5, color: colors.darkGray}]}>
+              {moment(data?.date).format("MMMM D, YYYY")}
+            </Text>
         </View>
       </View>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
