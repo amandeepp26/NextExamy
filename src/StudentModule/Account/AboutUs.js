@@ -3,23 +3,14 @@ import React from 'react';
 import {colors} from '../../styles';
 import {Icon} from 'react-native-elements';
 import styles from '../../navigation/styles';
+import Header from '../../components/Header';
 
 export default function AboutUs({navigation}) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
         {/* Header */}
-        <View style={style.header}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
-              onPress={() => navigation.goBack()}
-              name="chevron-left"
-              type="ionicons"
-              size={25}
-            />
-            <Text style={styles.h4}>About Us</Text>
-          </View>
-        </View>
+        <Header title={'About Us'} navigation={navigation}/>
         <ScrollView>
         <View
           style={{

@@ -5,6 +5,7 @@ import styles from '../../navigation/styles';
 import {Icon} from 'react-native-elements';
 import {Image} from 'react-native-ui-lib';
 import Button from '../../components/Button';
+import Header from '../../components/Header';
 
 const faq = [
   {
@@ -44,17 +45,9 @@ export default function TeacherHelpandSupport({navigation}) {
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
         {/* Header */}
-        <View style={style.header}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
-              onPress={() => navigation.goBack()}
-              name="chevron-left"
-              type="ionicons"
-              size={25}
-            />
-            <Text style={styles.h4}>Help & Support</Text>
-          </View>
-        </View>
+ 
+        <Header title={'Help & Support'} navigation={navigation} />
+
         <View
           style={{
             backgroundColor: colors.white,

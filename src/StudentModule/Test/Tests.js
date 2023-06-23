@@ -15,6 +15,7 @@ import apiClient from '../../utils/apiClient';
 import {Toast} from 'react-native-toast-message/lib/src/Toast';
 import {useSelector} from 'react-redux';
 import SkeletonComponent from './Loader';
+import Header from '../../components/Header';
 
 const testTopics = [
   {
@@ -133,9 +134,8 @@ function Tests({navigation}) {
 
   return (
     <View style={styles.container}>
-      <View style={{backgroundColor: colors.white}}>
-        <Text style={[styles.h3, {padding: 20}]}>Tests</Text>
-      </View>
+      <Header title={'Test'} navigation={navigation} />
+    
       <ScrollView
         style={{
           backgroundColor: colors.white,

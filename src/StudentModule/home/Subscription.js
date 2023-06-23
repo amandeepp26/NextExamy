@@ -15,25 +15,14 @@ import styles from '../../navigation/styles';
 import Button from '../../components/Button';
 import {Pressable} from 'react-native';
 import SubscriptionPlanCard from '../../components/SubscriptionPlanCard';
+import Header from '../../components/Header';
 
 const Subscription = ({navigation, route}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          borderBottomWidth: 3,
-          borderColor: '#e5e5e5',
-        }}>
-        <Icon
-          name="chevron-left"
-          type="ionicons"
-          size={30}
-          onPress={() => navigation.goBack()}
-        />
-        <Text style={[styles.h3, {padding: 20}]}>Choose a plan</Text>
-      </View>
+   
+      <Header title={'Choose a plan'} navigation={navigation}/>
+      
       <View style={{flexDirection: 'row', flex: 1}}>
         <ScrollView horizontal>
           <SubscriptionPlanCard />

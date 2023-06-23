@@ -4,23 +4,16 @@ import {colors} from '../../styles';
 import {Icon} from 'react-native-elements';
 import styles from '../../navigation/styles';
 import moment from 'moment';
+import Header from '../../components/Header';
 
 export default function PrivacyPolicy({navigation}) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
         {/* Header */}
-        <View style={style.header}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
-              onPress={() => navigation.goBack()}
-              name="chevron-left"
-              type="ionicons"
-              size={25}
-            />
-            <Text style={styles.h4}>Privacy Policy</Text>
-          </View>
-        </View>
+
+        <Header title={'Privacy Policy'} navigation={navigation}/>
+
         <ScrollView>
         <View
           style={{

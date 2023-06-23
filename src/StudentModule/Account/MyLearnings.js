@@ -16,6 +16,7 @@ import MockTestCard from '../../components/MockTestCard';
 import apiClient from '../../utils/apiClient';
 import { useSelector } from 'react-redux';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import Header from '../../components/Header';
 const options = [
   {
     id: 1,
@@ -149,17 +150,7 @@ export default function MyLearnings({navigation}) {
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
         {/* Header */}
-        <View style={style.header}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
-              onPress={() => navigation.goBack()}
-              name="chevron-left"
-              type="ionicons"
-              size={25}
-            />
-            <Text style={styles.h4}>My Learnings</Text>
-          </View>
-        </View>
+        <Header title={'My Learnings'} navigation={navigation}/>
         <View
           style={{
             backgroundColor: colors.white,
@@ -255,8 +246,8 @@ export default function MyLearnings({navigation}) {
           </View>
         )}
         {selectedOptions === 'Courses' && (
-          <View style={{backgroundColor: colors.white, marginTop: 5, flex: 1}}>
-            <Text style={[styles.h5, {padding: 15, fontWeight: 600}]}>
+          <View style={{backgroundColor: colors.white, marginTop: 5, flex: 1,paddingHorizontal:15}}>
+            <Text style={[styles.h5, {paddingTop:10,fontWeight: 600}]}>
               Live Classes
             </Text>
             <ScrollView>

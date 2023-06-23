@@ -16,6 +16,7 @@ import user2 from './images/user2.jpg';
 import user3 from './images/user3.jpeg';
 import user4 from './images/user4.jpeg';
 import user5 from './images/user5.jpeg';
+import Header from '../../components/Header';
 
 const data = [
   {
@@ -97,17 +98,9 @@ export default function UpcomingClassesList({navigation}) {
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
         {/* Header */}
-        <View style={style.header}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
-              onPress={() => navigation.goBack()}
-              name="chevron-left"
-              type="ionicons"
-              size={25}
-            />
-            <Text style={styles.h4}>Upcoming Classes</Text>
-          </View>
-        </View>
+  
+        <Header title={'Upcoming Classes'} navigation={navigation} />
+
         <ScrollView
           style={{
             marginTop: 5,

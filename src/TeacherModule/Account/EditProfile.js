@@ -9,7 +9,8 @@ import RNSTextInput from '../../components/RNSTextInput';
 import Button from '../../components/Button';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
-import { ImagePicker } from 'react-native-image-picker';
+import {ImagePicker} from 'react-native-image-picker';
+import Header from '../../components/Header';
 
 // create a component
 const TeacherEditProfile = ({navigation}) => {
@@ -91,17 +92,9 @@ const TeacherEditProfile = ({navigation}) => {
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
         {/* Header */}
-        <View style={style.header}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
-              onPress={() => navigation.goBack()}
-              name="chevron-left"
-              type="ionicons"
-              size={25}
-            />
-            <Text style={styles.h4}>Profile</Text>
-          </View>
-        </View>
+
+        <Header title={'Profile'} navigation={navigation} />
+
         <View style={{backgroundColor: colors.white, marginTop: 5, flex: 1}}>
           <View
             style={{

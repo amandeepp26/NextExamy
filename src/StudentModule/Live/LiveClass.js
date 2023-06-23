@@ -8,22 +8,14 @@ import RNSTextInput from '../../components/RNSTextInput';
 import Button from '../../components/Button';
 import Navigator from '../../navigation/Navigator';
 import LiveClassesVideo from '../../components/LiveClassesVideo';
+import Header from '../../components/Header';
 export default function LiveClass({navigation}) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
         {/* Header */}
-        <View style={style.header}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
-              onPress={() => navigation.goBack()}
-              name="chevron-left"
-              type="ionicons"
-              size={25}
-            />
-            <Text style={styles.h4}>Live Videos</Text>
-          </View>
-        </View>
+
+        <Header title={'Live Videos'} navigation={navigation} />
         <View
           style={{
             backgroundColor: colors.white,

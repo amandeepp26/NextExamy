@@ -11,9 +11,10 @@ export default function MockTestCard({data,bgColor,navigation}) {
 
   return (
     <Pressable style={[style.header]} onPress={()=>navigation.navigate('TestReview',{id:data?.assess_id,topic:data?.topic})}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{flexDirection:'row'}}>
+      <View style={{flexDirection: 'row', alignItems: 'center',width:'90%'}}>
         <View>
-          <Text style={[styles.h5, {marginTop: 2,justifyContent:'center',alignItems:'center'}]}>{data?.topic}</Text>
+          <Text style={[styles.h5, {marginTop: 2,justifyContent:'center',alignItems:'center'}]}>{data?.topic || 'Kinematics'}</Text>
           <View
             style={{
               flexDirection: 'row',
@@ -30,12 +31,12 @@ export default function MockTestCard({data,bgColor,navigation}) {
                 
               }}>
               <Text style={[styles.p, {marginLeft: 5, color: `rgb(${bgColor})`}]}>
-                {data?.subject_name} {data?.assess_id}
+                {data?.subject_name || 'Chemistry'} {data?.assess_id || '01'}
               </Text>
             </View>
             <Text
               style={[styles.p, {marginLeft: 10, color: colors.primaryBlue}]}>
-              {data?.total_questions} Questions
+              {data?.total_questions || '10'} Questions
             </Text>
           </View>
           
@@ -45,7 +46,6 @@ export default function MockTestCard({data,bgColor,navigation}) {
             </Text>
         </View>
       </View>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <Image
           style={{height: 40, width: 40}}
           source={require('./images/test.png')}
