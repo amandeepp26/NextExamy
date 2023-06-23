@@ -19,8 +19,9 @@ const apiClient = {
     subjectWiseClass:'api/subjecttopics',
     subjectWiseTopics:'api/topiclist',
     topicWiseClass:'api/topiclass',
+    getProfile:'api/my-profile',
+    updateProfile:'api/update-profile',
     
-    getProfile:"api/web/profile",
     propertyByType:'api/web/home/explore',
     getCities:"api/list/cities",
     getHomeContent:"api/web/home/content",
@@ -34,7 +35,6 @@ const apiClient = {
     developerContact:"api/web/contact/developer",
     developerList:"api/list/developers",
     developerDetail:"api/web/developer/",
-    updateProfile:"api/web/profile/update",
     contactedProperty:"api/web/property/contacted",
     viewedProperty:"api/web/property/history",
     searchQuery:"api/web/localities",

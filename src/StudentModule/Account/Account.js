@@ -68,12 +68,13 @@ const Account = ({navigation}) => {
                 onPress={() => navigation.navigate('Subscription')}
                 style={{
                   alignItems: 'center',
+                  width:'35%',
                   paddingHorizontal: 10,
                   paddingVertical: 5,
                   borderRadius: 5,
                   backgroundColor: colors.primaryBlue,
                 }}>
-                <Text style={[styles.h6, {color: colors.white}]}>
+                <Text style={[styles.h6, {color: colors.white,}]} numberOfLines={1}>
                   Subscribe Now!
                 </Text>
               </Pressable>
@@ -92,7 +93,7 @@ const Account = ({navigation}) => {
                 style={{height: 22, width: 21}}
               />
 
-              <Text style={[styles.h5, {color: '#575757', marginLeft: 10}]}>
+              <Text style={[styles.h6, {color: '#575757', marginLeft: 10}]}>
                 Notifications
               </Text>
             </Pressable>
@@ -104,7 +105,7 @@ const Account = ({navigation}) => {
                 source={require('./images/support.png')}
                 style={{height: 27, width: 27}}
               />
-              <Text style={[styles.h5, {color: '#575757', marginLeft: 10}]}>
+              <Text style={[styles.h6, {color: '#575757', marginLeft: 10}]}>
                 Help & Support
               </Text>
             </Pressable>
@@ -121,7 +122,7 @@ const Account = ({navigation}) => {
                 source={require('./images/books.png')}
                 style={{height: 30, width: 30}}
               />
-              <Text style={[styles.h5, {color: '#575757', marginLeft: 10}]}>
+              <Text style={[styles.h6, {color: '#575757', marginLeft: 10}]}>
                 My Learnings
               </Text>
             </Pressable>
@@ -131,7 +132,7 @@ const Account = ({navigation}) => {
                 source={require('./images/chat.png')}
                 style={{height: 30, width: 30}}
               />
-              <Text style={[styles.h5, {color: '#575757', marginLeft: 10}]}>
+              <Text style={[styles.h6, {color: '#575757', marginLeft: 10}]}>
                 Send Feedback
               </Text>
             </View>
@@ -142,50 +143,50 @@ const Account = ({navigation}) => {
               flexDirection: 'row',
               justifyContent: 'space-evenly',
             }}>
-            <View style={style.tab}>
+            <Pressable onPress={()=>navigation.navigate('AboutUs')} style={style.tab}>
               <Image
                 source={require('./images/aboutus.png')}
                 style={{height: 30, width: 30}}
               />
-              <Text style={[styles.h5, {color: '#575757', marginLeft: 10}]}>
+              <Text style={[styles.h6, {color: '#575757', marginLeft: 10}]}>
                 About Us
               </Text>
-            </View>
+            </Pressable>
 
-            <View style={style.tab}>
+            <Pressable onPress={()=>navigation.navigate('TermsandCondition')} style={style.tab}>
               <Image
                 source={require('./images/termsandcondition.png')}
                 style={{height: 30, width: 30}}
               />
               <Text
                 style={[
-                  styles.h5,
+                  styles.h6,
                   {color: '#575757', marginLeft: 10, width: '75%'},
                 ]}>
                 Terms & Conditions
               </Text>
-            </View>
+            </Pressable>
           </View>
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-evenly',
             }}>
-            <View style={style.tab}>
+            <Pressable onPress={()=>navigation.navigate('PrivacyPolicy')} style={style.tab}>
               <Image
                 source={require('./images/privacy.png')}
                 style={{height: 30, width: 30}}
               />
-              <Text style={[styles.h5, {color: '#575757', marginLeft: 10}]}>
+              <Text style={[styles.h6, {color: '#575757', marginLeft: 10}]}>
                 Privacy Policy
               </Text>
-            </View>
+            </Pressable>
             <View style={style.tab}>
               <Image
                 source={require('./images/delete.png')}
                 style={{height: 28, width: 28}}
               />
-              <Text style={[styles.h5, {color: '#575757', marginLeft: 10}]}>
+              <Text style={[styles.h6, {color: '#575757', marginLeft: 10}]}>
                 Delete Account
               </Text>
             </View>

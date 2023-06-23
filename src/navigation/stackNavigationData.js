@@ -29,6 +29,9 @@ import UpcomingLive from '../StudentModule/Live/UpcomingLive';
 import CompleteProfile from '../StudentModule/home/CompleteProfile';
 import SubjectWiseTest from '../StudentModule/MockTest/SubjectWiseTest';
 import Account from '../StudentModule/Account/Account';
+import PrivacyPolicy from '../StudentModule/Account/PrivacyPolicy';
+import AboutUs from '../StudentModule/Account/AboutUs';
+import TermsandCondition from '../StudentModule/Account/TermsandCondition';
 
 // const headerLeftComponent = (props) => {
 //   return (
@@ -344,6 +347,39 @@ const StackNavigationData = [
   {
     name: 'CompleteProfile',
     component: CompleteProfile,
+    headerLeft: null,
+    headerBackground: {source: logo},
+    headerTitleStyle: {
+      fontFamily: fonts.primaryRegular,
+      color: colors.white,
+      fontSize: 18,
+    },
+  },
+  {
+    name: 'AboutUs',
+    component: AboutUs,
+    headerLeft: null,
+    headerBackground: {source: logo},
+    headerTitleStyle: {
+      fontFamily: fonts.primaryRegular,
+      color: colors.white,
+      fontSize: 18,
+    },
+  },
+  {
+    name: 'TermsandCondition',
+    component: TermsandCondition,
+    headerLeft: null,
+    headerBackground: {source: logo},
+    headerTitleStyle: {
+      fontFamily: fonts.primaryRegular,
+      color: colors.white,
+      fontSize: 18,
+    },
+  },
+  {
+    name: 'PrivacyPolicy',
+    component: PrivacyPolicy,
     headerLeft: null,
     headerBackground: {source: logo},
     headerTitleStyle: {

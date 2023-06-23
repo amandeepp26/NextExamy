@@ -21,6 +21,7 @@ import {connect} from 'react-redux';
 import {Toast} from 'react-native-toast-message';
 import {RenderHTML} from 'react-native-render-html';
 import TestInstructions from './TestInstructions';
+import SInfo from 'react-native-sensitive-info';
 
 function TestQuestions({navigation, authToken, route}) {
   const [index, setIndex] = useState(0);
@@ -34,31 +35,7 @@ function TestQuestions({navigation, authToken, route}) {
   const [submit, setSubmit] = useState(false);
   const [result, setResult] = useState(null);
 
-  useEffect(() => {
-    // getAssessmentQuestion();
-    console.warn('options is--->>', selectedOptions, optionId);
-  }, [selectedOptions, optionId]);
-  const getAssessmentQuestion = async () => {
-    try {
-      const response = await apiClient.post(`${apiClient.Urls.mockTest}`, {
-        topic: route?.params.key.topic,
-        authToken: authToken,
-      });
-      console.warn(response);
-      if (response.status) {
-        setData(response.data);
-        setIsLoading(false);
-      } else {
-        setIsLoading(false);
-      }
-    } catch (e) {
-      Toast.show({
-        text1: e.message || e || 'Something went wrong!',
-        type: 'error',
-      });
-      setIsLoading(false);
-    }
-  };
+
 
   const startTest = async () => {
     try {

@@ -61,7 +61,7 @@ export default function TestReview({navigation, route}) {
               type="ionicons"
               size={25}
             />
-            <Text style={styles.h4}>
+            <Text style={[styles.h4,{width:'90%'}]}>
               Review Answers - {route?.params.topic}
             </Text>
           </View>

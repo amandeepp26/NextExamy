@@ -12,15 +12,16 @@ function Welcome({navigation,userType}) {
   const dispatch = useDispatch();
   return (
     <View style={style.container}>
-      <Image
+      {/* <Image
         source={require('../../../assets/images/logoIcon.png')}
         style={{width: 90, height: 90, margin: 5}}
-      />
-
+      /> */}
+  <View style={{width:300,height:300}}>
       <Image
         source={require('../../../assets/images/welcome.png')}
-        style={{width: '100%', height: 350, marginHorizontal: 10}}
+        style={{width: '100%',height:100, alignSelf:'center', marginHorizontal: 10}}
       />
+      </View>
       <View>
         <Text style={[styles.h2, {marginLeft: 10}]}>Welcome to</Text>
         <Text
