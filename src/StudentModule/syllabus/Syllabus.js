@@ -15,6 +15,7 @@ import {color} from 'react-native-elements/dist/helpers';
 import Video from '../../components/Video';
 import {colors} from '../../styles';
 import styles from '../../navigation/styles';
+import Header from '../../components/Header';
 // create a component
 
 const subjects = [
@@ -128,22 +129,9 @@ const Syllabus = ({navigation}) => {
   };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
-      <View
-        style={{
-          backgroundColor: colors.white,
-          flexDirection: 'row',
-          alignItems: 'center',
-          borderBottomWidth: 5,
-          borderColor: '#e5e5e5',
-        }}>
-        <Icon
-          name="chevron-left"
-          type="ionicons"
-          size={30}
-          onPress={() => navigation.goBack()}
-        />
-        <Text style={[styles.h3, {padding: 20}]}>Syllabus</Text>
-      </View>
+
+      <Header title={'Syllabus'} navigation={navigation} />
+
 
       <View style={{marginTop: 5, backgroundColor: colors.white}}>
         {/* subjects */}

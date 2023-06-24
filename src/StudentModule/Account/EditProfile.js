@@ -15,6 +15,7 @@ import {PermissionsAndroid} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {setEmail, setName, setPhoneNumber} from '../auth/signin';
 import apiClient from '../../utils/apiClient';
+import Header from '../../components/Header';
 
 // create a component
 const EditProfile = ({navigation})=> {
@@ -175,17 +176,9 @@ const EditProfile = ({navigation})=> {
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
         {/* Header */}
-        <View style={style.header}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
-              onPress={() => navigation.goBack()}
-              name="chevron-left"
-              type="ionicons"
-              size={25}
-            />
-            <Text style={styles.h4}>Profile</Text>
-          </View>
-        </View>
+ 
+        <Header title={'Profile'} navigation={navigation}/>
+
         <ScrollView style={{flex:1,backgroundColor:'white'}}>
         <View style={{backgroundColor: colors.white, marginTop: 5, flex: 1}}>
           

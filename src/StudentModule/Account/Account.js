@@ -7,6 +7,7 @@ import {
   Image,
   SafeAreaView,
   Pressable,
+  Dimensions,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import {colors} from '../../styles';
@@ -58,9 +59,10 @@ const Account = ({navigation}) => {
               elevation: 3,
               paddingHorizontal: 12,
               flexDirection: 'row',
+              width:Dimensions.get("window").width
             }}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <View style={{width: '65%'}}>
+            <View style={{flexDirection: 'row', alignItems: 'center',}}>
+              <View style={{width:'60%'}}>
                 <Text style={styles.h6}>Easy Subscription</Text>
                 <Text>Get access to sessions,live classes and many more.</Text>
               </View>
@@ -68,7 +70,7 @@ const Account = ({navigation}) => {
                 onPress={() => navigation.navigate('Subscription')}
                 style={{
                   alignItems: 'center',
-                  width:'35%',
+                  width:'40%',
                   paddingHorizontal: 10,
                   paddingVertical: 5,
                   borderRadius: 5,
@@ -206,9 +208,10 @@ const Account = ({navigation}) => {
               borderRadius: 5,
               position: 'absolute',
               alignSelf: 'center',
-              bottom: 70,
+              bottom: '6%',
               flexDirection: 'row',
               justifyContent: 'space-between',
+             
             }}>
             <Image
               source={require('./images/logout.png')}

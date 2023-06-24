@@ -3,23 +3,16 @@ import React from 'react';
 import {colors} from '../../styles';
 import {Icon} from 'react-native-elements';
 import styles from '../../navigation/styles';
+import Header from '../../components/Header';
 
 export default function TeacherNotification({navigation}) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
         {/* Header */}
-        <View style={style.header}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
-              onPress={() => navigation.goBack()}
-              name="chevron-left"
-              type="ionicons"
-              size={25}
-            />
-            <Text style={styles.h4}>Notification</Text>
-          </View>
-        </View>
+ 
+        <Header title={'Notification'} navigation={navigation} />
+
         <View style={{backgroundColor: colors.white, marginTop: 5, flex: 1,justifyContent:'center'}}>
           <View style={{justifyContent:'center',alignItems:'center'}}>
             <Image source={require('./images/nonotification.png')} style={{width:100,height:125}}/>

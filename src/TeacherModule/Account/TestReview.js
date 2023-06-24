@@ -4,23 +4,16 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import styles from '../../navigation/styles';
 import {colors} from '../../styles';
 import {Icon} from 'react-native-elements';
+import Header from '../../components/Header';
 
 export default function TeacherTestReview({navigation}) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
         {/* Header */}
-        <View style={style.header}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
-              onPress={() => navigation.goBack()}
-              name="chevron-left"
-              type="ionicons"
-              size={25}
-            />
-            <Text style={styles.h4}>Review Answers - Kinematics</Text>
-          </View>
-        </View>
+   
+        <Header title={'Review Answers - Kinematics<'} navigation={navigation} />
+        
         <View
           style={{
             backgroundColor: colors.white,

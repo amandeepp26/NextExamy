@@ -77,6 +77,7 @@ function ChatMessage({navigation, route}) {
                     padding: 10,
                     borderColor: '#d3d3d3',
                     borderRadius: 15,
+                    width:'70%'
                   }}>
                   <Text style={[styles.h6, {color: colors.white}]}>
                     {key.value}
@@ -91,8 +92,9 @@ function ChatMessage({navigation, route}) {
           placeholder="Type message..."
           value={inputValue}
           onChangeText={text => setInputValue(text)}
-          style={style.textInput}
+          style={[style.textInput,{paddingRight:40}]}
           onSubmitEditing={handleTextInputSubmit}
+        
         />
         <Pressable 
         onPress={handleAddToArray} style={{position: 'absolute', right: 20, top: 25}}>

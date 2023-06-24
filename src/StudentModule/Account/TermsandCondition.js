@@ -3,23 +3,14 @@ import React from 'react';
 import {colors} from '../../styles';
 import {Icon} from 'react-native-elements';
 import styles from '../../navigation/styles';
+import Header from '../../components/Header';
 
 export default function TermsandCondition({navigation}) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
         {/* Header */}
-        <View style={style.header}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
-              onPress={() => navigation.goBack()}
-              name="chevron-left"
-              type="ionicons"
-              size={25}
-            />
-            <Text style={styles.h4}>Terms and Conditions</Text>
-          </View>
-        </View>
+        <Header title={'Terms and Conditions'} navigation={navigation}/>
         <ScrollView>
         <View
           style={{
