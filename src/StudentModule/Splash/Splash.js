@@ -11,9 +11,9 @@ class Splash extends Component {
           style={{height: '100%', width: '100%', position: 'absolute'}}
           source={require('../../../assets/images/splash_background.jpg')}
         />
-        <View style={{width:'65%',height:'100%',flex:1,justifyContent:'center',alignItems:'center'}}>
+        <View style={{width:300,height:330,justifyContent:'center',alignItems:'center'}}>
         <Image
-          style={{height:'35%', width: '100%'}}
+          style={{height:'100%', width: '100%'}}
           source={require('../../../assets/images/logo.png')}
         />
         </View>

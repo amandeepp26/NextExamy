@@ -45,50 +45,49 @@ const Topics = [
     id: 1,
     name: 'Kinematics',
     questions: 10,
-    color:'#0C2C39'
+    color: '#0C2C39',
   },
   {
     id: 2,
     name: 'Solid & Fuel Mechanics',
     questions: 4,
-    color:'#343148'
-
+    color: '#343148',
   },
   {
     id: 3,
     name: 'Waves',
     questions: 7,
-    color:'#3B0D11'
+    color: '#3B0D11',
   },
   {
     id: 4,
     name: 'Electricity & Magnetism',
     questions: 12,
-    color:'#5DA493'
+    color: '#5DA493',
   },
   {
     id: 5,
     name: 'Thermal Physics',
     questions: 3,
-    color:'#DB84F3'
+    color: '#DB84F3',
   },
   {
     id: 6,
     name: 'Modern Physics',
     questions: 14,
-    color:'#A2D6E5'
+    color: '#A2D6E5',
   },
   {
     id: 7,
     name: 'Mechanism',
     questions: 5,
-    color:'#E3F7B3'
+    color: '#E3F7B3',
   },
   {
     id: 8,
     name: 'Kinematics',
     questions: 9,
-    color:'#B9E0B5'
+    color: '#B9E0B5',
   },
 ];
 
@@ -129,11 +128,9 @@ const Syllabus = ({navigation}) => {
   };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
-
       <Header title={'Syllabus'} navigation={navigation} />
 
-
-      <View style={{marginTop: 5, backgroundColor: colors.white}}>
+      <View style={{backgroundColor: colors.white}}>
         {/* subjects */}
         <ScrollView
           horizontal
@@ -172,38 +169,48 @@ const Syllabus = ({navigation}) => {
             );
           })}
         </ScrollView>
-        <ScrollView >
-          <View >
-        {Topics.map(key => {
-          return (
-            <Pressable
-              onPress={() => navigation.navigate('SubTopics',{topic:key.name})}
-              style={[style.header]}>
-                
-              <View style={{flexDirection: 'row', alignItems: 'center',borderLeftWidth:15,paddingLeft:10,borderTopLeftRadius:10,borderBottomLeftRadius:10,borderColor:key.color}}>
-                <View style={{width:'92%',paddingVertical:12}}>
-                <View>
-                  <Text style={[styles.h5, {marginTop: 2}]}>{key.name}</Text>
-
-                  <Text style={[styles.p, {fontSize: 13}]}>
-                    {key.questions} courses
-                  </Text>
-                </View>
-              </View>
-              <Icon name="chevron-right" type="ionicons" />
-              </View>
-            </Pressable>
-          );
-        })}
-        </View>
-        </ScrollView>
-        {/* <FlatList
-          numColumns={2}
-          data={NotesArray}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-        /> */}
       </View>
+      <ScrollView>
+        {Topics?.length > 0 ? (
+          <>
+            {Topics.map(key => {
+              return (
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate('SubTopics', {topic: key.name})
+                  }
+                  style={[style.header]}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderLeftWidth: 15,
+                      paddingLeft: 10,
+                      borderTopLeftRadius: 10,
+                      borderBottomLeftRadius: 10,
+                      borderColor: key.color,
+                    }}>
+                    <View style={{width: '92%', paddingVertical: 12}}>
+                      <View>
+                        <Text style={[styles.h5, {marginTop: 2}]}>
+                          {key.name}
+                        </Text>
+
+                        <Text style={[styles.p, {fontSize: 13}]}>
+                          {key.questions} courses
+                        </Text>
+                      </View>
+                    </View>
+                    <Icon name="chevron-right" type="ionicons" />
+                  </View>
+                </Pressable>
+              );
+            })}
+          </>
+        ) : (
+          <Text style={{textAlign: 'center'}}>No Data</Text>
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 };

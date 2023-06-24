@@ -72,9 +72,8 @@ function Tests({navigation}) {
   const [selectedCardIndex, setSelectedCardIndex] = useState(0);
   const [subjects, setSubjects] = useState(null);
   const [topics, setTopics] = useState(null);
-  const [isloading,setIsLoading] = useState(true);
-  const [subject_id,setSubject_id] = useState(null)
-
+  const [isloading, setIsLoading] = useState(true);
+  const [subject_id, setSubject_id] = useState(null);
 
   const authToken = useSelector(state => state.session.authToken);
 
@@ -87,7 +86,7 @@ function Tests({navigation}) {
       const response = await apiClient.get(`${apiClient.Urls.subjects}`, {
         authToken: authToken,
       });
-      console.warn("subjects----->>>",response);
+      console.warn('subjects----->>>', response);
       if (response.status) {
         setSubjects(response.data);
         getTopics(response.data[0].id);
@@ -102,19 +101,18 @@ function Tests({navigation}) {
     }
   };
 
-  const getTopics = async (e) => {
-    setSubject_id(e)
+  const getTopics = async e => {
+    setSubject_id(e);
     try {
       const response = await apiClient.post(`${apiClient.Urls.topicList}`, {
         authToken: authToken,
-        subject_id:e
+        subject_id: e,
       });
-      console.warn("Topics ------->>>>",response);
-      if(response.status){
+      console.warn('Topics ------->>>>', response);
+      if (response.status) {
         setTopics(response.topics);
         setIsLoading(false);
-      }
-      else{
+      } else {
         setTopics(null);
         setIsLoading(false);
       }
@@ -126,16 +124,14 @@ function Tests({navigation}) {
     }
   };
 
-  if(isloading){
-    return(
-      <SkeletonComponent />
-    )
+  if (isloading) {
+    return <SkeletonComponent />;
   }
 
   return (
     <View style={styles.container}>
       <Header title={'Test'} navigation={navigation} />
-    
+
       <ScrollView
         style={{
           backgroundColor: colors.white,
@@ -175,7 +171,7 @@ function Tests({navigation}) {
                     onPress={() => {
                       if (selectedCardIndex != index) {
                         setSelectedCardIndex(index);
-                        getTopics(subject.id)
+                        getTopics(subject.id);
                       } else {
                         setSelectedCardIndex(null);
                       }
@@ -198,40 +194,53 @@ function Tests({navigation}) {
               })}
             </ScrollView>
           </View>
-          {topics?.map(key => {
-            return (
-              <Pressable
-                onPress={() => navigation.navigate('TestQuestions',{key:key,subject_id:subject_id})}
-                style={[style.header]}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View style={{width:'90%'}}>
-                    <Text style={[styles.p, {color: colors.primaryBlue}]}>
-                      {key.question_count} Questions
-                    </Text>
-                    <Text style={[styles.h5, {marginTop: 2,}]}>{key.topic}</Text>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginTop: 2,
-                      }}>
-                      <Icon name="time-outline" type="ionicon" size={15} />
-                      <Text style={[styles.p, {marginLeft: 5}]}>
-                        {key.duration} minutes
-                        {/* {key.time} */}
-                      </Text>
+          {topics.length > 0 ? (
+            <>
+              {topics?.map(key => {
+                return (
+                  <Pressable
+                    onPress={() =>
+                      navigation.navigate('TestQuestions', {
+                        key: key,
+                        subject_id: subject_id,
+                      })
+                    }
+                    style={[style.header]}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <View style={{width: '90%'}}>
+                        <Text style={[styles.p, {color: colors.primaryBlue}]}>
+                          {key.question_count} Questions
+                        </Text>
+                        <Text style={[styles.h5, {marginTop: 2}]}>
+                          {key.topic}
+                        </Text>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            marginTop: 2,
+                          }}>
+                          <Icon name="time-outline" type="ionicon" size={15} />
+                          <Text style={[styles.p, {marginLeft: 5}]}>
+                            {key.duration} minutes
+                            {/* {key.time} */}
+                          </Text>
+                        </View>
+                      </View>
                     </View>
-                  </View>
-                </View>
-                <View style={{ alignItems: 'center'}}>
-                  <Image
-                    style={{height: 40, width: 40}}
-                    source={require('./images/notebook.png')}
-                  />
-                </View>
-              </Pressable>
-            );
-          })}
+                    <View style={{alignItems: 'center'}}>
+                      <Image
+                        style={{height: 40, width: 40}}
+                        source={require('./images/notebook.png')}
+                      />
+                    </View>
+                  </Pressable>
+                );
+              })}
+            </>
+          ) : (
+            <Text style={{textAlign: 'center'}}>No data</Text>
+          )}
         </View>
       </ScrollView>
     </View>
