@@ -16,13 +16,14 @@ function Welcome({navigation, userType}) {
         source={require('../../../assets/images/logoIcon.png')}
         style={{width: 90, height: 90, margin: 5}}
       /> */}
-      <View style={{width: '100%', height: 300,paddingTop:20}}>
+      <View style={{width: '100%', height:'60%',paddingTop:20}}>
         <Image
           source={require('../../../assets/images/welcome.png')}
-          style={{width: '80%', height: 300, alignSelf: 'center'}}
+          style={{width: '90%', height: 400, alignSelf: 'center'}}
         />
       </View>
-      <View>
+      <View style={{height:'40%'}}>
+
         <Text style={[styles.h2, {paddingLeft: 25}]}>Welcome to</Text>
         <Text
           style={[
@@ -31,7 +32,7 @@ function Welcome({navigation, userType}) {
           ]}>
           NextExamy
         </Text>
-        <View style={{marginTop: 15}}>
+        <View style={{position:'absolute',bottom:'12%',width:'100%'}}>
           <Button
             text={'I am a Teacher'}
             backgroundColor={colors.white}

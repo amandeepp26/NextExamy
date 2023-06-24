@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from '../../navigation/styles';
 import {colors} from '../../styles';
 import {Icon} from 'react-native-elements';
@@ -14,8 +14,8 @@ import {Image} from 'react-native-ui-lib';
 import LiveClassesVideo from '../../components/LiveClassesVideo';
 import MockTestCard from '../../components/MockTestCard';
 import apiClient from '../../utils/apiClient';
-import { useSelector } from 'react-redux';
-import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import {useSelector} from 'react-redux';
+import {Toast} from 'react-native-toast-message/lib/src/Toast';
 import Header from '../../components/Header';
 const options = [
   {
@@ -101,7 +101,7 @@ const testTopics = [
 export default function MyLearnings({navigation}) {
   const [selectedCardIndex, setSelectedCardIndex] = useState(0);
   const [selectedOptions, setselectedOptions] = useState('Courses');
-  const [mockTestData,setMockTestData] = useState(null);
+  const [mockTestData, setMockTestData] = useState(null);
 
   const authToken = useSelector(state => state.session.authToken);
 
@@ -134,9 +134,8 @@ export default function MyLearnings({navigation}) {
       );
       console.warn(response);
       if (response) {
-        setMockTestData(response.data)
+        setMockTestData(response.data);
       } else {
-        
       }
     } catch (e) {
       Toast.show({
@@ -150,7 +149,7 @@ export default function MyLearnings({navigation}) {
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
         {/* Header */}
-        <Header title={'My Learnings'} navigation={navigation}/>
+        <Header title={'My Learnings'} navigation={navigation} />
         <View
           style={{
             backgroundColor: colors.white,
@@ -246,8 +245,14 @@ export default function MyLearnings({navigation}) {
           </View>
         )}
         {selectedOptions === 'Courses' && (
-          <View style={{backgroundColor: colors.white, marginTop: 5, flex: 1,paddingHorizontal:15}}>
-            <Text style={[styles.h5, {paddingTop:10,fontWeight: 600}]}>
+          <View
+            style={{
+              backgroundColor: colors.white,
+              marginTop: 5,
+              flex: 1,
+              paddingHorizontal: 15,
+            }}>
+            <Text style={[styles.h5, {paddingTop: 10, fontWeight: 600}]}>
               Live Classes
             </Text>
             <ScrollView>
@@ -266,15 +271,23 @@ export default function MyLearnings({navigation}) {
               Submissions
             </Text> */}
             <ScrollView>
-              {mockTestData?.map(key => {
-                return (
-                  <MockTestCard
-                    data={key}
-                    bgColor={getRandomColor()}
-                    navigation={navigation}
-                  />
-                );
-              })}
+              {mockTestData?.length > 0 ? (
+                <>
+                  {mockTestData?.map(key => {
+                    return (
+                      <MockTestCard
+                        data={key}
+                        bgColor={getRandomColor()}
+                        navigation={navigation}
+                      />
+                    );
+                  })}
+                </>
+              ) : (
+                <Text style={{textAlign: 'center', alignItems: 'center'}}>
+                  No Data
+                </Text>
+              )}
             </ScrollView>
           </View>
         )}
@@ -284,17 +297,23 @@ export default function MyLearnings({navigation}) {
               Submissions
             </Text>
             <ScrollView>
-              {testTopics.map(key => {
-                return (
-                  <MockTestCard
-                    topic={key.name}
-                    subject={'Physics'}
-                    question={key.questions}
-                    bgColor={getRandomColor()}
-                    navigation={navigation}
-                  />
-                );
-              })}
+              {testTopics?.length > 0 ? (
+                <>
+                  {testTopics.map(key => {
+                    return (
+                      <MockTestCard
+                        topic={key.name}
+                        subject={'Physics'}
+                        question={key.questions}
+                        bgColor={getRandomColor()}
+                        navigation={navigation}
+                      />
+                    );
+                  })}
+                </>
+              ) : (
+                <Text style={{textAlign: 'center'}}>No data</Text>
+              )}
             </ScrollView>
           </View>
         )}

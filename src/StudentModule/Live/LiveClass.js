@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {Pressable, SafeAreaView} from 'react-native';
 import {colors} from '../../styles';
@@ -29,16 +29,24 @@ export default function LiveClass({navigation}) {
           </View>
           <View style={{marginTop: 40}}>
             <Text>Upcoming</Text>
-            <View style={{borderBottomColor: '#d3d3d3', borderBottomWidth: 1}}>
-              <LiveClassesVideo navigation={navigation} />
-            </View>
-            <View style={{borderBottomColor: '#d3d3d3', borderBottomWidth: 1}}>
-              <LiveClassesVideo navigation={navigation} />
-            </View>
-            <View style={{borderBottomColor: '#d3d3d3', borderBottomWidth: 1}}>
-              <LiveClassesVideo navigation={navigation} />
-            </View>
           </View>
+          <ScrollView>
+            <View style={{borderBottomColor: '#d3d3d3', borderBottomWidth: 1}}>
+              <LiveClassesVideo navigation={navigation} />
+            </View>
+            <View style={{borderBottomColor: '#d3d3d3', borderBottomWidth: 1}}>
+              <LiveClassesVideo navigation={navigation} />
+            </View>
+            <View style={{borderBottomColor: '#d3d3d3', borderBottomWidth: 1}}>
+              <LiveClassesVideo navigation={navigation} />
+            </View>
+            <View style={{borderBottomColor: '#d3d3d3', borderBottomWidth: 1}}>
+              <LiveClassesVideo navigation={navigation} />
+            </View>
+            <View style={{borderBottomColor: '#d3d3d3', borderBottomWidth: 1}}>
+              <LiveClassesVideo navigation={navigation} />
+            </View>
+          </ScrollView>
         </View>
       </View>
     </SafeAreaView>

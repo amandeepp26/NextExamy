@@ -1,21 +1,21 @@
 //import liraries
-import { NavigationContainer } from '@react-navigation/native';
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Provider } from 'react-redux';
+import {NavigationContainer} from '@react-navigation/native';
+import React, {Component} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import {Provider} from 'react-redux';
 import AppView from './src/StudentModule/AppView';
 import Splash from './src/StudentModule/Splash/Splash';
-import {store} from './src/redux/store'
-import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
-import { fonts } from './src/styles';
+import {store} from './src/redux/store';
+import Toast, {BaseToast, ErrorToast} from 'react-native-toast-message';
+import {fonts} from './src/styles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const toastConfig = {
-  success: (props) => (
+  success: props => (
     <BaseToast
       {...props}
-      style={{ borderLeftColor: '#69C779' }}
+      style={{borderLeftColor: '#69C779'}}
       text1Style={{
         fontSize: 12,
         fontFamily: fonts.primarySemiBold,
@@ -29,11 +29,21 @@ const toastConfig = {
       }}
       autoHide={false}
       onPress={() => Toast.hide()}
-      renderLeadingIcon={() => <AntDesign style={[styles.toastIconStyles, { color: '#69C779', paddingLeft: 10, }]} name={'checkcircleo'} />}
-      renderTrailingIcon={() => <MaterialIcons style={[styles.toastIconStyles, { color: '#FE6301', paddingRight: 10, }]} name={'cancel'} />}
+      renderLeadingIcon={() => (
+        <AntDesign
+          style={[styles.toastIconStyles, {color: '#69C779', paddingLeft: 10}]}
+          name={'checkcircleo'}
+        />
+      )}
+      renderTrailingIcon={() => (
+        <MaterialIcons
+          style={[styles.toastIconStyles, {color: '#FE6301', paddingRight: 10}]}
+          name={'cancel'}
+        />
+      )}
     />
   ),
-  error: (props) => (
+  error: props => (
     <ErrorToast
       {...props}
       text1Style={{
@@ -49,8 +59,18 @@ const toastConfig = {
       }}
       autoHide={false}
       onPress={() => Toast.hide()}
-      renderLeadingIcon={() => <AntDesign style={[styles.toastIconStyles, { color: '#FE6301', paddingLeft: 10, }]} name={'warning'} />}
-      renderTrailingIcon={() => <MaterialIcons style={[styles.toastIconStyles, { color: '#FE6301', paddingRight: 10, }]} name={'cancel'} />}
+      renderLeadingIcon={() => (
+        <AntDesign
+          style={[styles.toastIconStyles, {color: '#FE6301', paddingLeft: 10}]}
+          name={'warning'}
+        />
+      )}
+      renderTrailingIcon={() => (
+        <MaterialIcons
+          style={[styles.toastIconStyles, {color: '#FE6301', paddingRight: 10}]}
+          name={'cancel'}
+        />
+      )}
     />
   ),
 };
@@ -63,27 +83,24 @@ class App extends Component {
   state = {
     appReady: false,
     restartAllowed: true,
-  }
+  };
 
-  componentDidMount(){
+  componentDidMount() {
     setTimeout(() => {
-      this.setState({ appReady: true });
+      this.setState({appReady: true});
     }, 2000);
   }
   render() {
     if (!this.state.appReady) {
-      return (
-        <Splash />
-      );
+      return <Splash />;
     }
 
     return (
       <Provider store={store}>
-      <NavigationContainer>
-        <AppView />
-      </NavigationContainer>
-      
-      <Toast config={toastConfig} />
+        <NavigationContainer>
+          <AppView />
+        </NavigationContainer>
+        <Toast config={toastConfig} />
       </Provider>
     );
   }
@@ -100,7 +117,7 @@ const styles = StyleSheet.create({
   toastIconStyles: {
     fontSize: 24,
     alignSelf: 'center',
-  }
+  },
 });
 
 //make this component available to the app

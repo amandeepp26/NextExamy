@@ -1,4 +1,4 @@
-import {Pressable, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, { useState } from 'react';
 import {colors} from '../../styles';
 import styles from '../../navigation/styles';
@@ -46,6 +46,7 @@ export default function HelpandSupport({navigation}) {
       <View style={styles.container}>
         {/* Header */}
         <Header title={'Help and Support'} navigation={navigation}/>
+        <ScrollView>
         <View
           style={{
             backgroundColor: colors.white,
@@ -139,6 +140,7 @@ export default function HelpandSupport({navigation}) {
             );
           })}
         </View>
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
