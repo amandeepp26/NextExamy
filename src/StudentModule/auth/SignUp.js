@@ -84,13 +84,13 @@ function Signup({
         <Text style={[styles.p, {color: '#000', textAlign: 'justify',}]}>
           <Text
             style={{color: colors.secondaryBlue}}
-            onPress={() => navigation.navigate('')}>
+            onPress={() => navigation.navigate('TermsandCondition')}>
              Terms & Conditions
           </Text>{' '}
           and
           <Text
             style={{color: colors.secondaryBlue}}
-            onPress={() => navigation.navigate('')}>
+            onPress={() => navigation.navigate('PrivacyPolicy')}>
             {' '}
             Privacy Policy{' '}
           </Text>

@@ -22,6 +22,7 @@ const EditProfile = ({navigation})=> {
   const [isVisible, setIsVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [image, setImage] = useState('');
+  const [userId,setUserId] = useState(null);
 
   const authToken = useSelector(state => state.session.authToken);
   const name = useSelector(state => state.signin.name);
@@ -44,6 +45,7 @@ const EditProfile = ({navigation})=> {
         dispatch(setEmail(response.data.email));
         dispatch(setPhoneNumber(response.data.mobile));
         set_dob(response.data.date_of_birth);
+        setUserId(response.data.id);
         setImage(response.data.profile);
       } else {
       }
@@ -62,9 +64,10 @@ const EditProfile = ({navigation})=> {
         name:name,
         email:email,
         date_of_birth:dob,
-        ...(popupVisible && { profile: image })
+        user_id:userId,
+        profile: image
       });
-      console.warn(response);
+      console.warn("update profile response------->>>>",response);
       if (response.status == 'success') {
         navigation.goBack();
         Toast.show({
@@ -87,7 +90,7 @@ const EditProfile = ({navigation})=> {
       set_dob(dob);
     }
     setIsVisible(false);
-    set_dob(moment(date).format('MM/DD/YYYY'));
+    set_dob(moment(date).format('DD-MMM-yyyy'));
   };
 
   //function to launch gallery
@@ -248,7 +251,7 @@ const EditProfile = ({navigation})=> {
                 onChangeText={e => dispatch(setEmail(e))}
               />
             </View>
-            <View style={{marginTop: 25}}>
+            {/* <View style={{marginTop: 25}}>
               <Text style={[styles.h4, {marginLeft: 10}]}>Phone Number</Text>
               <RNSTextInput
                 placeHolder={'Enter Phone Number'}
@@ -257,7 +260,7 @@ const EditProfile = ({navigation})=> {
                 onChangeText={e => dispatch(setPhoneNumber(e))}
                 keyboardType="numeric"
               />
-            </View>
+            </View> */}
             <Pressable
               onPress={() => setIsVisible(true)}
               style={{marginTop: 25}}>

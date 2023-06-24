@@ -10,6 +10,8 @@ import SelectSubCategory from '../StudentModule/onboarding/SelectSubCategory';
 import OtpVerification from '../StudentModule/auth/OtpVerification';
 import TeacherLogin from '../TeacherModule/auth/Login';
 import signupOtpVerification from '../StudentModule/auth/signupOtpVerification';
+import TermsandCondition from '../StudentModule/Account/TermsandCondition';
+import PrivacyPolicy from '../StudentModule/Account/PrivacyPolicy';
 
 function Navigator(props) {
   console.warn('ppppp', props);
@@ -30,7 +32,8 @@ function Navigator(props) {
                 name="signupOtpVerification"
                 component={signupOtpVerification}
               />
-            
+              <Stack.Screen name="TermsandCondition" component={TermsandCondition} />
+              <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
             </Stack.Navigator>
           ) : (
             <Stack.Navigator screenOptions={{headerShown: false}}>
