@@ -12,11 +12,13 @@ import {
 import {Icon} from 'react-native-elements';
 import {colors} from '../../styles';
 import styles from '../../navigation/styles';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {logout} from '../auth/session';
 // create a component
 const Account = ({navigation}) => {
   const dispatch = useDispatch();
+  const category = useSelector(state => state.signin.category);
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
@@ -34,7 +36,7 @@ const Account = ({navigation}) => {
               source={require('../../../assets/images/logoIcon.png')}
               style={{width: 70, height: 70, margin: 5}}
             />
-            <Text style={styles.h4}>IIT-JEE Mains</Text>
+            <Text style={styles.h4}>{category || 'Your Category'}</Text>
           </View>
           <Pressable
             onPress={() => navigation.navigate('EditProfile')}

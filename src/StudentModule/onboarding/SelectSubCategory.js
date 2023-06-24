@@ -26,7 +26,7 @@ function SelectSubCategory({navigation, route}) {
   const [subcategory_id,setSubcategoryId] = useState(null);
   const dispatch = useDispatch();
 
-  console.log('route data-->',route?.params)
+  console.log('route data-->',route?.params.id)
   if (route?.params.data.length % 2 !== 0) {
     route?.params.data.push({id: 'dummy', isDummy: true});
   }
@@ -92,7 +92,7 @@ function SelectSubCategory({navigation, route}) {
     try {
       const response = await apiClient.post(`${apiClient.Urls.selectCategory}`, {
         authToken:tempToken,
-        category_id:route?.params.data[0].id,
+        category_id:route?.params.id,
         subcategory_id:subcategory_id
       });
       console.warn("select category response is ---->",response);

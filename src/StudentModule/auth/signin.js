@@ -12,6 +12,9 @@ const SET_PASSWORD = 'auth/signin/SET_PASSWORD';
 const ENTER_OTP = 'auth/signin/ENTER_OTP';
 const SKIP = 'auth/signin/SKIP';
 const SET_USERTYPE = 'auth/signin/SET_USERTYPE';
+const SET_CATEGORY = 'auth/signin/SET_CATEGORY';
+const SET_SUBCATEGORY = 'auth/signin/SET_SUBCATEGORY';
+
 
 
 const LOGIN_START = 'auth/signin/LOGIN_START';
@@ -33,7 +36,8 @@ const initialState = {
   profile_pic: '',
   loading: false,
   userType:'',
-  category:''
+  category:'',
+  subCategory:''
 };
 
 export const clearState = () => ({
@@ -92,6 +96,20 @@ export const setOTP = otp => {
   return {
     type: ENTER_OTP,
     otp,
+  };
+};
+
+export const setCategory = category => {
+  return {
+    type: SET_CATEGORY,
+    category,
+  };
+};
+
+export const setSubcategory = subCategory => {
+  return {
+    type: SET_SUBCATEGORY,
+    subCategory,
   };
 };
 
@@ -502,6 +520,18 @@ export default signinReducer = (state = initialState, action) => {
       return {
         ...state,
         password: action.password,
+      };
+    }
+    case SET_CATEGORY: {
+      return {
+        ...state,
+        category: action.category,
+      };
+    }
+    case SET_SUBCATEGORY: {
+      return {
+        ...state,
+        subCategory: action.subCategory,
       };
     }
     case SKIP: {

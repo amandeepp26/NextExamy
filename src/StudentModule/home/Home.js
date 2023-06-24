@@ -1,5 +1,5 @@
 //import liraries
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -20,34 +20,38 @@ import Button from '../../components/Button';
 import CompleteProfilePopup from '../../components/CompleteProfilePopup';
 import apiClient from '../../utils/apiClient';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCategory, setEmail, setName, setPhoneNumber, setSubcategory } from '../auth/signin';
 // import Video from 'react-native-video';
 
 // create a component
-class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isVisible: true,
-      subjects:[]
-    };
-  }
-  componentDidMount() {
+
+const Home =({navigation})=>{
+  const [isVisible,setIsVisible] = useState(true);
+  const [subjects,setSubjects] = useState([]);
+  const authToken = useSelector(state => state.session.authToken);
+  const category = useSelector(state => state.signin.category);
+
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
     setTimeout(() => {
-      this.setState({isVisible: false});
+      setIsVisible(false);
     }, 10000);
-    this.getSubjects();
-  }
-   getSubjects = async () => {
+    getSubjects();
+    getProfile();
+  },[])
+  
+  const getSubjects = async () => {
     try {
       const response = await apiClient.post(`${apiClient.Urls.subjectWiseClass}`, {
-        authToken: this.props.authToken
+        authToken: authToken
       });
       console.warn("response is",response);
       if (response) {
-        this.setState({subjects:response})
+        setSubjects(response);
       } else {
-        this.setState({subjects:[]})
+        setSubjects([]);
       }
     } catch (e) {
       Toast.show({
@@ -57,8 +61,29 @@ class Home extends Component {
       console.warn('error is-->', e);
     }
   };
-  render() {
-    const {isVisible} = this.state;
+
+  const getProfile = async () => {
+    try {
+      const response = await apiClient.get(`${apiClient.Urls.getProfile}`, {
+        authToken: authToken,
+      });
+      console.warn(response);
+      if (response.status == 'success') {
+        dispatch(setName(response.data.name));
+        dispatch(setEmail(response.data.email));
+        dispatch(setPhoneNumber(response.data.mobile));
+        dispatch(setCategory(response.data.category_name));
+        dispatch(setSubcategory(response.data.subcategory_name))
+      } else {
+      }
+    } catch (e) {
+      Toast.show({
+        text1: e.message || e || 'Something went wrong!',
+        type: 'error',
+      });
+    }
+  };
+
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
         <View style={styles.container}>
@@ -69,12 +94,12 @@ class Home extends Component {
                 source={require('../../../assets/images/logoIcon.png')}
                 style={{width: 70, height: 70, margin: 5}}
               />
-              <Text style={styles.h4}>IIT-JEE Mains</Text>
+              <Text style={styles.h4}>{category || 'Your Category'}</Text>
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Icon onPress={()=>this.props.navigation.navigate('Search')} name="search" type="ionicons" size={25} />
+              <Icon onPress={()=>navigation.navigate('Search')} name="search" type="ionicons" size={25} />
               <Pressable
-                onPress={() => this.props.navigation.navigate('Account')}>
+                onPress={() =>navigation.navigate('Account')}>
                 <Image
                   source={require('../../components/images/user.jpeg')}
                   style={{
@@ -89,8 +114,8 @@ class Home extends Component {
             </View>
           </View>
           <ScrollView style={{marginBottom: 110}}>
-            <SubjectWiseClass navigation={this.props.navigation} subjects={this.state.subjects} />
-            <QuickLinks navigation={this.props.navigation} />
+            <SubjectWiseClass navigation={navigation} subjects={subjects} />
+            <QuickLinks navigation={navigation} />
             <View
               style={{
                 padding: 10,
@@ -112,9 +137,9 @@ class Home extends Component {
                 activeDotStyle={{width: 25}}
                 activeDotColor={colors.primaryBlue}
                 paginationStyle={{bottom: 10}}>
-                <Video navigation={this.props.navigation} />
-                <Video navigation={this.props.navigation} />
-                <Video navigation={this.props.navigation} />
+                <Video navigation={navigation} />
+                <Video navigation={navigation} />
+                <Video navigation={navigation} />
               </Swiper>
             </View>
             <View
@@ -127,9 +152,9 @@ class Home extends Component {
               <Text style={[styles.h3, {fontWeight: '700'}]}>Free Classes</Text>
             </View>
             <View style={{backgroundColor: colors.white, paddingBottom: 30}}>
-              <Video navigation={this.props.navigation} />
+              <Video navigation={navigation} />
               <Button
-                onpress={() => this.props.navigation.navigate('FreeVideos')}
+                onpress={() => navigation.navigate('FreeVideos')}
                 text={'See all free classes'}
                 backgroundColor={'#535353'}
               />
@@ -151,7 +176,7 @@ class Home extends Component {
             }}>
             <Text style={styles.h6}>Want to achieve your dreams?</Text>
             <Pressable
-              onPress={() => this.props.navigation.navigate('Subscription')}
+              onPress={() => navigation.navigate('Subscription')}
               style={{
                 backgroundColor: colors.primaryBlue,
                 paddingHorizontal: 10,
@@ -168,11 +193,10 @@ class Home extends Component {
             </Pressable>
           </View>
           {/* Complete profile button */}
-          {isVisible && <CompleteProfilePopup navigation={this.props.navigation} />}
+          {isVisible && <CompleteProfilePopup navigation={navigation} />}
         </View>
       </SafeAreaView>
     );
-  }
 }
 
 // define your styles
@@ -191,8 +215,4 @@ const style = StyleSheet.create({
 });
 
 //make this component available to the app
-export default connect(state => {
-  return {
-    authToken: state.session.authToken,
-  };
-}, {})(Home);
+export default Home;
