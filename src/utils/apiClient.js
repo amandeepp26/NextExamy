@@ -1,5 +1,5 @@
-export const baseUrl = 'https://app.ankitbangwaldigitalmarketing.in/';
-export const imgUrl = 'https://app.ankitbangwaldigitalmarketing.in/images/assessments/';
+export const baseUrl = 'https://nextexamy.com/';
+export const imgUrl = 'https://nextexamy.com/images/assessments/';
 
 const apiClient = {
   Urls: {
@@ -21,6 +21,7 @@ const apiClient = {
     topicWiseClass:'api/topiclass',
     getProfile:'api/my-profile',
     updateProfile:'api/update-profile',
+    selectCategory:'api/user-category',
     
     propertyByType:'api/web/home/explore',
     getCities:"api/list/cities",
@@ -51,7 +52,8 @@ const apiClient = {
       }
     }
   
-    let headers = {};
+    let headers = {
+      'Accept': 'application/json',};
   
     if (params?.authToken) {
       headers['Authorization'] = `Bearer ${params?.authToken}`;

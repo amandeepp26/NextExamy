@@ -60,7 +60,7 @@ function SelectCategory({navigation}) {
   const [category, setCategory] = useState(null);
   const [subCategory, setsubcategory] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [categoryId,setCategoryId] = useState(null);
   const dispatch = useDispatch();
   const tempToken = useSelector(state => state.session.tempToken);
 
@@ -89,6 +89,7 @@ function SelectCategory({navigation}) {
 
   const select = (key, index) => {
     if (selectedCardIndex != index) {
+      setCategoryId(key.id)
       setsubcategory(key.subcategories);
       console.warn(subCategory);
       setSelectedCardIndex(index);
@@ -201,7 +202,7 @@ function SelectCategory({navigation}) {
                 backgroundColor={colors.primaryBlue}
                 text={'Next'}
                 onpress={() => {
-                  navigation.navigate('SelectSubCategory', {data: subCategory});
+                  navigation.navigate('SelectSubCategory', {data: subCategory,id:categoryId});
                 }}
               />
             ) : (

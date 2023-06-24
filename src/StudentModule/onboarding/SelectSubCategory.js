@@ -9,6 +9,7 @@ import {skipNow} from '../auth/signin';
 import {useDispatch, useSelector} from 'react-redux';
 import {setAuthData} from '../auth/session';
 import {Toast} from 'react-native-toast-message/lib/src/Toast';
+import apiClient from '../../utils/apiClient';
 
 const colorCodes = [
   {primary: '#A0E7E5', secondary: '#FFFFFF'}, // Blue and White
@@ -22,8 +23,10 @@ const colorCodes = [
 // create a component
 function SelectSubCategory({navigation, route}) {
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+  const [subcategory_id,setSubcategoryId] = useState(null);
   const dispatch = useDispatch();
 
+  console.log('route data-->',route?.params)
   if (route?.params.data.length % 2 !== 0) {
     route?.params.data.push({id: 'dummy', isDummy: true});
   }
@@ -40,6 +43,7 @@ function SelectSubCategory({navigation, route}) {
         onPress={() => {
           if (selectedCardIndex != index) {
             setSelectedCardIndex(index);
+            setSubcategoryId(item.id);
           } else {
             setSelectedCardIndex(null);
           }
@@ -81,6 +85,29 @@ function SelectSubCategory({navigation, route}) {
         </View>
       </Pressable>
     );
+  };
+
+  
+  const selectCategory = async () => {
+    try {
+      const response = await apiClient.post(`${apiClient.Urls.selectCategory}`, {
+        authToken:tempToken,
+        category_id:route?.params.data[0].id,
+        subcategory_id:subcategory_id
+      });
+      console.warn("select category response is ---->",response);
+      if (response.status=='success') {
+        dispatch(skipNow(false));
+        dispatch(setAuthData(tempToken));
+      } else {
+      }
+    } catch (e) {
+      Toast.show({
+        text1: e.message || e || 'Something went wrong!',
+        type: 'error',
+      });
+      console.warn('error is-->', e);
+    }
   };
   return (
     <View style={styles.container}>
@@ -130,9 +157,7 @@ function SelectSubCategory({navigation, route}) {
           <Button
             backgroundColor={colors.primaryBlue}
             text={'Next'}
-            onpress={() => {
-              dispatch(skipNow(false));
-              dispatch(setAuthData(tempToken));
+            onpress={() => {selectCategory()
             }}
           />
         ) : (
