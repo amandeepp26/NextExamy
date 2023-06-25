@@ -50,7 +50,7 @@ export default function HelpandSupport({navigation}) {
         <View
           style={{
             backgroundColor: colors.white,
-            marginVertical: 5,
+            marginBottom: 5,
             flexDirection: 'row',
             justifyContent: 'space-between',
             paddingVertical: 25,
@@ -79,7 +79,7 @@ export default function HelpandSupport({navigation}) {
             paddingVertical: 10,
             paddingHorizontal: 20,
           }}>
-          <Text style={[styles.h6,{fontWeight:700}]}>Have any Query?</Text>
+          <Text style={[styles.h6,{fontWeight:'600'}]}>Have any Query?</Text>
           <Pressable
             // onPress={()=>navigation.navigate('EditProfile')}
             style={{
@@ -102,7 +102,7 @@ export default function HelpandSupport({navigation}) {
             paddingHorizontal: 20,
             flex:1
           }}>
-          <Text style={[styles.h6,{fontWeight:700}]}>Frequently Asked Questions</Text>
+          <Text style={[styles.h6,{fontWeight:"600"}]}>Frequently Asked Questions</Text>
           {faq.map((val, index) => {
             const isActive = activeQuestion === index;
 

@@ -28,7 +28,7 @@ const subjects = [
   },
 ];
 
-function MockTest({navigation}) {
+function Assessments({navigation}) {
   renderItem = ({item, index}) => {
     return (
       <Pressable
@@ -88,7 +88,7 @@ function MockTest({navigation}) {
               styles.h3,
               {fontWeight: '700', color: colors.primaryBlue, marginTop: 10},
             ]}>
-            Mock tests
+            Assessments
           </Text>
           <Text style={[styles.h4, {fontWeight: '700'}]}>
             to evaluate your preparation
@@ -105,4 +105,4 @@ function MockTest({navigation}) {
   );
 }
 
-export default MockTest;
+export default Assessments;

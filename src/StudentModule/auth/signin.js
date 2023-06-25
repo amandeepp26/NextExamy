@@ -14,6 +14,8 @@ const SKIP = 'auth/signin/SKIP';
 const SET_USERTYPE = 'auth/signin/SET_USERTYPE';
 const SET_CATEGORY = 'auth/signin/SET_CATEGORY';
 const SET_SUBCATEGORY = 'auth/signin/SET_SUBCATEGORY';
+const SET_PROFILEPIC = 'auth/signin/SET_PROFILEPIC';
+
 
 
 
@@ -33,7 +35,7 @@ const initialState = {
   email: '',
   password: '',
   otp: '',
-  profile_pic: '',
+  profile_pic: null,
   loading: false,
   userType:'',
   category:'',
@@ -110,6 +112,12 @@ export const setSubcategory = subCategory => {
   return {
     type: SET_SUBCATEGORY,
     subCategory,
+  };
+};
+export const setProfilePic = profile_pic => {
+  return {
+    type: SET_PROFILEPIC,
+    profile_pic,
   };
 };
 
@@ -532,6 +540,12 @@ export default signinReducer = (state = initialState, action) => {
       return {
         ...state,
         subCategory: action.subCategory,
+      };
+    }
+    case SET_PROFILEPIC: {
+      return {
+        ...state,
+        profile_pic: action.profile_pic,
       };
     }
     case SKIP: {

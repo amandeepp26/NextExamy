@@ -103,7 +103,6 @@ export default function LiveClassesList({navigation}) {
 
         <ScrollView
           style={{
-            marginTop: 5,
             backgroundColor: '#fff',
             paddingVertical: 10,
             flex: 1,

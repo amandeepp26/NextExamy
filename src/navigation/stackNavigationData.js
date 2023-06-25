@@ -24,10 +24,10 @@ import LiveClass from '../StudentModule/Live/LiveClass';
 import Search from '../StudentModule/home/Search';
 import Live from '../StudentModule/Live/Live';
 import TestInstructions from '../StudentModule/Test/TestInstructions';
-import MockTest from '../StudentModule/MockTest/MockTest';
+import Assessments from '../StudentModule/Assessments/Assessments';
 import UpcomingLive from '../StudentModule/Live/UpcomingLive';
 import CompleteProfile from '../StudentModule/home/CompleteProfile';
-import SubjectWiseTest from '../StudentModule/MockTest/SubjectWiseTest';
+import SubjectWiseTest from '../StudentModule/Assessments/SubjectWiseTest';
 import Account from '../StudentModule/Account/Account';
 import PrivacyPolicy from '../StudentModule/Account/PrivacyPolicy';
 import AboutUs from '../StudentModule/Account/AboutUs';
@@ -312,8 +312,8 @@ const StackNavigationData = [
     },
   },
   {
-    name: 'MockTest',
-    component: MockTest,
+    name: 'Assessments',
+    component: Assessments,
     headerLeft: null,
     headerBackground: {source: logo},
     headerTitleStyle: {

@@ -28,6 +28,8 @@ const style = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.white,
     paddingVertical: 20,
+    borderBottomWidth:1,
+    borderColor:'#d3d3d3'
   },
 });
 export default Header;

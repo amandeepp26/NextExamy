@@ -91,6 +91,7 @@ function ChatMessage({navigation, route}) {
         <TextInput
           placeholder="Type message..."
           value={inputValue}
+          multiline
           onChangeText={text => setInputValue(text)}
           style={[style.textInput,{paddingRight:40}]}
           onSubmitEditing={handleTextInputSubmit}
@@ -124,7 +125,7 @@ const style = StyleSheet.create({
     backgroundColor: colors.white,
     borderColor: '#d3d3d3',
     elevation: 0.5,
-    fontSize: 17,
+    fontSize: 15,
   },
 });
 

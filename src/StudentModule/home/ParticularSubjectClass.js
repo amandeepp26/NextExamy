@@ -14,6 +14,7 @@ import {colors} from '../../styles';
 import styles from '../../navigation/styles';
 import Button from '../../components/Button';
 import {Pressable} from 'react-native';
+import Header from '../../components/Header';
 // create a component
 // const Topics = [
 //   {
@@ -84,21 +85,7 @@ const Topics =[
 const ParticularSubjectClass = ({navigation, route}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          borderBottomWidth: 3,
-          borderColor: '#e5e5e5',
-        }}>
-        <Icon
-          name="chevron-left"
-          type="ionicons"
-          size={30}
-          onPress={() => navigation.goBack()}
-        />
-        <Text style={[styles.h3, {padding: 20}]}>{route?.params?.subject}</Text>
-      </View>
+      <Header title={route?.params?.subject} navigation={navigation} />
       <ScrollView style={{flex: 1}}>
         <ScrollView
           horizontal={true}

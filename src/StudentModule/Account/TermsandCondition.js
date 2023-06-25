@@ -15,7 +15,7 @@ export default function TermsandCondition({navigation}) {
         <View
           style={{
             backgroundColor: colors.white,
-            marginTop: 5,
+            paddingTop: 5,
             paddingBottom:15,
             flex: 1,
           }}>

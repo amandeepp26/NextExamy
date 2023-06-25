@@ -34,15 +34,15 @@ const Links = [
   },
   {
     id: 5,
-    category: 'TAKE A MOCK TEST',
+    category: 'ASSESSMENTS',
     img: require('./images/test.png'),
-    screen:'MockTest'
+    screen:'Assessments'
   },
   {
     id: 6,
     category: 'ASK A DOUBT',
     img: require('./images/doubt.png'),
-    screen:'Chat'
+    screen:'CHAT'
   },
 ];
 // create a component

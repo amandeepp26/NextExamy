@@ -19,7 +19,6 @@ export default function LiveClass({navigation}) {
         <View
           style={{
             backgroundColor: colors.white,
-            marginTop: 5,
             flex: 1,
             padding: 15,
           }}>
@@ -27,7 +26,7 @@ export default function LiveClass({navigation}) {
             <Text style={[styles.p]}>Live Now</Text>
             <LiveClassesVideo liveStatus={true} navigation={navigation} />
           </View>
-          <View style={{marginTop: 40}}>
+          <View style={{marginTop: 20}}>
             <Text>Upcoming</Text>
           </View>
           <ScrollView>

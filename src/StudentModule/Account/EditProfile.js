@@ -13,7 +13,7 @@ import * as ImagePicker from 'react-native-image-picker';
 import {Toast} from 'react-native-toast-message';
 import {PermissionsAndroid} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {setEmail, setName, setPhoneNumber} from '../auth/signin';
+import {setEmail, setName, setPhoneNumber, setProfilePic} from '../auth/signin';
 import apiClient from '../../utils/apiClient';
 import Header from '../../components/Header';
 
@@ -22,13 +22,13 @@ const EditProfile = ({navigation})=> {
   const [dob, set_dob] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
-  const [image, setImage] = useState('');
   const [userId,setUserId] = useState(null);
 
   const authToken = useSelector(state => state.session.authToken);
   const name = useSelector(state => state.signin.name);
   const phone_number = useSelector(state => state.signin.phone_number);
   const email = useSelector(state => state.signin.email);
+  const profile_pic = useSelector(state=>state.signin.profile_pic);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -47,7 +47,16 @@ const EditProfile = ({navigation})=> {
         dispatch(setPhoneNumber(response.data.mobile));
         set_dob(response.data.date_of_birth);
         setUserId(response.data.id);
-        setImage(response.data.profile);
+        if (response.data.profile != null) {
+          dispatch(
+            setProfilePic(
+              'https://nextexamy.com/images/students/' + response.data.profile,
+            ),
+          );
+        }
+        else{
+          dispatch(setProfilePic(null));
+        }
       } else {
       }
     } catch (e) {
@@ -66,7 +75,7 @@ const EditProfile = ({navigation})=> {
         email:email,
         date_of_birth:dob,
         user_id:userId,
-        profile: image
+        profile: profile_pic
       });
       console.warn("update profile response------->>>>",response);
       if (response.status == 'success') {
@@ -120,7 +129,7 @@ const EditProfile = ({navigation})=> {
         // alert('ImagePicker Error: ' + response.error);
       } else {
         let source = response.assets[0];
-        setImage(source.uri);
+        dispatch(setProfilePic(source.uri));
         // console.warn(source);
         setPopupVisible(false);
       }
@@ -145,7 +154,7 @@ const EditProfile = ({navigation})=> {
         };
 
         ImagePicker.launchCamera(options, response => {
-          console.log('Response = ', response);
+          console.warn('Response = ',response);
           if (response.didCancel) {
             console.log('User cancelled image picker');
             // alert('User cancelled image picker');
@@ -160,7 +169,7 @@ const EditProfile = ({navigation})=> {
             // const fileSize = response.data.length * (3 / 4) - 2;
             // console.log('filesize', fileSize);
             let source = response.assets[0];
-            setImage(source.uri);
+            dispatch(setProfilePic(source.uri));
             setPopupVisible(false);
           }
         });
@@ -194,7 +203,7 @@ const EditProfile = ({navigation})=> {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            {image == null ? (
+            {profile_pic == null ? (
               <Icon
                 name="person-outline"
                 type="ionicons"
@@ -203,7 +212,7 @@ const EditProfile = ({navigation})=> {
               />
             ) : (
               <Image
-                source={{uri: image}}
+                source={{uri: profile_pic}}
                 style={{height: '110%', width: '110%', borderRadius: 50}}
               />
             )}
@@ -302,7 +311,8 @@ const EditProfile = ({navigation})=> {
             }}>
             <View
               style={{
-                height: image != null ? 220 : 180,
+                // height: profile_pic != null ? 220 : 180,
+                height:180,
                 borderWidth: 1,
                 borderColor: '#d3d3d3',
                 width: '90%',
@@ -336,11 +346,11 @@ const EditProfile = ({navigation})=> {
                   Choose from Library..
                 </Text>
               </Pressable>
-              {image != null && (
+              {/* {profile_pic != null && (
                 <Pressable
                   onPress={e => {
                     if (e.target != e.currentTarget) {
-                      setImage('');
+                      dispatch(setProfilePic(null));
                       setPopupVisible(false);
                     }
                   }}
@@ -353,7 +363,7 @@ const EditProfile = ({navigation})=> {
                     Delete Photo
                   </Text>
                 </Pressable>
-              )}
+              )} */}
 
               <Pressable
                 onPress={e => {

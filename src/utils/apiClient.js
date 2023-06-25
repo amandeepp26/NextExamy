@@ -51,6 +51,13 @@ const apiClient = {
         formData.append(key, params[key]);
       }
     }
+    if(params?.profile){
+      formData.append('profile', {
+        uri: params?.profile,
+        type: 'image/jpeg', // Adjust the MIME type according to your image file format
+        name: 'image.jpg', // Provide a desired name for the file
+      });
+    }
   
     let headers = {
       'Accept': 'application/json',};

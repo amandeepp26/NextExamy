@@ -130,22 +130,14 @@ function Tests({navigation}) {
 
   return (
     <View style={styles.container}>
-      <Header title={'Test'} navigation={navigation} />
-
-      <ScrollView
+      <Header title={'Mock Test'} navigation={navigation} />
+      <View
         style={{
           backgroundColor: colors.white,
-          marginTop: 5,
-          marginBottom: 50,
+          paddingVertical: 10,
         }}>
-        <View
-          style={{
-            marginTop: 10,
-            backgroundColor: colors.white,
-            paddingBottom: 20,
-          }}>
-          <View style={{paddingLeft: 12}}>
-            <Text
+        <View style={{paddingLeft: 12}}>
+          {/* <Text
               style={[
                 styles.h3,
                 {fontWeight: '700', color: colors.primaryBlue, marginTop: 10},
@@ -154,46 +146,52 @@ function Tests({navigation}) {
             </Text>
             <Text style={[styles.h4, {fontWeight: '700'}]}>
               to evaluate your preparation
-            </Text>
-            {/* subjects */}
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingVertical: 20,
-              }}>
-              {subjects?.map((subject, index) => {
-                return (
-                  <Pressable
-                    key={index}
-                    onPress={() => {
-                      if (selectedCardIndex != index) {
-                        setSelectedCardIndex(index);
-                        getTopics(subject.id);
-                      } else {
-                        setSelectedCardIndex(null);
-                      }
-                    }}
-                    style={{
-                      borderWidth: selectedCardIndex === index ? 2 : 1,
-                      borderColor:
-                        selectedCardIndex === index
-                          ? colors.primaryBlue
-                          : '#d3d3d3',
-                      paddingVertical: 6,
-                      paddingHorizontal: 20,
-                      borderRadius: 25,
-                      alignItems: 'center',
-                      marginRight: 8,
-                    }}>
-                    <Text style={styles.h6}>{subject.name}</Text>
-                  </Pressable>
-                );
-              })}
-            </ScrollView>
-          </View>
+            </Text> */}
+          {/* subjects */}
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingVertical: 5,
+            }}>
+            {subjects?.map((subject, index) => {
+              return (
+                <Pressable
+                  key={index}
+                  onPress={() => {
+                    if (selectedCardIndex != index) {
+                      setSelectedCardIndex(index);
+                      getTopics(subject.id);
+                    } else {
+                      setSelectedCardIndex(null);
+                    }
+                  }}
+                  style={{
+                    borderWidth: selectedCardIndex === index ? 2 : 1,
+                    borderColor:
+                      selectedCardIndex === index
+                        ? colors.primaryBlue
+                        : '#d3d3d3',
+                    paddingVertical: 6,
+                    paddingHorizontal: 20,
+                    borderRadius: 25,
+                    alignItems: 'center',
+                    marginRight: 8,
+                  }}>
+                  <Text style={styles.h6}>{subject.name}</Text>
+                </Pressable>
+              );
+            })}
+          </ScrollView>
+        </View>
+        <ScrollView
+          style={{
+            backgroundColor: colors.white,
+            marginTop: 5,
+            marginBottom: 100,
+          }}>
           {topics.length > 0 ? (
             <>
               {topics?.map(key => {
@@ -239,10 +237,18 @@ function Tests({navigation}) {
               })}
             </>
           ) : (
-            <Text style={{textAlign: 'center'}}>No data</Text>
+            <View style={{flex: 1, justifyContent: 'center', paddingTop: 200}}>
+              <Text
+                style={[
+                  styles.h5,
+                  {textAlign: 'center', alignItems: 'center'},
+                ]}>
+                No tests found!
+              </Text>
+            </View>
           )}
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </View>
   );
 }

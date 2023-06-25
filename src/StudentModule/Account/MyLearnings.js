@@ -17,6 +17,7 @@ import apiClient from '../../utils/apiClient';
 import {useSelector} from 'react-redux';
 import {Toast} from 'react-native-toast-message/lib/src/Toast';
 import Header from '../../components/Header';
+import Button from '../../components/Button';
 const options = [
   {
     id: 1,
@@ -153,7 +154,6 @@ export default function MyLearnings({navigation}) {
         <View
           style={{
             backgroundColor: colors.white,
-            marginTop: 5,
             alignItems: 'center',
           }}>
           <ScrollView
@@ -284,9 +284,29 @@ export default function MyLearnings({navigation}) {
                   })}
                 </>
               ) : (
-                <Text style={{textAlign: 'center', alignItems: 'center'}}>
-                  No Data
-                </Text>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100%',
+                    paddingTop: 200,
+                  }}>
+                  <Text
+                    style={[
+                      styles.h5,
+                      {textAlign: 'center', alignItems: 'center'},
+                    ]}>
+                    You have not attempt any mock test yet!
+                  </Text>
+                  <View style={{width: '50%'}}>
+                    <Button
+                      text={'Attempt Now'}
+                      onpress={() => navigation.navigate('TESTS')}
+                      backgroundColor={colors.primaryBlue}
+                    />
+                  </View>
+                </View>
               )}
             </ScrollView>
           </View>
@@ -312,7 +332,29 @@ export default function MyLearnings({navigation}) {
                   })}
                 </>
               ) : (
-                <Text style={{textAlign: 'center'}}>No data</Text>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100%',
+                    paddingTop: 200,
+                  }}>
+                  <Text
+                    style={[
+                      styles.h5,
+                      {textAlign: 'center', alignItems: 'center'},
+                    ]}>
+                    You have not attempt any Assessment yet!
+                  </Text>
+                  <View style={{width: '50%'}}>
+                    <Button
+                      text={'Attempt Now'}
+                      onpress={() => navigation.navigate('TESTS')}
+                      backgroundColor={colors.primaryBlue}
+                    />
+                  </View>
+                </View>
               )}
             </ScrollView>
           </View>

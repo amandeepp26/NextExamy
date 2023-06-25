@@ -12,13 +12,12 @@ export default function Notification({navigation}) {
         {/* Header */}
         <Header title={'Notification'} navigation={navigation}/>
   
-        <View style={{backgroundColor: colors.white, marginTop: 5, flex: 1,justifyContent:'center'}}>
-          <View style={{justifyContent:'center',alignItems:'center'}}>
+        <View style={{backgroundColor: colors.white, flex: 1,justifyContent:'center',alignItems:'center'}}>
             <Image source={require('./images/nonotification.png')} style={{width:100,height:125}}/>
-            <Text style={{fontWeight:500,paddingVertical:5}}>
-            No notification yet
+            <Text style={[styles.h5,{fontWeight:"500",marginTop:10}]}>
+            No Notifications yet!
             </Text>
-          </View>
+        
         </View>
       </View>
     </SafeAreaView>

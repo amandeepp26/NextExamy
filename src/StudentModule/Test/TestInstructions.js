@@ -12,6 +12,7 @@ import styles from '../../navigation/styles';
 import {Icon} from 'react-native-elements';
 import {SafeAreaView} from 'react-native';
 import Button from '../../components/Button';
+import Header from '../../components/Header';
 // create a component
 function TestInstructions({
   keys,
@@ -23,32 +24,14 @@ function TestInstructions({
 }) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
-      <View
-        style={{
-          backgroundColor: colors.white,
-          flexDirection: 'row',
-          alignItems: 'center',
-          borderBottomWidth: 3,
-          borderColor: '#e5e5e5',
-        }}>
-        <Icon
-          name="chevron-left"
-          type="ionicons"
-          size={30}
-          onPress={() => navigation.goBack()}
-        />
-        <Text style={[styles.h4, {padding: 15, width: '80%'}]}>
-          Mock Test- {keys?.topic}
-        </Text>
-      </View>
+      <Header title={`Mock Test- ${keys?.topic}`} navigation={navigation} />
       <ScrollView>
-        <View style={{flex: 1, backgroundColor: colors.white}}>
+        <View style={{ backgroundColor: colors.white}}>
           <View
             style={{
               backgroundColor: colors.white,
               paddingLeft: 15,
-              paddingVertical: 20,
-              marginTop: 5,
+              paddingVertical: 10,
               borderBottomWidth: 3,
               borderColor: '#e5e5e5',
             }}>
