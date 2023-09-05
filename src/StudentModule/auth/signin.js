@@ -147,12 +147,10 @@ export const requestOtp = callback => async (dispatch, getState) => {
         type: LOADING_STOP,
       });
     }  else {
-      if (response.errors.mobile) {
         Toast.show({
-          text1: response.errors.mobile || response || 'Something went wrong!',
+          text1: response.message || response || 'Something went wrong!',
           type: 'error',
         });
-      }
       dispatch({
         type: LOADING_STOP,
       });

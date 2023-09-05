@@ -18,6 +18,7 @@ import {logout} from '../auth/session';
 const Account = ({navigation}) => {
   const dispatch = useDispatch();
   const category = useSelector(state => state.signin.category);
+  const subCategory = useSelector(state => state.signin.subCategory);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
@@ -36,7 +37,7 @@ const Account = ({navigation}) => {
               source={require('../../../assets/images/logoIcon.png')}
               style={{width: 70, height: 70, margin: 5}}
             />
-            <Text style={styles.h4}>{category || 'Your Category'}</Text>
+            <Text style={styles.h4}>{category && subCategory ? `${category} - ${subCategory}` : 'Your Category'}</Text>
           </View>
           <Pressable
             onPress={() => navigation.navigate('EditProfile')}

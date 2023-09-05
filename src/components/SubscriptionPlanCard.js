@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {
   View,
   Text,
@@ -12,21 +12,94 @@ import {colors} from '../styles';
 import styles from '../navigation/styles';
 import {Icon} from 'react-native-elements';
 import Button from './Button';
+import RenderHTML from 'react-native-render-html';
+import RazorpayCheckout from 'react-native-razorpay';
+import apiClient from '../utils/apiClient';
+import { useSelector } from 'react-redux';
+import { Toast } from 'react-native-toast-message';
 
 // create a component
-const SubscriptionPlanCard = () => {
+const SubscriptionPlanCard = ({data}) => {
+  const [loading,setLoading] =useState(false);
+  const authToken = useSelector(state => state.session.authToken);
+
+  const handleBuyNow = async () => {
+    try {
+      setLoading(true);
+      RazorpayCheckout.open({
+        key: 'rzp_test_pMpiDPZ9Svz0EW',
+        amount: data.price*100,
+        name: 'Next Examy',
+        description: 'Subscription Plan Payment',
+        prefill: {
+          email: 'user@example.com', // Pass the customer's email here (optional)
+          contact: '1234567890', // Pass the customer's contact number here (optional)
+        },
+        theme: { color: colors.primaryBlue }, 
+      }).then((response)=>{
+        if(response.razorpay_payment_id){
+            paymentSuccess(response.razorpay_payment_id);
+        }
+        else{
+          paymentFailure(response.razorpay_payment_id);
+        }
+      })
+
+    } catch (error) {
+      console.log('Error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const paymentSuccess =async (e) => {
+    try {
+      const response = await apiClient.post(`${apiClient.Urls.paymentSuccess}`, {
+        authToken: authToken,
+        payment_id:e,
+        plan_id:data.id,
+      });
+      console.warn("Payment success response------->>>>",response);
+      
+    } catch (e) {
+      Toast.show({
+        text1: e.message || e || 'Something went wrong!',
+        type: 'error',
+      });
+      console.log("error---->",e)
+    }
+  };
+
+  const paymentFailure =async (e) => {
+    try {
+      const response = await apiClient.post(`${apiClient.Urls.paymentFailure}`, {
+        authToken: authToken,
+        payment_id:e,
+        plan_id:data.id
+      });
+      console.warn("Payment Failed response------->>>>",response);
+      
+    } catch (e) {
+      Toast.show({
+        text1: e.message || e || 'Something went wrong!',
+        type: 'error',
+      });
+      console.log("error---->",e)
+    }
+  };
+
   return (
     <View
       style={{
         borderRadius: 15,
-        elevation:2,
+        elevation: 2,
         backgroundColor: '#FFECE5',
         marginTop: 20,
         paddingHorizontal: 10,
-        width:Dimensions.get('window').width-35,
-        height:Dimensions.get('window').height-150,
+        width: Dimensions.get('window').width - 35,
+        height: Dimensions.get('window').height - 150,
         paddingVertical: 10,
-        marginLeft:15,
+        marginLeft: 15,
       }}>
       <View style={style.header}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -36,7 +109,7 @@ const SubscriptionPlanCard = () => {
           />
           <View>
             <Text style={[styles.h4, {fontWeight: 'bold', color: '#707070'}]}>
-              IIT-JEE Mains
+              {data.plan_name}
             </Text>
             <View
               style={{
@@ -57,24 +130,21 @@ const SubscriptionPlanCard = () => {
           </View>
         </View>
         <Pressable>
-          <Text style={[styles.h3, {fontWeight: 'bold'}]}>₹ 1499</Text>
+          <Text style={[styles.h3, {fontWeight: 'bold'}]}>₹ {data.price}</Text>
         </Pressable>
       </View>
       <View style={{paddingHorizontal: 15, marginTop: 10}}>
         <Text style={[styles.h5, {fontWeight: 'bold', color: '#707070'}]}>
           About Course
         </Text>
-        <Text
+        <RenderHTML source={{html: data.description}} />
+        {/* <Text
           style={[
             styles.h6,
             {color: '#707070', lineHeight: 22, marginVertical: 10},
           ]}>
-          IIT JEE is mainly divided into two categories known as JEE Main and
-          JEE Advanced. JEE Main is the first phase while JEE Advanced is the
-          second phase of the exam. Candidates have to appear and clear JEE Main
-          before proceeding to the next stage. Since 2019, National Testing
-          Agency (NTA) is in charge of overseeing and conducting JEE Main.
-        </Text>
+            {data.description}
+        </Text> */}
         <View
           style={{
             flexDirection: 'row',
@@ -87,7 +157,7 @@ const SubscriptionPlanCard = () => {
               styles.h6,
               {fontWeight: 'bold', color: '#707070', marginLeft: 5},
             ]}>
-            6 months
+            {data.duration} days
           </Text>
         </View>
         <View
@@ -139,9 +209,13 @@ const SubscriptionPlanCard = () => {
           </Text>
         </View>
       </View>
-        <View style={{position:'absolute',width:'105%',bottom:30,}}>
-        <Button backgroundColor={'#535353'} text={'Buy Now'}  />
+      {loading ? (
+        <Button load={true} backgroundColor={colors.primaryBlue} />
+      ) : (
+        <View style={{position: 'absolute', width: '105%', bottom: 30}}>
+          <Button backgroundColor={'#535353'} text={'Buy Now'} onpress={()=>handleBuyNow()} />
         </View>
+      )}
     </View>
   );
 };

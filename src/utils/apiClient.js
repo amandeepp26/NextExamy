@@ -22,24 +22,10 @@ const apiClient = {
     getProfile:'api/my-profile',
     updateProfile:'api/update-profile',
     selectCategory:'api/user-category',
+    subscriptionPlanList:'api/planlist',
+    paymentSuccess:'api/successpayment',
+    paymentFailure:'api/failedpayment',
     
-    propertyByType:'api/web/home/explore',
-    getCities:"api/list/cities",
-    getHomeContent:"api/web/home/content",
-    getNewsList:"api/web/blog/posts",
-    blogDetails:"api/web/blog/post/", //need to do + developer list and details
-    getPropertyDetail:"api/web/property/details",
-    search:"api/web/home/search",
-    favouriteProperty:"api/web/properties/favourite",
-    addToFavourite:"api/web/property/favourite",
-    propertyContact:"api/web/contact/property",
-    developerContact:"api/web/contact/developer",
-    developerList:"api/list/developers",
-    developerDetail:"api/web/developer/",
-    contactedProperty:"api/web/property/contacted",
-    viewedProperty:"api/web/property/history",
-    searchQuery:"api/web/localities",
-    blogDetails:'api/web/blog/post/'
   },
   make: function (url, method, params) {
     console.log("apiclient", baseUrl + url, params);

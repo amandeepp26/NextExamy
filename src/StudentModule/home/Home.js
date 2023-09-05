@@ -38,6 +38,7 @@ const Home = ({navigation}) => {
   const [subjects, setSubjects] = useState(null);
   const authToken = useSelector(state => state.session.authToken);
   const category = useSelector(state => state.signin.category);
+  const subCategory = useSelector(state => state.signin.subCategory);
   const profile_pic = useSelector(state => state.signin.profile_pic);
 
   const dispatch = useDispatch();
@@ -112,7 +113,7 @@ const Home = ({navigation}) => {
               source={require('../../../assets/images/logoIcon.png')}
               style={{width: 70, height: 70, margin: 5}}
             />
-            <Text style={styles.h4}>{category || 'Your Category'}</Text>
+            <Text style={styles.h4}>{category && subCategory ? `${category} - ${subCategory}` : 'Your Category'}</Text>
           </View>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Icon
